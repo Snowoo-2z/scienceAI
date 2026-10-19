@@ -104,3 +104,18 @@ Bloqueurs : E0 (taille et RSS réels du GGUF emb4) et E1 (qualité) non exécut�
 Besoin    : réponse de l'humain au protocole d'évaluation (500 requêtes, domaine cible).
 Décision proposée : ADR-P-010.
 ```
+
+```
+[2026-10-19] Agent-Recherche · W5/W6 · FAIT (intégration E-M0b)
+Fait      : Intégration de la mesure page cache de MNÉMOSYNE (E-M0b) et réponse à Silex.
+Résultat  : Fichier 1,91 GiB lu par blocs : memory.current 55,8 → 2 019,5 Mio, VmRSS 34,7 Mio,
+            836 Mio/s. Avec fadvise(DONTNEED) : memory.current 61,8 Mio, 625 Mio/s (−25 %).
+            Conséquence : le plafond de 200 Mo doit porter sur le RSS du processus, pas sur le
+            cgroup entier, sinon éviction du GGUF et chute du débit.
+            Protocole E0 mis à jour : quatre chiffres à publier (RSS, cgroup avec/sans cache,
+            débit dans les deux cas).
+Fichiers  : docs/PROTOCOLE-EVALUATION.md §7.5, docs/ARCHITECTURE-200MB-WEB.md §4.7
+Bloqueurs : E0 non exécutée (pas de llama.cpp ni de GGUF dans cet environnement).
+Besoin    : domaine de la tâche cible + autorisation logs pour le jeu de 500 requêtes.
+Décision proposée : aucune nouvelle.
+```

@@ -173,7 +173,29 @@ curl -s localhost:8080/metrics | grep -E 'tokens_per_second|slots'
 - Publier `VmRSS` et `memory.current` **ensemble**. L'écart entre les deux est l'information.
 - Un run sur machine froide (reboot) au moins une fois.
 
-### 7.5 Critère
+### 7.5 Page cache et cgroup — ce que MNÉMOSYNE a mesuré
+
+MNÉMOSYNE a exécuté E-M0b (bac à sable, fichier de 1,91 GiB, lecture par blocs de 8 Mio) :
+
+| Mode | `memory.current` | `VmRSS` | Débit |
+|---|---:|---:|---:|
+| Lecture bufferisée | 55,8 → **2 019,5 Mio** | 34,7 Mio | 836 Mio/s |
+| `posix_fadvise(DONTNEED)` | **61,8 Mio** | 34,8 Mio | 625 Mio/s |
+
+**Trois conséquences pour E0 :**
+
+1. Le page cache gonfle `memory.current` **de la taille du fichier**, alors que `VmRSS` reste à 35 Mo.
+   Un plafond `MemoryMax=200M` évincerait donc les pages du GGUF, voire le cœur résident.
+2. `DONTNEED` ramène `memory.current` à 62 Mo, au prix de **25 % de débit**. C'est un arbitrage
+   explicite, pas un réglage gratuit.
+3. La mesure doit donc publier **quatre chiffres** : `VmRSS`, `memory.current` avec cache,
+   `memory.current` après `DONTNEED`, et le débit dans les deux cas.
+
+Conséquence produit : sur un mini-PC dédié (8–16 Go), laisser le page cache faire son travail est
+le bon choix — il accélère les tokens suivants. Le plafond de 200 Mo doit s'appliquer au **RSS du
+processus**, pas au cgroup entier, sinon on se prive du cache pour rien.
+
+### 7.6 Critère
 
 | Résultat | Conclusion |
 |---|---|

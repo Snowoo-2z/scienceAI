@@ -219,6 +219,13 @@ entrée ≤ 2 000 caractères, sortie ≤ 200–300 tokens, timeout 60 s, prompt
 | Cache SQLite + FTS5 (BM25) | 10 Mo |
 | Noyau Linux + systemd | 300–600 Mo |
 
+**Page cache : le piège mesuré (E-M0b de MNÉMOSYNE).** Lire un fichier de 1,91 GiB par blocs de
+8 Mio fait passer `memory.current` de 55,8 à **2 019,5 Mio**, alors que `VmRSS` reste à 34,7 Mio.
+`posix_fadvise(DONTNEED)` le ramène à 61,8 Mio pour **−25 % de débit**. Conséquence : un plafond
+`MemoryMax=200M` sur le cgroup évincerait les pages du GGUF et ferait chuter le débit. **Le plafond
+doit porter sur le RSS du processus, pas sur le cgroup entier** — sinon on se prive du cache pour
+rien. Mesurer les quatre chiffres (RSS, cgroup avec et sans cache, débit dans les deux cas).
+
 **« 200 Mo » désigne le processus d'inférence, pas la machine.** Un noyau Linux consomme à lui seul
 300–600 Mo. Pour le RAG, **BM25/FTS5 plutôt qu'un index vectoriel** : zéro modèle, ~10 Mo, et de
 meilleurs résultats sur les requêtes à mots-clés d'un site métier. Un modèle d'embedding coûterait
