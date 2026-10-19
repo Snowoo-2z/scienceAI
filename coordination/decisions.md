@@ -1,5 +1,11 @@
 # Journal des décisions (ADR)
 
+> **Convention de numérotation (2026-10-19).** Deux pistes coexistent et ont
+> des ADR distincts : `ADR-P-*` pour la piste **produit** (cible 200 Mo de
+> RSS, @9c2ae177) et `ADR-O-*` pour la piste **recherche Ω** (~100 Go,
+> KAIROS). Les ADR-001 à 005 sont communs aux deux. Un numéro nu ne doit
+> plus être attribué.
+
 ---
 
 ## ADR-001 — Interpréter la cible mémoire comme le RSS du processus d'inférence
@@ -60,7 +66,7 @@ réduit les FLOPs mais augmente l'empreinte.
 
 ---
 
-## ADR-006 — Traiter deux régimes de budget (100 Mo et ~100 Go), pas un seul
+## ADR-O-006 — Traiter deux régimes de budget (100 Mo et ~100 Go), pas un seul
 
 **Date** : 2026-10-19
 **Statut** : proposé (à arbitrer par l'humain)
@@ -85,4 +91,33 @@ ce sont deux points de la même courbe (`tok/s = BW / (ρ·B + KV)`).
 Les expériences E0/E1/E7 (100 Mo) et E-K1/E-K2/E-K8 (100 Go) sont
 indépendantes et peuvent avancer en parallèle. Risque : dispersion.
 Mitigation : un agent par régime, et un point de décision humain après E-K8.
+**Qui a validé** : en attente (KAIROS propose, l'humain tranche).
+
+---
+
+## ADR-O-007 — La compression devient un outil de mesure, pas le but du programme
+
+**Date** : 2026-10-19
+**Statut** : proposé (piste Ω)
+**Auteur** : KAIROS
+**Contexte** : HECATON-I démontre qu'un transformer de 317 B tient dans
+82,6 Go à 2,01 bit, avec 49 tok/s sur un noyau à 800 GOP/s. C'est un
+résultat de compression, pas une invention : le modèle continue de payer
+connaissance, compétence et raisonnement aux mêmes poids, à chaque token
+(2,05 Go lus par token). Le demandeur a demandé explicitement autre chose :
+« trouver un moyen de créer, pas limiter la taille du modèle ».
+**Décision** :
+1. HECATON-I est **gelé comme baseline** reproductible. On n'y investit plus
+   d'effort d'optimisation, sauf pour les mesures nécessaires aux comparaisons.
+2. Le programme actif est le **tri-système** de `docs/06-PROGRAMME-II.md` :
+   cortex 15 Go + bibliothèque de compétences 55 Go + mémoire plastique 25 Go
+   + vérificateur 3 Go.
+3. Le packing, la quantification et la sparsité ne sont retenus que s'ils
+   **augmentent la capacité à joules égaux**. Un gain de 0,1 bit/poids n'est
+   pas un résultat ; un facteur sur les octets lus par token en est un.
+4. Toute affirmation de capacité doit être mesurée par E-Ω5 (élasticité
+   capacité/Go par substrat) ou par E-Ω1 (skills contre RAG à joules égaux).
+**Conséquences** : les chiffres de HECATON-I restent cités comme référence
+(baseline), jamais comme livrable. Les efforts W-SKILL, W-PLAST et W-DEPTH
+deviennent prioritaires sur W3 (kernels), qui passe en soutien.
 **Qui a validé** : en attente (KAIROS propose, l'humain tranche).

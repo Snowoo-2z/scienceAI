@@ -26,6 +26,7 @@ Sous-commandes
   hw                 le même modèle sur plusieurs plateformes
   train              coût d'entraînement / distillation
   svg                figures (budget mémoire, roofline) en SVG autonome
+  packing            arithmétique réelle d'un format packé (trits, échelles)
 
 Conventions
 -----------
@@ -878,6 +879,79 @@ def _load(spec_or_path: str) -> ModelSpec:
                      f"disponibles : {', '.join(cat)}")
 
 
+
+# ---------------------------------------------------------------------------
+# 12. Packing ternaire : arithmetique reelle
+# ---------------------------------------------------------------------------
+
+# 5 trits tiennent dans un octet : 3^5 = 243 <= 256 -> 1,6 bit/poids.
+_PACK_BASE_BITS = {
+    "trit5": 8.0 / 5.0,
+    "int2": 2.0,
+    "int4": 4.0,
+}
+
+
+def packed_bits(pack: str = "trit5", block: int = 128, scale_bits: int = 16) -> float:
+    """Bits par poids d'un format packe, echelles incluses.
+
+    Le terme d'echelle est ``scale_bits / block`` : une echelle par bloc de
+    ``block`` poids. C'est une hypothese de format, pas une mesure.
+    """
+    if pack not in _PACK_BASE_BITS:
+        raise ValueError("format inconnu : %s" % pack)
+    if block <= 0:
+        raise ValueError("block doit etre > 0")
+    return _PACK_BASE_BITS[pack] + scale_bits / block
+
+
+def packing_rows(s: "ModelSpec", blocks=(32, 64, 128, 256),
+                 packs=("trit5", "int2"), scale_bits: int = 16):
+    n_exp = params_breakdown(s)["experts"]
+    ref_bytes = n_exp * s.bits_experts / 8.0
+    rows = []
+    for pack in packs:
+        for block in blocks:
+            b = packed_bits(pack, block, scale_bits)
+            bytes_exp = n_exp * b / 8.0
+            rows.append({
+                "pack": pack, "block": block, "bits": b,
+                "go_experts": bytes_exp / GO,
+                "delta_go": (bytes_exp - ref_bytes) / GO,
+            })
+    return n_exp, s.bits_experts, rows
+
+
+def cmd_packing(args) -> int:
+    s = _load(args.config)
+    n_exp, ref_bits, rows = packing_rows(
+        s, tuple(args.blocks), tuple(args.packs), args.scale_bits)
+    print(f"{s.name} - packing des experts")
+    print(f"  experts ........... {n_exp / 1e9:.2f} B de parametres")
+    print(f"  reference outil ... {ref_bits:.2f} bit/poids "
+          f"(approximation, pas un format)")
+    print()
+    print(f"  {'format':7} {'bloc':>5} {'bits/poids':>10} {'Go experts':>11} "
+          f"{'delta':>8}")
+    print("  " + "-" * 46)
+    for r in rows:
+        print(f"  {r['pack']:7} {r['block']:5d} {r['bits']:10.4f} "
+              f"{r['go_experts']:11.2f} {r['delta_go']:+8.2f}")
+    print()
+    print("Lecture : 5 trits par octet donnent 1,60 bit/poids avant echelles.")
+    print("Une echelle fp16 par bloc de 128 ajoute 0,125 bit -> 1,725.")
+    print("Le 1,7 de l'outil est proche de ce format mais reste une")
+    print("approximation : aucun kernel n'implemente ce packing ici.")
+    print()
+    print("Tenseurs NON ternaires (inchanges) :")
+    for group, (n, b) in params_with_bits(s).items():
+        if group == "experts":
+            continue
+        print(f"  {group:16} {n / 1e9:8.2f} B x {b:4.1f} bit = "
+              f"{n * b / 8 / GO:7.3f} Go")
+    return 0
+
+
 def main(argv: Optional[List[str]] = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__,
                                  formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -929,12 +1003,22 @@ def main(argv: Optional[List[str]] = None) -> int:
     p_sens.add_argument("--bw", nargs="*", type=float,
                         default=[60, 90, 166, 256, 400, 550])
 
+    p_pk = sub.add_parser("packing", help="arithmetique du packing ternaire")
+    p_pk.add_argument("config")
+    p_pk.add_argument("--blocks", nargs="*", type=int, default=[32, 64, 128, 256])
+    p_pk.add_argument("--scale-bits", type=int, default=16)
+    p_pk.add_argument("--packs", nargs="*", default=["trit5", "int2"],
+                      choices=list(_PACK_BASE_BITS))
+
     p_svg = sub.add_parser("svg", help="figures SVG")
     p_svg.add_argument("--out", default="figures")
     p_svg.add_argument("--ctx", type=int, default=32768)
     p_svg.add_argument("--hw", default="strix-halo", choices=list(HARDWARE))
 
     args = ap.parse_args(argv)
+
+    if args.cmd == "packing":
+        return cmd_packing(args)
 
     if args.cmd == "show":
         s = _load(args.config)

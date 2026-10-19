@@ -1,0 +1,29 @@
+HECATON-420A6 - packing des experts
+  experts ........... 360.78 B de parametres
+  reference outil ... 1.70 bit/poids (approximation, pas un format)
+
+  format   bloc bits/poids  Go experts    delta
+  ----------------------------------------------
+  trit5      32     2.1000       94.70   +18.04
+  trit5      64     1.8500       83.43    +6.76
+  trit5     128     1.7250       77.79    +1.13
+  trit5     256     1.6625       74.97    -1.69
+  int2       32     2.5000      112.74   +36.08
+  int2       64     2.2500      101.47   +24.80
+  int2      128     2.1250       95.83   +19.17
+  int2      256     2.0625       93.01   +16.35
+
+Lecture : 5 trits par octet donnent 1,60 bit/poids avant echelles.
+Une echelle fp16 par bloc de 128 ajoute 0,125 bit -> 1,725.
+Le 1,7 de l'outil est proche de ce format mais reste une
+approximation : aucun kernel n'implemente ce packing ici.
+
+Tenseurs NON ternaires (inchanges) :
+  shared_expert        0.40 B x  4.0 bit =   0.201 Go
+  router               0.05 B x  8.0 bit =   0.048 Go
+  ffn_dense            0.00 B x  4.0 bit =   0.000 Go
+  attention            0.18 B x  4.0 bit =   0.091 Go
+  linear_attn          1.01 B x  4.0 bit =   0.503 Go
+  memory_layers        9.22 B x  4.0 bit =   4.611 Go
+  embeddings           0.27 B x  6.0 bit =   0.201 Go
+  norms_biases         0.37 B x  8.0 bit =   0.372 Go

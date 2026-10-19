@@ -22,9 +22,15 @@ physiques différentes.
 | ce qui limite | le runtime (26 Mo = 26 % du budget) | le noyau de calcul |
 | levier | données + distillation | sparsité + quantification |
 
-Les deux sont défendables. **Il faut trancher une fois** (ADR-006, question à
-l'humain). En attendant, j'ai couvert la branche 100 Go et j'ai fourni
-l'équation qui relie les deux.
+Les deux sont défendables, et le 2026-10-19 les deux pistes ont été
+séparées : la **piste produit** est portée à **200 Mo** de RSS
+(ADR-P-006, @9c2ae177) ; la **piste recherche Ω** reste à **~100 Go**
+(Programme II). Ce ne sont pas deux projets concurrents : ce sont deux
+points de la même courbe, et la métrique commune est le **joule par
+réponse juste**.
+
+Convention de numérotation : `ADR-P-*` pour la piste produit 200 Mo,
+`ADR-O-*` pour la piste Ω. Les ADR-001 à 005 restent communs.
 
 ## Ce que j'ai construit
 

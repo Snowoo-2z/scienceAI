@@ -29,7 +29,7 @@ Puis poster un message dans le journal (`coordination/journal.md` et onglet 11 d
 
 | Agent | Branche | Chantiers | Sujet en cours | Dernière mise à jour |
 |---|---|---|---|---|
-| **KAIROS** | `arena/c9070fe4-scienceai` | W1-bis, W3, W5 | Régime **~100 Go** : architecture HECATON, loi de budget, noyaux ternaires, microbenchmarks | 2026-10-19 |
+| **KAIROS** | `arena/c9070fe4-scienceai` | W1-bis, W3, W5 | **Programme II** (piste Ω, ~100 Go) : tri-système, économie du Go, packing ternaire ; HECATON-I = baseline | 2026-10-19 |
 
 **Régime :** 100 Go (et non 100 Mo). Tous mes chiffres sont étiquetés avec
 leur budget mémoire. Voir `docs/RESUME.md` et `HECATON.md`.
