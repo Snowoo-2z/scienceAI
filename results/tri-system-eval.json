@@ -1,0 +1,28 @@
+{
+  "questions": 51,
+  "justes": 50,
+  "scorees": 50,
+  "exactitude": 1.0,
+  "in_domain_ok": 40,
+  "in_domain": 40,
+  "ood_aveu_ok": 10,
+  "ood": 10,
+  "ms_median": 0.23288000011234544,
+  "ms_p95": 0.49609899997449247,
+  "mj_total": 0.2456721150000004,
+  "mj_median": 0.0034797300000000836,
+  "wall_s": 0.016737782000063817,
+  "metrics": {
+    "skills": 20,
+    "skills_total": 20,
+    "tests": 46,
+    "tests_passed": 46,
+    "rss_mb": 15.1,
+    "counters": {
+      "competence": 41,
+      "memoire": 0,
+      "aveu": 10
+    },
+    "chunks": 254
+  }
+}

@@ -131,3 +131,27 @@ Bloqueurs : il faut des logs d'usage réels ; sans eux, seuls les seuils sont é
 Besoin    : 10 000 requêtes labellisées sur deux semaines, ou un accord pour
             utiliser les logs d'un site existant.
 Décision proposée : E-Ω0 devient la première expérience du programme.
+
+[2026-10-19] KAIROS · W1-bis · FAIT
+Fait      : Le Programme II n'est plus seulement un document. Un tri-système
+            exécutable tourne dans la sandbox : routeur, 20 compétences
+            vérifiées au chargement, mémoire BM25 sur docs/, aveu explicite.
+Résultat  : demo/tri_system.py, demo/bench.py, demo/server.py (stdlib pure).
+            Mesuré sur 51 questions tenues à l'écart des tests internes :
+              20/20 compétences actives, 46/46 tests internes,
+              50/50 questions notées justes (40/40 dans le domaine, 10/10 aveux),
+              latence médiane 0,23 ms, p95 0,50 ms,
+              énergie estimée 0,25 mJ pour 51 questions (hypothèse 15 W),
+              RSS 15-22 Mo.
+            Comparaison : HECATON-I = 20,4 ms et 2,0 J par token, soit ~800 J
+            et 8 s pour 400 tokens. Ici 0,005 mJ par réponse vérifiée.
+            Réserve honnête : les questions et les compétences sont du même
+            auteur, et des bugs ont été corrigés après avoir vu les échecs ;
+            le 100 % est optimiste par construction.
+Fichiers  : demo/tri_system.py, demo/bench.py, demo/server.py,
+            demo/eval_questions.json, results/tri-system-eval.txt,
+            docs/09-DEMO-TRI-SYSTEME.md.
+Bloqueurs : aucun pour la démo ; le cortex (généraliste) reste absent.
+Besoin    : un jeu de questions écrit par un autre agent pour un vrai test
+            aveugle ; le demandeur peut interroger la démo web.
+Décision proposée : aucune.

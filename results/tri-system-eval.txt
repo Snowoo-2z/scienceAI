@@ -1,0 +1,116 @@
+==============================================================================
+  TRI-SYSTÈME — ÉVALUATION SUR QUESTIONS TENUES À L'ÉCART
+==============================================================================
+  compétences vérifiées ... 20/20 (46/46 tests internes)
+  questions ............... 51
+  exactitude .............. 100.0 % (50/50)
+  dans le domaine ......... 40/40
+  hors domaine (aveu) ..... 10/10
+  latence médiane ......... 0.23 ms
+  latence p95 ............. 0.50 ms
+  énergie estimée ......... 0.25 mJ pour 51 questions
+  RSS ..................... 15.1 Mo
+
+  Détail :
+  OK    [competence] Combien font 1234 + 876 ?
+        -> 2110
+  OK    [competence] Combien font 45 × 12 ?
+        -> 540
+  OK    [competence] Quel est le résultat de 999 - 111 ?
+        -> 888
+  OK    [competence] Combien font 144 / 12 ?
+        -> 12
+  OK    [competence] Combien font 7 puissance 3 ?
+        -> 343
+  OK    [competence] Combien font 20 % de 350 ?
+        -> 70
+  OK    [competence] Combien font 7,5 % de 800 ?
+        -> 60
+  OK    [competence] Quelle est l'augmentation de 80 à 100 ?
+        -> augmentation de 25 %
+  OK    [competence] Quelle est la diminution de 500 à 400 ?
+        -> diminution de 20 %
+  OK    [competence] Racine carrée de 1024
+        -> 32
+  OK    [competence] PGCD de 84 et 126
+        -> 42
+  OK    [competence] Convertir 42 km en miles
+        -> 26,097582
+  OK    [competence] Convertir 70 kg en livres
+        -> 154,323582
+  OK    [competence] Combien font 250 °C en °F ?
+        -> 482 °F
+  OK    [competence] Convertir 5 Go en To
+        -> 0,005
+  OK    [competence] Convertir 90 minutes en heures
+        -> 1,5
+  OK    [competence] Convertir 200 dollars en euros
+        -> 185,185185
+  OK    [competence] Quel jour de la semaine le 25 décembre 2026 ?
+        -> vendredi
+  OK    [competence] Quel jour de la semaine le 1 mai 2027 ?
+        -> samedi
+  OK    [competence] Combien de jours entre le 15 mars 2026 et le 15 juin 2026 ?
+        -> 92 jours
+  OK    [competence] Quel âge a une personne née le 1 janvier 1980 ?
+        -> 46 ans
+  OK    [competence] Combien de mots dans "le petit chat noir dort sur le tapis rouge" ?
+        -> 9 mots
+  OK    [competence] Combien de voyelles dans "anticonstitutionnellement" ?
+        -> 10 voyelles
+  OK    [competence] Mets "vive la recherche" en majuscules
+        -> VIVE LA RECHERCHE
+  OK    [competence] Inverse "abcdef"
+        -> fedcba
+  OK    [competence] Est-ce que "ressasser" est un palindrome ?
+        -> oui
+  OK    [competence] Est-ce que "orange" est un palindrome ?
+        -> non
+  OK    [competence] "aimer" et "maire" sont-ils des anagrammes ?
+        -> oui
+  OK    [competence] 2024 en chiffres romains
+        -> MMXXIV
+  OK    [competence] Que vaut XLII ?
+        -> 42
+  OK    [competence] Quelle est la capitale du Canada ?
+        -> Ottawa
+  OK    [competence] Quelle est la capitale de la Suisse ?
+        -> Berne
+  OK    [competence] Quel est le symbole chimique du sodium ?
+        -> Na
+  OK    [competence] Numéro atomique du calcium
+        -> 20
+  OK    [competence] Quelle est la 5e planète du système solaire ?
+        -> Jupiter
+  OK    [competence] Quel est le budget mémoire du Programme II ?
+        -> Le Programme II se cadre à ~100 Go de RAM. La piste produit, séparée, vise 200 Mo de RSS.
+  OK    [competence] Quelle est la métrique du projet ?
+        -> La métrique du projet est le joule par réponse juste ; à défaut, la réussite par joule à taille de modèle fixe
+  —     [competence] Qui est Silex ?
+        -> Silex est l'agent du chantier W3 sur la branche arena/d930d4b4-scienceai : packing ternaire et streaming des p
+  OK    [aveu      ] Quelle est la recette de la tarte tatin ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Qui a écrit Les Misérables ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Traduis "bonjour" en japonais
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Combien de secondes dans une année ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Quel temps fera-t-il demain à Paris ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Donne-moi une idée de prénom pour un chat
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Résume la théorie de la relativité en trois phrases
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [competence] Combien font 5 % de 0 ?
+        -> 0
+  OK    [competence] Convertir -40 °C en °F
+        -> -40 °F
+  OK    [competence] Combien de jours entre le 31 décembre 2025 et le 1 janvier 2026 ?
+        -> 1 jours
+  OK    [aveu      ] Quel jour de la semaine le 31 février 2026 ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Que vaut IIX ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
+  OK    [aveu      ] Quelle est la capitale de la Narnia ?
+        -> Je ne sais pas répondre avec mes compétences actuelles. Je préfère l'avouer plutôt que d'inventer. Essayez un 
