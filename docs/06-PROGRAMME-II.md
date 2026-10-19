@@ -238,11 +238,18 @@ réponse tombe sous 1 J.
 
 | # | Question | Coût | Tue quoi si échec |
 |---|---|---|---|
+| **E-Ω0** | α et k de la demande réelle | 0 €, 2 sem. | tout le programme, avant de le lancer |
 | **E-Ω1** | skills exécutables > RAG texte ? | 2 000 €, 3 sem. | tout le programme |
 | **E-Ω2** | la mémoire plastique apprend-elle ? | 0 €, 1 sem. | I-2 et I-4 |
 | **E-Ω3** | penser plus longtemps aide-t-il ? | 0 €, 1 sem. | I-3 |
 | **E-Ω4** | taux de compilation | 0 €, 2 sem. | I-5 |
 | **E-Ω5** | élasticité capacité/Go par substrat | 5 000 €, 4 sem. | la thèse théorique |
+
+**E-Ω0 passe avant toutes les autres.** Elle mesure les deux paramètres qui
+commandent le calcul de rendement (§10) : l'exposant de Zipf α de la demande
+et le nombre de décompositions alternatives k. Outil : `tools/zipf_check.py` ;
+protocole : `docs/08-MESURER-LA-DEMANDE.md`. Règle écrite d'avance : α < 0,8
+⇒ on ne construit pas la bibliothèque.
 
 **E-Ω5 est l'expérience reine.** À budget total fixé (par exemple 40 Go), on
 fait varier la répartition `W` ↔ `M` (100/0, 75/25, 50/50, 25/75) sur une
@@ -332,7 +339,8 @@ dans `results/programme2-*.txt` et `figures/programme2-rendement.svg`.
 
 | Paramètre | Valeur | Pourquoi |
 |---|---:|---|
-| Demande de compétences | Zipf γ = 1,0 | loi de longue traîne standard ; **à mesurer** |
+| Demande de compétences | Zipf γ = 1,0, M = 10⁹ | loi de longue traîne standard ; **à mesurer** |
+| Procédures possibles M | 10⁹ | hypothèse : la couverture vaut H(n)/H(M). Avec M = 10⁸ au lieu de 10⁹, la couverture à 10 M de skills passe de 78,4 % à 50 % (γ=1) et de 25,1 % à 50,1 % (γ=0,7). **M doit être mesuré, pas supposé.** |
 | Coût d'un token de cortex | 0,5 J | cortex 8 B, 0,35 Go/token, ~5 ms |
 | Planification | 10 tokens | un plan court, pas une génération |
 | Génération de secours | 300 tokens | réponse complète |

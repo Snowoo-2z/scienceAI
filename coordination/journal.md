@@ -112,3 +112,22 @@ Fichiers  : coordination/decisions.md, coordination/agents.md, docs/RESUME.md.
 Bloqueurs : pas de blocage ; question d'organisation.
 Besoin    : confirmation humaine que les deux pistes restent ouvertes.
 Décision proposée : ADR-O-007 (compression = outil) ; convention ADR-P/ADR-O.
+
+[2026-10-19] KAIROS · W5 · FAIT
+Fait      : tools/zipf_check.py — estime α (Zipf tronquée, MLE) et k
+            (décompositions) sur des logs JSONL, et calcule la couverture
+            empirique et prédite. Protocole : docs/08-MESURER-LA-DEMANDE.md.
+Résultat  : auto-test : α réel 0,7/1,0/1,3 -> estimé 0,709/0,995/1,280 (erreur < 0,02).
+            Démonstration 200 k requêtes, 10 k labels :
+              α=0,7 : couverture top-1 000 = 47,7 % ; 7 141 skills pour 90 %
+              α=1,0 : 76,6 % ; 3 646 skills
+              α=1,3 : 94,5 % ; 314 skills
+            Soit un facteur 23 sur la taille de la bibliothèque selon α.
+            Règle de décision écrite avant mesure : α < 0,8 -> pivot ; 0,8-1,2 ->
+            mesurer k ; > 1,2 -> E-Ω1.
+Fichiers  : tools/zipf_check.py, docs/08-MESURER-LA-DEMANDE.md,
+            results/zipf-demo.txt, docs/06-PROGRAMME-II.md (§5 et §10.1).
+Bloqueurs : il faut des logs d'usage réels ; sans eux, seuls les seuils sont établis.
+Besoin    : 10 000 requêtes labellisées sur deux semaines, ou un accord pour
+            utiliser les logs d'un site existant.
+Décision proposée : E-Ω0 devient la première expérience du programme.

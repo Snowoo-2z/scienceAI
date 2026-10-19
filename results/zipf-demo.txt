@@ -1,0 +1,87 @@
+=== demo alpha=0.7 ===
+========================================================================
+  MESURE DE LA DEMANDE — démo Zipf alpha=0.7, 10000 labels
+========================================================================
+  requêtes ............. 200 000
+  labels distincts       9 997
+  alpha (Zipf, MLE) .... 0.705
+  alternatives/requête . 1.00
+
+  Couverture réelle par le top-n (mesurée sur ces logs) :
+    top      10 .......   7.94 %
+    top     100 .......  21.11 %
+    top   1 000 .......  47.65 %
+
+  Nombre de compétences nécessaires (modèle de Zipf ajusté) :
+    90 % ............ 7 141
+    95 % ............ 8 485
+    99 % ............ 9 681
+
+  Lecture :
+    alpha < 0,8 -> longue traîne trop lourde ; la bibliothèque
+    ne couvrira pas assez. Le tri-système perd l'essentiel de
+    son avantage (1,5x au lieu de 20x). PIVOTER.
+
+    Peu ou pas d'alternatives : la couverture stricte est la bonne
+    hypothèse, et elle est plus fragile.
+
+
+=== demo alpha=1.0 ===
+========================================================================
+  MESURE DE LA DEMANDE — démo Zipf alpha=1.0, 10000 labels
+========================================================================
+  requêtes ............. 200 000
+  labels distincts       9 667
+  alpha (Zipf, MLE) .... 1.000
+  alternatives/requête . 1.00
+
+  Couverture réelle par le top-n (mesurée sur ces logs) :
+    top      10 .......  29.93 %
+    top     100 .......  52.91 %
+    top   1 000 .......  76.58 %
+
+  Nombre de compétences nécessaires (modèle de Zipf ajusté) :
+    90 % ............ 3 646
+    95 % ............ 5 937
+    99 % ............ 8 769
+
+  Lecture :
+    alpha entre 0,8 et 1,2 -> zone de travail. L'avantage dépend
+    fortement des décompositions alternatives ; les mesurer.
+
+    Peu ou pas d'alternatives : la couverture stricte est la bonne
+    hypothèse, et elle est plus fragile.
+
+
+=== demo alpha=1.3 ===
+========================================================================
+  MESURE DE LA DEMANDE — démo Zipf alpha=1.3, 10000 labels
+========================================================================
+  requêtes ............. 200 000
+  labels distincts       6 231
+  alpha (Zipf, MLE) .... 1.290
+  alternatives/requête . 1.00
+
+  Couverture réelle par le top-n (mesurée sur ces logs) :
+    top      10 .......  61.31 %
+    top     100 .......  83.22 %
+    top   1 000 .......  94.51 %
+
+  Nombre de compétences nécessaires (modèle de Zipf ajusté) :
+    90 % ............ 314
+    95 % ............ 1 023
+    99 % ............ 3 993
+
+  Lecture :
+    alpha > 1,2 -> tête de distribution très concentrée ; la
+    bibliothèque est très rentable. Aller à E-Ω1.
+
+    Peu ou pas d'alternatives : la couverture stricte est la bonne
+    hypothèse, et elle est plus fragile.
+
+
+=== self-test ===
+Auto-test de l'estimateur :
+  alpha réel 0.7 -> estimé 0.709 (erreur 0.009) OK
+  alpha réel 1.0 -> estimé 0.995 (erreur 0.005) OK
+  alpha réel 1.3 -> estimé 1.280 (erreur 0.020) OK
