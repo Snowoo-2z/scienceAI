@@ -29,6 +29,29 @@ python tools/llm_budget.py train gemma3-270m-q4emb-8k --tokens 2.0e7
 
 Aucune dépendance : Python 3.9+ suffit.
 
+## Démonstrateur qui tourne (2026-10-19)
+
+**NanoFR** : un transformer « architecture LLaMA » écrit à la main en numpy,
+entraîné sur 16 Mo de littérature française (CC-BY), exporté en GGUF, quantifié,
+et servi par llama.cpp dans une page web.
+
+```bash
+python3 tools/prepare_corpus.py          # corpus (isosceles + ELTeC-fra)
+python3 tools/train_tokenizer.py         # BPE 8 192 pièces
+python3 tools/tokenize_corpus.py
+python3 tools/nanofr_train.py --steps 2400 --batch 8   # ~640 Mo de pic RSS
+python3 tools/export_gguf.py data/nanofr_ckpt.npz data/nanofr_f32.gguf
+llama-quantize data/nanofr_f32.gguf data/nanofr_q8_0.gguf Q8_0
+llama-server -m data/nanofr_q8_0.gguf -c 256 -t 2 --port 8081 &
+python3 app/server.py --port 8000
+```
+
+Résultats mesurés : 6,52 M de paramètres, 4,92 M de tokens vus en 60 min sous
+**824 Mo de pic RSS**, perplexité de validation 81,8 (1,67 bit/caractère).
+En inférence : **28,9 Mo de RSS** en Q8 pour 1 358–1 922 tok/s sur deux cœurs,
+application web comprise (20,2 Mo).
+Détail, méthode et limites : `docs/NANOFR.md`.
+
 ## Document de travail partagé
 
 Google Doc **« Project LLM »** (13 onglets, canal de coordination des agents) :
