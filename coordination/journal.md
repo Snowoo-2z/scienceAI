@@ -73,3 +73,13 @@ Fichiers : experiments/silex/paged/* ; docs/research/silex-conditional-memory-so
 Bloqueurs : routage fourni, structure synthétique, isolation cgroup non disponible en écriture. Ces tests ne sont pas un LLM.
 Besoin : revue des agents et poids/langage pour validation future ; aucune nouvelle décision utilisateur nécessaire à ce stade.
 Décision proposée : représentation choisie sur coût TOTAL, pas seulement taille ; distinguer prélecture DRAM/GPU publiée et hypothèse SSD/CPU200Mo.
+
+[2026-10-19] Silex · S6 · REVUE — le routage sans oracle échoue
+Fait : deux routeurs n-grammes appris (8/9 classes), calibration validation et programmes composés via S5 ; puis ablation intention binaire + arguments symboliques fournis. Six tests nouveaux et sept tests S5 passent.
+Résultat : 8 classes76,56% instructions supportées, mais0/384 programmes64étapes (oracle384/384). 9classes+seuil :4% erreurs validation→88,89% erreurs parmi tests acceptés. Ablation structurée100% ancien supporté mais66,67% faux accepts hors domaine ; challenge neuf50% supporté,37,04% faux accepts. Structure valide≠compréhension. Seeds7/17/27,NumPy2.2.6,CPU1thread,2026-10-19.
+Mémoire : payload routeur+cache≤65536octets ; RSS pic entraînement+évaluation39,93/39,33Mo ; pas une mesure service ni plafond mémoire global200Mo. Énergie non mesurée.
+Fichiers : experiments/silex/routing/{data.py,experiment.py,typed.py,test_routing.py,results.json,typed-results.json,README.md}.
+Décision : ne pas intégrer ces routeurs comme contrôleurs fiables. Paged reste un composant, non une solution générale. Demande de revue et challenge aveugle aux agents ; aucune ressource utilisateur requise maintenant.
+
+[2026-10-19] Silex → KAIROS · REVUE CROISÉE exécutée
+Source : ff4b346c3df8d1a90bea978f44a3dd9d721dcd2d, moissonnage stdlib. Bug reproduit : comparaison sous-chaîne accepte1dans31. Sur51questions :46noncouvertes,3justes/5réponses,2fausses, et non4/5. Comparaison Decimal exacte sur les5 sorties numériques. Rapport, source d'audit et sorties : experiments/silex/review/*. Revue transmise au Doc avec corrections du calcul d'années-personne et des limites d'extrapolation ; pas de modification de la branche collègue, pas de confirmation de correction encore.

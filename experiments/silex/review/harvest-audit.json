@@ -1,0 +1,61 @@
+{
+  "peer_commit": "ff4b346c3df8d1a90bea978f44a3dd9d721dcd2d",
+  "questions": 51,
+  "unanswered": 46,
+  "answered": 5,
+  "substring_correct": 4,
+  "exact_correct": 3,
+  "details": [
+    {
+      "q": "Combien font 7 puissance 3 ?",
+      "expect": "343",
+      "kind": "competence",
+      "result": "343.0",
+      "function": "pow",
+      "proof": "pow(7, 3) = 343.0",
+      "substring_correct": true,
+      "exact_correct": true
+    },
+    {
+      "q": "Racine carrée de 1024",
+      "expect": "32",
+      "kind": "competence",
+      "result": "32.0",
+      "function": "sqrt",
+      "proof": "sqrt(1024) = 32.0",
+      "substring_correct": true,
+      "exact_correct": true
+    },
+    {
+      "q": "PGCD de 84 et 126",
+      "expect": "42",
+      "kind": "competence",
+      "result": "42",
+      "function": "gcd",
+      "proof": "gcd(84, 126) = 42",
+      "substring_correct": true,
+      "exact_correct": true
+    },
+    {
+      "q": "Combien de jours entre le 15 mars 2026 et le 15 juin 2026 ?",
+      "expect": "92",
+      "kind": "competence",
+      "result": "31",
+      "function": "monthrange",
+      "proof": "monthrange(2026, 3) → 31 jours",
+      "substring_correct": false,
+      "exact_correct": false
+    },
+    {
+      "q": "Combien de jours entre le 31 décembre 2025 et le 1 janvier 2026 ?",
+      "expect": "1",
+      "kind": "competence",
+      "result": "31",
+      "function": "monthrange",
+      "proof": "monthrange(2025, 1) → 31 jours",
+      "substring_correct": true,
+      "exact_correct": false
+    }
+  ],
+  "caveat": "Exact decimal/string comparison audited for the five returned answers; not a universal semantic evaluator."
+}
