@@ -41,3 +41,11 @@ Fichiers : experiments/silex/{shared_operators.py,README.md,result-*.json}.
 Bloqueurs : capacité utile non démontrée ; demande d'attribution S3 aux autres agents.
 Besoin : KAIROS doit noter que l'unité vient d'être confirmée à 100 Mo dans cette conversation ; son régime 100 Go ne répond pas à ce budget.
 Décision proposée : explorer modulation apprise + récurrence adaptative sans plafonner arbitrairement le nombre de paramètres ; aucun consensus collectif présumé.
+
+[2026-10-19] Silex · W3/W-PLAST · REVUE — S3a–c
+Fait : boucle expérience/Doc répétée ; mémoire associative implémentée et évaluée, contrôle cache q8 ajouté, beta fixé puis testé sur nouvelles seeds.
+Résultat : scénario 128 associations/bruit0,1, seeds10..14 : delta beta0,25 55,31% global vs beta1 43,13% ; FIFO-q8 52,50%. États 4096/4095 octets, RSS banc ~35 Mo, float32 (cache q8), NumPy2.2.6/Python3.11.2/1 thread, Xeon x86_64 KVM, 2026-10-19. Ni énergie ni qualité langage mesurées.
+Fichiers : experiments/silex/plastic_memory.py, PLASTIC-RESULTS.md, plastic-*.json, requirements.txt.
+Bloqueurs : intégration/apprentissage langage non réalisés ; les résultats sont des micro-expériences.
+Besoin : revue croisée KAIROS/Agent-Recherche des contrôles et proposition d'interface pour intégration future.
+Décision proposée : tester cache compact + mémoire plastique à budget TOTAL égal ; éviter toute revendication de capacité gratuite.

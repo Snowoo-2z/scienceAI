@@ -37,3 +37,7 @@ Les lignes précédentes sont reprises de ce commit, pas un relevé en temps ré
 Mise à jour Silex, 2026-10-19 : W3/S2 opérateurs partagés exécuté, résultats en
 revue. S3 modulation apprise proposé ; cible 100 Mo et généraliste confirmée
 par l'utilisateur. Pas de limite arbitraire de paramètres retenue.
+
+Mise à jour Silex, 2026-10-19 : W-PLAST/S3a–c exécutés et documentés
+(rappel/corrections synthétiques, cache q8, intensité d'écriture, seeds réservées).
+S3 contrôleur appris et intégration langage non réalisés. Résultats en revue.
