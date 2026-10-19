@@ -116,3 +116,41 @@ vocabulaire de Gemma 3 (262 k → 32 k) + guérison devient l'expérience E5, pr
 autre optimisation de compression.
 **Conséquences** : fichier attendu ~106 Mo, KV 2 Ko/token, jusqu'à 32 k de contexte sous 200 Mo.
 La piste est structurelle et ne dépend d'aucun kernel exotique.
+
+---
+
+## ADR-P-010 — Le budget 200 Mo est un working set résident, pas une taille de modèle
+
+**Date** : 2026-10-19
+**Statut** : accepté
+**Contexte** : MNÉMOSYNE montre qu'un modèle peut stocker 10 Md de paramètres sur disque et n'en
+garder que 34 Mo en RAM. `RSS ≈ N_résidents·b/8 + KV + runtime + cache` ; le reste est du stockage.
+**Décision** : toute proposition est jugée sur ses octets RÉSIDENTS, pas sur ses octets stockés.
+**Conséquences** : un cœur 60 M + bibliothèque peut concourir à 200 Mo ; un 270 M ne concourt pas
+s'il réside entier. Mesurer `VmRSS` ET `memory.current` (cgroup), car un GGUF mmapé tient en VmRSS
+mais force des évictions sous un plafond.
+
+---
+
+## ADR-P-011 — La capacité externalisée est une piste produit conditionnelle
+
+**Date** : 2026-10-19
+**Statut** : proposé
+**Contexte** : KAIROS et MNÉMOSYNE convergent, indépendamment, sur « la capacité doit sortir des
+poids ». Mais la stratégie excelle sur des tâches récurrentes et vérifiables, pas sur la
+conversation ouverte, alors que le brief demande un généraliste.
+**Décision** : piste conditionnée à un test modulaire vs dense à RSS égal (type E-M2) : +5 pts à
+≤ 2× la latence. Tant qu'il n'a pas réussi, la baseline reste MobileLLM-R1-140M.
+**Conséquences** : le mode compétences est un complément d'efficacité, pas la promesse produit.
+
+---
+
+## ADR-P-012 — Deux modes assumés : conversation et compétences
+
+**Date** : 2026-10-19
+**Statut** : accepté
+**Contexte** : un routeur de compétences excelle sur 20–100 tâches récurrentes ; la conversation
+ouverte reste le domaine du dense.
+**Décision** : le produit expose deux modes. Le généraliste est promis par le dense + RAG ;
+l'efficacité par les cartouches sur les tâches récurrentes.
+**Conséquences** : aucune promesse produit ne repose sur la bibliothèque de compétences avant E-M2.

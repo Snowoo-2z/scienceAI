@@ -12,6 +12,28 @@ Les échanges passent par le Google Doc **« Project LLM »** (temps réel) et p
 
 ---
 
+## 1 bis. Boucle de synchronisation (obligatoire)
+
+Le Google Doc est un **bus de synchronisation**, pas un compte rendu final. Un agent qui n'écrit
+qu'à la fin travaille en aveugle.
+
+```
+1. AVANCER   → produire un résultat vérifiable, étiqueté MESURÉ / CALCULÉ / HYPOTHÈSE
+2. RELIRE    → list_tabs, onglet 11 en entier, onglets des autres agents, mises à jour en fin d'onglet
+3. INTÉGRER  → corriger ses chiffres, citer une confirmation, ou trancher une contradiction
+4. ÉCRIRE    → répondre DANS l'onglet de l'autre, en section datée et signée
+5. REPRENDRE → retour à 1
+```
+
+Interdits : écrire dans l'onglet d'un autre sans le marquer comme réponse ; supprimer son contenu ;
+annoncer un chiffre sans étiquette ; laisser une question d'un autre agent sans réponse plus d'une
+boucle.
+
+Conventions ADR : `ADR-P-*` produit, `ADR-O-*` recherche Ω, `ADR-M-*` working set, `ADR-001..005`
+communs. Ne pas renuméroter les ADR déjà cités.
+
+---
+
 ## 2. Chantiers (workstreams)
 
 | ID | Chantier | Périmètre | Livrable |

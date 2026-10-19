@@ -290,6 +290,37 @@ E5 est le cœur scientifique du projet : c'est lui qui rend un vrai généralist
 
 ---
 
+## 6 bis. Intégration des autres agents (boucle du 2026-10-19)
+
+Deux agents ont produit en parallèle des résultats qui changent la lecture du budget.
+
+**MNÉMOSYNE — le working set, pas le nombre de paramètres.**
+`RSS ≈ N_résidents · b/8 + KV + runtime + cache`. Le reste est du stockage disque.
+Mesuré chez eux : charger une cartouche de 2–4 Mo coûte **1–4 ms** (p99 ~100 ms sur VM partagée) ;
+le chargement par requête est négligeable ; la pagination par token d'un cœur de 34 Mo coûterait
+68 ms/token. D'où leur règle : *cartouche par requête, cœur résident*.
+Leur configuration calculée : 60 M + bibliothèque de 1 Md de paramètres ternaires = **69,2 Mo de
+RSS** pour 284 Mo de disque, la bibliothèque pouvant croître sans changer le RSS.
+
+**KAIROS — Programme II.**
+À 400 B de paramètres, 1 Go de compétences vérifiées rapporte autant qu'1 Go de poids
+(0,0004 point/Go). Transposition partielle à notre échelle, mais le principe tient : ce qui est
+vérifiable doit être stocké, pas appris.
+
+**La convergence.** Trois chemins indépendants — réduire le coût fixe (vocabulaire), déplacer la
+capacité vers des cartouches, déplacer la capacité vers des compétences vérifiées — aboutissent à
+la même conclusion : **pour un petit budget, la capacité doit sortir des poids**.
+
+**La limite.** Cette stratégie excelle sur des tâches récurrentes et vérifiables, pas sur la
+conversation ouverte. Or le brief demande un généraliste. D'où deux modes assumés (ADR-P-012) :
+conversation par le dense + RAG, efficacité par les cartouches sur la tâche récurrente.
+
+**Point à trancher — définition du budget.** RSS hors page cache, ou RAM totale page cache inclus ?
+Position : mesurer **les deux** (`VmRSS` et `memory.current` d'un cgroup à 200 Mo). Un GGUF mmapé de
+132 Mo tient en VmRSS mais force des évictions sous un plafond cgroup. Un chiffre unique est trompeur.
+
+---
+
 ## 7. Décisions
 
 **ADR-006 — Cible d'inférence portée à 200 Mo de RSS.**
@@ -306,6 +337,18 @@ guérison) est prioritaire sur toute autre optimisation de compression.
 
 **ADR-008 — Déploiement via llama-server, pool de contexte partagé.**
 Conséquence : le nombre de slots se déduit du budget mémoire restant, pas l'inverse.
+
+**ADR-P-010 — Le budget 200 Mo est un working set résident, pas une taille de modèle.**
+Conséquence : toute proposition est jugée sur ses octets résidents, pas sur ses octets stockés.
+Un 60 M + bibliothèque peut concourir ; un 270 M ne concourt pas s'il réside entier.
+
+**ADR-P-011 — La capacité externalisée est une piste produit conditionnelle.**
+Condition : un test modulaire vs dense à RSS égal (type E-M2) doit montrer +5 pts à ≤ 2× la
+latence. Tant qu'il n'a pas réussi, la baseline reste le dense MobileLLM-R1-140M.
+
+**ADR-P-012 — Deux modes assumés : conversation et compétences.**
+Le produit ne promet pas le généraliste par les cartouches. Il promet le généraliste par le dense +
+RAG, et l'efficacité par les cartouches sur les tâches récurrentes.
 
 ---
 

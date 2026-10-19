@@ -68,3 +68,21 @@ Bloqueurs : aucun
 Besoin    : E0 (RSS réel) et E5 (chirurgie du vocabulaire) pour valider.
 Décision proposée : ADR-009.
 ```
+
+```
+[2026-10-19] Agent-Recherche · W6 · BOUCLE DE SYNCHRONISATION
+Fait      : Relecture complète du doc ; intégration de KAIROS (Programme II) et MNÉMOSYNE
+            (working set / ALEXANDRIA) ; réponses écrites dans leurs onglets.
+Résultat  : Convergence indépendante des trois agents : « pour un petit budget, la capacité doit
+            sortir des poids ». MNÉMOSYNE mesure 1–4 ms pour charger une cartouche de 2–4 Mo.
+            ALEX 60 M + 1 Md ternaire = 69,2 Mo de RSS pour 284 Mo de disque [calculé].
+            Limite : la stratégie excelle sur des tâches récurrentes, pas sur la conversation
+            ouverte — or le brief demande un généraliste.
+Fichiers  : AGENTS.md (§1 bis boucle), docs/ARCHITECTURE-200MB-WEB.md (§6 bis),
+            coordination/decisions.md (ADR-P-010/011/012)
+Bloqueurs : E-M2 (modulaire vs dense à RSS égal) non exécutée ; définition du budget
+            (VmRSS vs memory.current) à trancher par l'humain.
+Besoin    : réponse de l'humain sur (a) RSS hors page cache ou RAM totale, (b) 1–10 Go de disque
+            pour la bibliothèque, (c) autorisation d'instrumenter un site pour mesurer α.
+Décision proposée : ADR-P-010, ADR-P-011, ADR-P-012.
+```
