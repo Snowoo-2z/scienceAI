@@ -55,11 +55,18 @@ class Arch:
     kv_bytes: float = 1.0        # octets par élément de KV cache (1.0 = q8_0, 2.0 = f16)
     runtime_mb: float = 20.0     # RSS du moteur hors poids et hors KV (llama.cpp & co)
     activation_mb: float = 6.0   # buffers de calcul / scratch
+    head_dim_explicit: float = 0.0   # 0 = d_model / n_heads
+    local_layers: int = 0            # couches à fenêtre glissante (Gemma, Mistral...)
+    local_window: int = 0            # taille de la fenêtre
 
     # ---- paramètres -------------------------------------------------------------
     @property
     def head_dim(self) -> float:
-        return self.d_model / self.n_heads
+        return self.head_dim_explicit or (self.d_model / self.n_heads)
+
+    @property
+    def global_layers(self) -> int:
+        return self.layers - self.local_layers
 
     @property
     def embed_params(self) -> float:
@@ -103,13 +110,16 @@ class Arch:
         return self.params * self.weight_bpw / 8.0
 
     @property
-    def kv_bytes_per_token(self) -> float:
-        # K et V, toutes couches, toutes têtes KV
-        return 2.0 * self.layers * self.n_kv_heads * self.head_dim * self.kv_bytes
+    def kv_bytes_total(self) -> float:
+        """KV total. Les couches locales ne stockent que min(ctx, fenêtre)."""
+        per_layer_token = 2.0 * self.n_kv_heads * self.head_dim * self.kv_bytes
+        window = min(self.ctx, self.local_window) if self.local_layers else 0
+        units = self.global_layers * self.ctx + self.local_layers * window
+        return per_layer_token * units
 
     @property
-    def kv_bytes_total(self) -> float:
-        return self.kv_bytes_per_token * self.ctx
+    def kv_bytes_per_token(self) -> float:
+        return self.kv_bytes_total / self.ctx
 
     @property
     def rss_bytes(self) -> float:
@@ -179,16 +189,30 @@ PRESETS: dict[str, Arch] = {
     "smollm2-135m-q2": Arch("SmolLM2-135M Q2", 30, 576, 9, 3, 1536, 49152, True, 2048, 2.6, 1.0),
     # Référence : MobileLLM-R1-140M (15 L, 576 d, 9 têtes, 3 KV, FFN 2048, vocab 128k)
     "mobilellm-r1-140m": Arch("MobileLLM-R1-140M", 15, 576, 9, 3, 2048, 128_000, True, 2048, 4.5, 1.0),
-    # Référence : Gemma 3 270M (vocab 256k, embeddings non partagés, 18 L, 640 d ?)
-    "gemma3-270m": Arch("Gemma 3 270M (approx.)", 18, 640, 8, 4, 2048, 262_144, True, 2048, 4.5, 1.0),
     # Candidats "100 Mo" (dimensionnés pour tenir sous 100 Mo de RSS)
     "nano60": Arch("NanoFR-60M", 20, 448, 7, 2, 1280, 32_768, True, 2048, 4.5, 1.0),
     "nano75": Arch("NanoFR-75M", 20, 512, 8, 2, 1408, 32_768, True, 2048, 4.5, 1.0),
     "nano85": Arch("NanoFR-85M", 24, 512, 8, 2, 1408, 32_768, True, 2048, 4.5, 1.0),
     "nano125": Arch("NanoFR-125M", 30, 576, 9, 3, 1536, 32_768, True, 2048, 4.5, 1.0),
-    # Piste ternaire (BitNet b1.58) : plus de paramètres pour le même nombre d'octets
-    "ternary200": Arch("Ternaire-200M", 28, 768, 12, 4, 2048, 32_768, True, 2048, 1.58, 1.0),
-    "ternary270": Arch("Ternaire-270M", 28, 896, 14, 4, 2432, 32_768, True, 2048, 1.58, 1.0),
+    # --- Régime 200 Mo : généraliste + déploiement web ---
+    "gemma3-270m-qat-2k": Arch(
+        "Gemma3-270M QAT q4 (2k)", 18, 640, 4, 1, 2048, 262_144, True,
+        ctx=2048, weight_bpw=4.0, kv_bytes=1.0,
+        head_dim_explicit=256, local_layers=15, local_window=512),
+    "gemma3-270m-qat-8k": Arch(
+        "Gemma3-270M QAT q4 (8k)", 18, 640, 4, 1, 2048, 262_144, True,
+        ctx=8192, weight_bpw=4.0, kv_bytes=1.0,
+        head_dim_explicit=256, local_layers=15, local_window=512),
+    "gemma3-270m-qat-32k": Arch(
+        "Gemma3-270M QAT q4 (32k)", 18, 640, 4, 1, 2048, 262_144, True,
+        ctx=32768, weight_bpw=4.0, kv_bytes=1.0,
+        head_dim_explicit=256, local_layers=15, local_window=512),
+    "smollm2-135m-q8": Arch("SmolLM2-135M Q8", 30, 576, 9, 3, 1536, 49_152, True, 2048, 8.5, 1.0),
+    "smollm2-360m-q4": Arch("SmolLM2-360M Q4.5", 32, 960, 15, 5, 2560, 49_152, True, 2048, 4.5, 1.0),
+    # Piste ternaire (BitNet b1.58)
+    "ternary300": Arch("Ternaire-270M", 28, 896, 14, 4, 2432, 32_768, True, 2048, 1.58, 1.0),
+    "ternary400": Arch("Ternaire-400M", 32, 1024, 16, 4, 2816, 32_768, True, 2048, 1.58, 1.0),
+    "ternary400-8k": Arch("Ternaire-400M (8k)", 32, 1024, 16, 4, 2816, 32_768, True, 8192, 1.58, 1.0),
 }
 
 
@@ -277,6 +301,16 @@ def main() -> None:
     tr.add_argument("--gpu-tflops", type=float, default=100.0, help="TFLOPS effectifs crête")
     tr.add_argument("--mfu", type=float, default=0.30)
     tr.add_argument("--usd-per-hour", type=float, default=0.60)
+    sv = sub.add_parser("serve", help="dimensionner un serveur web (slots, RSS, énergie)")
+    sv.add_argument("name")
+    sv.add_argument("--parallel", type=int, default=4)
+    sv.add_argument("--ctx-per-slot", type=int, default=2048)
+    sv.add_argument("--tok-s-single", type=float, default=15.0)
+    sv.add_argument("--batching-gain", type=float, default=2.5,
+                    help="gain agrégé du continuous batching (décodage memory-bound)")
+    sv.add_argument("--device-watts", type=float, default=15.0)
+    sv.add_argument("--requests-per-day", type=int, default=1000)
+    sv.add_argument("--tokens-per-response", type=int, default=200)
     w = sub.add_parser("wall", help="énergie murale : P_plateforme / débit")
     w.add_argument("name")
     w.add_argument("--device-watts", type=float, default=15.0)
@@ -295,6 +329,28 @@ def main() -> None:
         table(args.names or list(PRESETS))
     elif args.cmd == "train":
         train_report(PRESETS[args.name], args.tokens, args.gpu_tflops, args.mfu, args.usd_per_hour)
+    elif args.cmd == "serve":
+        import dataclasses
+        total_ctx = args.parallel * args.ctx_per_slot
+        a = dataclasses.replace(PRESETS[args.name], ctx=total_ctx)
+        print(f"\n=== Serveur web : {a.name} ===")
+        print(f"  Slots {args.parallel} × {args.ctx_per_slot} tokens = contexte total {total_ctx}")
+        print(f"  Poids ................ {fmt_bytes(a.weight_bytes)}")
+        print(f"  KV total (partagé) ... {fmt_bytes(a.kv_bytes_total)}")
+        print(f"  Runtime + scratch .... {fmt_bytes((a.runtime_mb + a.activation_mb)*1e6)}")
+        print(f"  RSS par process ...... {a.rss_mb:.0f} Mo  "
+              f"{'OK < 200 Mo' if a.rss_mb <= 200 else 'HORS BUDGET'}")
+        aggregate = args.tok_s_single * args.batching_gain
+        per_user = aggregate / args.parallel
+        print(f"  Débit agrégé estimé .. {aggregate:.0f} tok/s "
+              f"({args.tok_s_single:.0f} mono-flux × {args.batching_gain:.1f}) "
+              f"→ ~{per_user:.1f} tok/s par utilisateur à {args.parallel} slots [estim.]")
+        sec_per_req = args.tokens_per_response / max(per_user, 0.1)
+        print(f"  Latence réponse ...... ~{sec_per_req:.0f} s pour {args.tokens_per_response} tokens")
+        energy_wh = args.device_watts * sec_per_req * args.requests_per_day / 3600
+        print(f"  Énergie .............. {energy_wh:.0f} Wh/jour pour {args.requests_per_day} requêtes")
+        print(f"  Coût annuel .......... {energy_wh*365/1000*0.25:.0f} € à 0,25 €/kWh")
+        print()
     elif args.cmd == "wall":
         a = PRESETS[args.name]
         print(f"\n=== {a.name} : énergie réellement payée au mur ===")

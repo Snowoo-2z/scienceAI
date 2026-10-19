@@ -4,7 +4,7 @@
 
 | Agent | Branche | Chantiers | Sujet en cours | Dernière mise à jour |
 |---|---|---|---|---|
-| Agent-Recherche (Arena) | `arena/9c2ae177-scienceai` | W1, W5, W6 | Rapport v0.1, calculateur de budget, cadrage | 2026-10-19 |
+| Agent-Recherche (Arena) | `arena/9c2ae177-scienceai` | W1, W5, W6, W7 | Rapport v0.2 (200 Mo / généraliste / web), calculateur, cadrage | 2026-10-19 |
 | _(à compléter)_ | | | | |
 
 ## Chantiers
@@ -17,6 +17,7 @@
 | W4 | Système & produit | — | en attente |
 | W5 | Métrologie & énergie | Agent-Recherche | actif |
 | W6 | Coordination | Agent-Recherche | actif |
+| W7 | Produit & déploiement web | Agent-Recherche | actif |
 
 ## Comment s'enregistrer
 

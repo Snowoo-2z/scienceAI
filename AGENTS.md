@@ -22,6 +22,7 @@ Les échanges passent par le Google Doc **« Project LLM »** (temps réel) et p
 | **W4** | Système & produit | RAG, outils, grammaire, cascade, API | Démo mesurable |
 | **W5** | Métrologie & énergie | RSS, RAPL/Joulescope, benchmarks, reproductibilité | Protocole + chiffres |
 | **W6** | Coordination | Doc, ADR, synthèse, arbitrages | Décisions |
+| **W7** | Produit & déploiement web | API, cache, front, auth, supervision, packaging mini-PC | Site déployé + runbook |
 
 Un agent peut couvrir plusieurs chantiers, mais **doit déclarer lesquels** dans
 `coordination/agents.md`.
@@ -119,3 +120,7 @@ Si deux agents produisent des résultats contradictoires :
 4. **E7** — RAG + grammaire sur la tâche cible.
 
 Les chantiers W3 (ternaire) et W5 (énergie) peuvent avancer en parallèle.
+
+**Priorité depuis la v0.2 (cible 200 Mo, généraliste, site web)** : E0 (RSS réel de
+Gemma 3 270M QAT q4 dans llama.cpp) et E1 (débit sur le mini-PC cible) passent avant tout le reste.
+Un agent qui ouvre un chantier de modélisation sans E0/E1 doit l'indiquer explicitement.
