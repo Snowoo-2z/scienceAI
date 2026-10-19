@@ -1,0 +1,18 @@
+========================================================================
+  MOISSONNAGE DE COMPÉTENCES DANS LA BIBLIOTHÈQUE STANDARD
+========================================================================
+  modules explorés ............ 11
+  fonctions publiques vues .... 252
+  fiches produites ............ 242
+  fiches testées avec succès .. 133
+  échecs (signature/args) ..... 109
+
+  temps total ................. 32 ms
+  débit ....................... 7596 fiches/s (0.13 ms par fiche)
+  taille d'une fiche .......... 249 octets
+
+  PROJECTION à 10 M de fiches : 0.37 heures de moissonnage, 2.5 Go d'index.
+
+  À comparer : 10 M de compétences écrites à la main à 5 min chacune
+  = 833 000 heures = 40 années-personnes.
+========================================================================

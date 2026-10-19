@@ -1,0 +1,24 @@
+==========================================================================
+  ROUTAGE SUR LA BIBLIOTHÈQUE MOISSONNÉE SEULE (aucune main humaine)
+==========================================================================
+  fiches disponibles ....... 133 (sur 242)
+  questions ................ 51
+  justes ................... 4
+  FAUSSES (réponse + preuve) 1
+  non couvertes ............ 46
+  hors domaine, répondu .... 0
+
+  Justes :
+    Combien font 7 puissance 3 ? -> 343.0  (pow)
+    Racine carrée de 1024 -> 32.0  (sqrt)
+    PGCD de 84 et 126 -> 42  (gcd)
+    Combien de jours entre le 31 décembre 2025 et le 1 janvier 2026 ? -> 31  (monthrange)
+
+  Fausses — le mode d'échec qui compte :
+    Combien de jours entre le 15 mars 2026 et le 15 juin 2026 ? -> 31  (monthrange)   attendu 92
+
+  Précision quand le routeur répond : 4/5
+  Lecture : le moissonnage supprime le coût d'écriture, pas le coût
+  de compréhension. Un routeur sans sémantique produit des réponses
+  fausses avec une preuve — exactement ce que le vérificateur doit
+  interdire.

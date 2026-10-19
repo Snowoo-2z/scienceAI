@@ -167,6 +167,20 @@ Comparer : (A) modèle seul, (B) + RAG texte, (C) + skills exécutables.
 **Échec :** C < B + 10 points → l'exécution n'apporte rien, tout le programme
 tombe.
 
+> **Révision du 2026-10-19, après critique.** « 10 M de compétences » se
+> lisait comme 10 M de compétences *écrites à la main* : 5 minutes chacune,
+> soit 40 années-personne. C'est intenable, et l'idée est abandonnée sous
+> cette forme. Deux sources remplacent l'écriture humaine :
+> (1) le **moissonnage** du code existant (mesuré : 7 596 fiches/s,
+> 249 octets par fiche, 133/242 fonctions enveloppées automatiquement dans
+> 11 modules de la bibliothèque standard) ; (2) l'**auto-extension** : une
+> compétence n'est écrite que lorsqu'une requête échoue, une fois, puis
+> testée et réutilisée. Le goulot se déplace de l'écriture vers le
+> **routage** : sur le banc de 51 questions, un routeur lexical sur
+> bibliothèque moissonnée donne 4 justes, 1 fausse et 46 non couvertes.
+> C'est le vrai problème, et c'est un problème de *sélection*, pas de
+> connaissance. Détail et critères d'abandon : `docs/10-MOISSONNAGE.md`.
+
 ### I-2 — Mémoire épisodique plastique (W-PLAST)
 
 **Mécanisme.** 25 Go de slots `(situation → action → issue)` écrits **pendant

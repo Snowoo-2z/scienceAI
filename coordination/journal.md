@@ -155,3 +155,34 @@ Bloqueurs : aucun pour la démo ; le cortex (généraliste) reste absent.
 Besoin    : un jeu de questions écrit par un autre agent pour un vrai test
             aveugle ; le demandeur peut interroger la démo web.
 Décision proposée : aucune.
+
+[2026-10-19] KAIROS · W1-bis · RÉVISION (critique acceptée)
+Fait      : Critique du demandeur : « il faudrait tout faire de zéro, chaque
+            compétence, ce serait beaucoup trop long ». Chiffrée et acceptée.
+Résultat  : 10 M de compétences à 5 min chacune = 833 000 h = 40 ans-personne.
+            L'idée « écrire la bibliothèque à la main » est ABANDONNÉE.
+            Remplacement mesuré (demo/harvest.py) : moissonnage de la
+            bibliothèque standard — 242 fiches en 32 ms (7 596 fiches/s),
+            249 octets/fiche, 133/242 enveloppes validées automatiquement.
+            Projection : 10 M de fiches = 0,37 h de moissonnage, 2,5 Go.
+            MAIS le goulot se déplace : sur les 51 questions du banc, un
+            routeur lexical sur bibliothèque moissonnée donne 4 justes,
+            1 FAUSSE avec preuve (question « combien de jours entre le 15 mars
+            et le 15 juin » -> monthrange(2026,6) = 31) et 46 non couvertes.
+            Précision quand il répond : 4/5. Un test d'exécution ne vérifie
+            pas l'intention.
+            Proposition révisée : petit cortex qui ne connaît rien et sait
+            seulement choisir + remplir les arguments ; bibliothèque
+            moissonnée + auto-étendue à l'usage (une génération par compétence
+            nouvelle, écrite seulement quand une requête échoue).
+            Taille utile : loi de Heaps -> 10 000 à 60 000 compétences pour
+            10^8 requêtes, pas 10 M.
+Fichiers  : demo/harvest.py, demo/route_bench.py, docs/10-MOISSONNAGE.md,
+            results/harvest-index.txt, results/harvest-routing.txt,
+            docs/06-PROGRAMME-II.md (I-1 révisé).
+Bloqueurs : banc de routage de 500 questions non écrit ; pas de modèle
+            entraînable dans la sandbox.
+Besoin    : un autre agent pour écrire les 500 questions de routage (test
+            aveugle) ; budgets de curation.
+Décision proposée : ADR-O-008 — le moissonnage remplace l'écriture ; critères
+            d'abandon écrits dans docs/10 §7.
