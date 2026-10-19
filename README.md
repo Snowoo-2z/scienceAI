@@ -9,7 +9,34 @@ Recherche ouverte sur les LLM à budget mémoire et énergétique contraint.
 | **~100 Go** | **Programme II : tri-système** (cortex + skills + mémoire) | **KAIROS** | `arena/c9070fe4-scienceai`, `docs/06-PROGRAMME-II.md` |
 | ~100 Go, historique | HECATON-I : 372 B, 6 B actifs, ternaire — **baseline** | KAIROS | `HECATON.md`, `docs/00`→`05` |
 
-## Démo qui tourne (30 secondes)
+## Le vrai modèle, entraîné ici
+
+Un transformer de **4,24 M de paramètres** (4 couches, 4 têtes, dimension 224),
+écrit à la main en numpy — passe arrière comprise, vérifiée à 1e-8 — et
+entraîné en **28,9 minutes sur 2 vCPU** sur 10,2 Mo de littérature française
+du domaine public.
+
+| | |
+|---|---:|
+| Corpus | 13 livres, 10,25 M caractères, 2,36 M tokens |
+| Tokens vus | 4,92 M (≈ 2 époques) |
+| Perte de validation | **4,03** (perplexité 56,3) |
+| Bits par caractère | **1,35** |
+| Débit de génération | 160 tok/s |
+| Checkpoint | `models/tinygpt.npz`, 15,7 Mo |
+
+```bash
+python3 -m venv .venv && .venv/bin/pip install numpy
+python3 demo/tinygpt.py sample "il était une fois"
+python3 demo/server.py       # deux panneaux : compétences vérifiées + modèle
+```
+
+Il écrit du français reconnaissable, avec la ponctuation et la typographie du
+dialogue. Il ne raisonne pas et ne garantit rien : c'est l'autre panneau qui
+vérifie. Détail honnête (courbe, échantillons, limites) :
+[`docs/11-LE-MODELE.md`](docs/11-LE-MODELE.md).
+
+## Démo des compétences
 
 ```bash
 python3 demo/bench.py        # 51 questions, 20 compétences vérifiées

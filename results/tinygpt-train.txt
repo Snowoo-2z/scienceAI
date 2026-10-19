@@ -1,0 +1,22 @@
+corpus : 10 249 253 caractères  2 360 827 tokens (vocabulaire 8 000)
+train : 2 313 611 · val : 47 216
+modèle : 4.24 M paramètres · d=224 · 4 couches · 4 têtes · bloc 128
+  step    100 · perte train 6.4922 · perte val 5.1979 · ppl   180.89 ·    2702 tok/s · 113.7 s
+  step    200 · perte train 4.7429 · perte val 4.8337 · ppl   125.68 ·    2953 tok/s · 104.0 s
+  step    300 · perte train 4.4847 · perte val 4.6593 · ppl   105.56 ·    2857 tok/s · 107.5 s
+  step    400 · perte train 4.3390 · perte val 4.5221 · ppl    92.03 ·    2943 tok/s · 104.4 s
+  step    500 · perte train 4.2217 · perte val 4.4149 · ppl    82.67 ·    2913 tok/s · 105.4 s
+  step    600 · perte train 4.1335 · perte val 4.3505 · ppl    77.52 ·    2948 tok/s · 104.2 s
+  step    700 · perte train 4.0484 · perte val 4.2704 · ppl    71.55 ·    2900 tok/s · 105.9 s
+  step    800 · perte train 3.9776 · perte val 4.2481 · ppl    69.98 ·    2924 tok/s · 105.1 s
+  step    900 · perte train 3.9409 · perte val 4.2241 · ppl    68.31 ·    2698 tok/s · 113.9 s
+  step   1000 · perte train 3.8892 · perte val 4.1500 · ppl    63.43 ·    2763 tok/s · 111.2 s
+  step   1100 · perte train 3.8502 · perte val 4.1481 · ppl    63.31 ·    2777 tok/s · 110.6 s
+  step   1200 · perte train 3.8343 · perte val 4.1350 · ppl    62.49 ·    2551 tok/s · 120.4 s
+  step   1300 · perte train 3.7860 · perte val 4.0978 · ppl    60.21 ·    2842 tok/s · 108.1 s
+  step   1400 · perte train 3.7833 · perte val 4.0781 · ppl    59.03 ·    2876 tok/s · 106.8 s
+  step   1500 · perte train 3.7905 · perte val 4.0633 · ppl    58.17 ·    3063 tok/s · 100.3 s
+  step   1600 · perte train 3.7613 · perte val 4.0303 · ppl    56.28 ·    3005 tok/s · 102.2 s
+  step   1600 · perte train 0.0000 · perte val 4.0665 · ppl    58.35 ·   36164 tok/s ·   8.5 s
+
+terminé en 28.9 min · meilleure perte val 4.0303 · ppl 56.28

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="420" viewBox="0 0 880 420" font-family="ui-sans-serif,system-ui,sans-serif">
+<rect width="880" height="420" fill="#fff"/>
+<text x="24" y="28" font-size="17" font-weight="700">Courbe d'apprentissage — GPT 4 couches, 4.24 M paramètres</text>
+<text x="24" y="46" font-size="12" fill="#555">2 360 827 tokens de français · vocabulaire 8 000 · perte par token (entropie croisée)</text>
+<line x1="80" y1="340.0" x2="700" y2="340.0" stroke="#eee"/>
+<text x="72" y="344.0" font-size="10.5" fill="#666" text-anchor="end">0.0</text>
+<line x1="80" y1="293.3" x2="700" y2="293.3" stroke="#eee"/>
+<text x="72" y="297.3" font-size="10.5" fill="#666" text-anchor="end">1.1</text>
+<line x1="80" y1="246.7" x2="700" y2="246.7" stroke="#eee"/>
+<text x="72" y="250.7" font-size="10.5" fill="#666" text-anchor="end">2.3</text>
+<line x1="80" y1="200.0" x2="700" y2="200.0" stroke="#eee"/>
+<text x="72" y="204.0" font-size="10.5" fill="#666" text-anchor="end">3.4</text>
+<line x1="80" y1="153.3" x2="700" y2="153.3" stroke="#eee"/>
+<text x="72" y="157.3" font-size="10.5" fill="#666" text-anchor="end">4.5</text>
+<line x1="80" y1="106.7" x2="700" y2="106.7" stroke="#eee"/>
+<text x="72" y="110.7" font-size="10.5" fill="#666" text-anchor="end">5.7</text>
+<line x1="80" y1="60.0" x2="700" y2="60.0" stroke="#eee"/>
+<text x="72" y="64.0" font-size="10.5" fill="#666" text-anchor="end">6.8</text>
+<line x1="80" y1="340" x2="700" y2="340" stroke="#999"/>
+<line x1="80" y1="60" x2="80" y2="340" stroke="#999"/>
+<polyline fill="none" stroke="#58a6ff" stroke-width="2.2" points="118.8,73.3 157.5,145.2 196.2,155.8 235.0,161.8 273.8,166.6 312.5,170.2 351.2,173.7 390.0,176.6 428.8,178.1 467.5,180.3 506.2,181.9 545.0,182.5 583.8,184.5 622.5,184.6 661.2,184.3 700.0,185.5"/>
+<polyline fill="none" stroke="#f0883e" stroke-width="2.2" points="118.8,126.5 157.5,141.5 196.2,148.6 235.0,154.3 273.8,158.7 312.5,161.3 351.2,164.6 390.0,165.5 428.8,166.5 467.5,169.5 506.2,169.6 545.0,170.2 583.8,171.7 622.5,172.5 661.2,173.1 700.0,174.5"/>
+<circle cx="700.0" cy="185.5" r="4" fill="#58a6ff"/>
+<circle cx="700.0" cy="174.5" r="4" fill="#f0883e"/>
+<g font-size="12"><rect x="720" y="70" width="12" height="3" fill="#58a6ff"/><text x="740" y="75" fill="#333">train</text><rect x="720" y="92" width="12" height="3" fill="#f0883e"/><text x="740" y="97" fill="#333">validation</text></g>
+<text x="80" y="366" font-size="11" fill="#666">0</text>
+<text x="700" y="366" font-size="11" fill="#666" text-anchor="end">1600 pas</text>
+<text x="80" y="386" font-size="12" fill="#333">dernière perte train 3.761 · validation 4.030 · perplexité 56.3</text>
+</svg>

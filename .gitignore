@@ -3,3 +3,6 @@ bwprobe
 tgemv
 *.o
 __pycache__/
+
+# corpus téléchargé (regénérable par demo/build_corpus.py)
+data/

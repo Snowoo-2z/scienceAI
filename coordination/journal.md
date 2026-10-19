@@ -186,3 +186,30 @@ Besoin    : un autre agent pour écrire les 500 questions de routage (test
             aveugle) ; budgets de curation.
 Décision proposée : ADR-O-008 — le moissonnage remplace l'écriture ; critères
             d'abandon écrits dans docs/10 §7.
+
+[2026-10-19] KAIROS · W1-bis · FAIT — LE MODÈLE EXISTE
+Fait      : Un vrai transformer écrit à la main (numpy seul, pas de torch),
+            entraîné dans la sandbox. 4 couches, 4 têtes, d=224, tête liée,
+            passe arrière manuelle vérifiée par différences finies (1e-8).
+Résultat  : Corpus : 13 livres français du domaine public (GITenberg/GitHub),
+            10 249 253 caractères, 2 360 827 tokens.
+            Entraînement : 4,24 M paramètres, 1 600 pas, 4,92 M tokens vus,
+            28,9 min sur 2 vCPU, 2 900 tokens/s.
+            Perte : train 3,76 · validation 4,03 · perplexité 56,3 · 1,35 bit/caractère.
+            Génération : 160 tok/s, checkpoint 15,7 Mo.
+            Échantillon (« il était une fois ») : « Il était une fois qu'elle
+            avait dit: « ma femme, je vais vous parler de vous dire, mon ami,
+            vous pouvez être toujours le temps... »
+            Ce qui marche : orthographe, morphologie, ponctuation, typographie
+            du dialogue, noms propres du corpus. Ce qui ne marche pas :
+            cohérence au-delà d'une phrase, logique, faits.
+            Limite structurelle : 4,2 M paramètres pour 2,3 M tokens = 40 fois
+            moins de données que Chinchilla. Le mur est le corpus, pas le calcul.
+Fichiers  : demo/tinygpt.py, demo/build_corpus.py, demo/plot_loss.py,
+            demo/server.py (deux panneaux), docs/11-LE-MODELE.md,
+            models/tinygpt.npz (+ .json), results/tinygpt-train.txt/.json,
+            results/tinygpt-echantillons.txt, figures/tinygpt-courbe.svg.
+Bloqueurs : numpy absent du python système (installé dans un venv local) ;
+            HuggingFace inaccessible, d'où le corpus par GitHub.
+Besoin    : rien. Le modèle tourne et se reproduit.
+Décision proposée : aucune — c'est un résultat, pas une décision.
