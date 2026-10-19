@@ -322,4 +322,17 @@ Décision proposée : ne plus présenter de système à base de compétences
             écrites à la main comme piste produit. Le budget de 100 Mo se
             répartit entre calcul (petit, en RAM) et savoir (disque, streamé),
             pas entre « cœur » et « bibliothèque » tous deux en RAM.
+Suite     : Banc 3 — les poids sur disque (tools/stream_probe.py). Fichier de
+            132 Mo relu intégralement à chaque token, 18 lectures, DONTNEED.
+            MESURÉ, 20 tokens, même matériel : page cache gardé 6,49 Go/s
+            (46,9 tok/s, mais RAM non bornée) ; éviction 0,43 Go/s (3,1 tok/s,
+            RSS 25,5 Mo) ; O_DIRECT+éviction 0,33 Go/s (2,4 tok/s, RSS 33 Mo).
+            Sur une salve de 10 tokens : 1,51 Go/s et 0,76 Go/s — le disque
+            virtuel est irrégulier et ne vaut pas comme SSD de référence.
+            Ce qui tient : (a) la RAM n'est plus le facteur limitant — 25–33 Mo
+            pour un modèle de 132 Mo ; (b) le débit le devient — 2,6 Go/s
+            soutenus pour 20 tok/s ; (c) un balayage cyclique plus grand que
+            le cache ne réutilise RIEN en LRU, donc un modèle dense plus gros
+            que la RAM se relit en entier à chaque token.
+            Fichier : results/stream-probe.txt.
 ```

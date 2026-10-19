@@ -1,0 +1,8 @@
+régime         s   GB/s   tok/s   RSS max
+-----------------------------------------
+cache       0.43   6.49   46.93    25.5 Mo
+evince      6.41   0.43    3.12    25.5 Mo
+direct      8.37   0.33    2.39    33.0 Mo
+
+Fichier de 132 Mo relu intégralement à chaque token,
+18 lectures par token, DONTNEED après chaque lecture.

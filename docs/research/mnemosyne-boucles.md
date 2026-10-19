@@ -147,3 +147,49 @@ python3 analyze.py --md
 ```
 
 Détail des chiffres et limites : `experiments/loops/README.md`.
+
+## Banc 3 — et si les poids vivaient sur le disque ?
+
+L'humain a fait préciser par Silex que **le disque est permis** : la contrainte
+porte sur la RAM. La tentation est donc de dire : « le modèle fait 132 Mo,
+on le met sur le disque, on n'en garde rien, et 100 Mo de RAM suffisent ».
+`tools/stream_probe.py` mesure ce que ça donne.
+
+Protocole : un fichier de 132 Mo (la taille réelle de MobileLLM-R1-140M en
+Q4_K_M), relu **intégralement à chaque token**, en 18 lectures (une par
+couche), avec `fadvise(DONTNEED)` après chaque lecture pour ne pas mesurer le
+page cache. 20 tokens, soit 2,6 Go lus.
+
+| régime | débit | tokens/s | RSS max du processus |
+|---|---|---|---|
+| page cache laissé en place | 6,49 Go/s | 46,9 | 25,5 Mo |
+| éviction (`DONTNEED`) | 0,43 Go/s | 3,1 | 25,5 Mo |
+| `O_DIRECT` + éviction | 0,33 Go/s | 2,4 | 33,0 Mo |
+
+Sur une seconde salve de 10 tokens, les mêmes mesures donnaient 1,51 Go/s et
+0,76 Go/s : le disque virtuel de cette sandbox est irrégulier (rafales). Il ne
+représente pas le SSD d'un petit PC.
+
+Trois choses tiennent quand même, et elles ne dépendent pas du disque :
+
+1. **La RAM n'est plus le facteur limitant.** 25–33 Mo de RSS pour un modèle
+   de 132 Mo « chargé ». C'est exactement la cible de 100 Mo, et c'est la
+   première fois qu'on l'atteint avec un modèle de cette taille.
+2. **Le facteur limitant devient le débit.** Pour tenir 20 tok/s avec un
+   modèle dense de 132 Mo, il faut 132 Mo × 20 = **2,6 Go/s soutenus**. À
+   10 tok/s, 1,3 Go/s. C'est l'ordre de grandeur d'un NVMe, pas d'un disque
+   dur ni d'une carte SD.
+3. **Un balayage cyclique plus grand que le cache ne réutilise rien.**
+   Relire les mêmes 132 Mo à chaque token avec 100 Mo de cache ne donne pas
+   76 % de hits : en LRU, la page évincée est justement celle qui servira au
+   token suivant, et le taux de hits tombe à zéro. Un modèle dense plus gros
+   que la RAM doit donc être *entièrement* relu à chaque token. C'est pour ça
+   que la ligne « éviction » et la ligne « cache » diffèrent d'un facteur 15.
+
+Conséquence pour le projet : mettre le savoir sur disque est bon marché
+(8 bits par octet, contre ~1 bit par paramètre) ; **streamer un modèle dense**
+ne l'est pas, parce que le coût est proportionnel au modèle entier et par
+token. La sortie n'est donc pas « tout sur le disque », c'est « un cœur
+résident petit, et des morceaux non recouvrants lus à la demande » — ce qui
+n'est vrai que si l'activation est creuse. C'est le seul régime où le débit
+disque cesse d'être proportionnel à la taille du modèle.

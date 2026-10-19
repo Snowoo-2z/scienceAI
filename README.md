@@ -65,8 +65,8 @@ de faits arbitraires tient dans un paramètre.
 
 - **Un paramètre ≈ 1 bit de contenu arbitraire.** 16 000 faits de 5 bits
   tiennent dans 80 416 paramètres (93,8 % de restitution, hasard à 3,1 % sur
-  des clés neuves). Donc **100 Mo de poids Q4 ≈ 200 M paramètres ≈ 25 Mo de
-  savoir** ; les 75 Mo restants ne sont pas du savoir, ce sont les circuits
+  des clés neuves). Donc **100 Mo de poids Q4 ≈ 180–200 M paramètres ≈ 25 Mo
+  de savoir** ; les 75 Mo restants ne sont pas du savoir, ce sont les circuits
   qui calculent.
 - **La capacité suit les paramètres, pas le calcul.** À 32 000 faits :
   44,9 % avec 80 k paramètres, 72,8 % avec 170 k sur une seule couche,
@@ -75,7 +75,12 @@ de faits arbitraires tient dans un paramètre.
   couche bouclée deux fois passe de 44,9 % à 60,0 % — elle rend exploitable
   une place déjà payée, sans en créer.
 - **Sur du texte, boucler coûte plus qu'il ne rapporte** : à mémoire égale,
-  val 2,0432 (1 application) contre 2,0875 (2 applications).
+  val 2,0432 (1 application), 2,0875 (2), 2,0718 (4). La courbe plafonne.
+- **Le disque déplace le problème, il ne le supprime pas.** Un modèle dense
+  plus gros que la RAM doit être relu *en entier* à chaque token (un balayage
+  cyclique ne réutilise rien en LRU). Pour 20 tok/s avec 132 Mo de poids, il
+  faut 2,6 Go/s soutenus. Mesuré ici : 25–33 Mo de RSS, mais 0,3–1,5 Go/s
+  selon la rafale du disque virtuel, soit 2,4 à 10,9 tok/s.
 
 Conclusion partielle, et elle est falsifiable : à 100 Mo, on ne gagne pas en
 changeant la forme du réseau, on gagne en décidant **où vivent les bits**. Le
@@ -96,6 +101,7 @@ poids, table de faits ou cartouche de compétence. Note complète :
 | [`tools/substrate_budget.py`](tools/substrate_budget.py) | répartition RAM entre cœur, skills, LoRA, mémoire, retrieval |
 | [`tools/wsprobe.c`](tools/wsprobe.c) | microbenchmark de chargement de cartouches |
 | [`tools/pagecache_probe.py`](tools/pagecache_probe.py) | mesure du page cache caché dans `memory.current` |
+| [`tools/stream_probe.py`](tools/stream_probe.py) | débit et tokens/s quand les poids sont relus sur disque |
 | [`results/substrate-budget.txt`](results/substrate-budget.txt) | couverture et latence par allocation |
 | [`results/pagecache-probe.txt`](results/pagecache-probe.txt) | page cache : 2 Go lus vs `DONTNEED` |
 | [`demo/README.md`](demo/README.md) | la démo, ses chiffres, ses limites |
