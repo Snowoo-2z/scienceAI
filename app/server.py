@@ -36,20 +36,33 @@ class Handler(BaseHTTPRequestHandler):
         self.send_header("Content-Type", ctype)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
+        self.send_header("Access-Control-Allow-Origin", "*")
         self.end_headers()
-        self.wfile.write(body)
+        if self.command != "HEAD":
+            self.wfile.write(body)
+
+    def do_OPTIONS(self) -> None:  # noqa: N802
+        self.send_response(204)
+        self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type")
+        self.send_header("Content-Length", "0")
+        self.end_headers()
+
+    def do_HEAD(self) -> None:  # noqa: N802
+        self.do_GET()
 
     def do_GET(self) -> None:  # noqa: N802
-        if self.path in ("/", "/index.html"):
+        if self.path.split("?")[0] in ("/", "/index.html"):
             self._send(200, (ROOT / "index.html").read_bytes(), "text/html; charset=utf-8")
-        elif self.path == "/api/health":
+        elif self.path.split("?")[0] == "/api/health":
             body = json.dumps({"ok": True, "rss_mb": round(rss_mb(), 1)}).encode()
             self._send(200, body, "application/json")
         else:
             self._send(404, b"not found", "text/plain")
 
     def do_POST(self) -> None:  # noqa: N802
-        if self.path != "/api/complete":
+        if self.path.split("?")[0] != "/api/complete":
             self._send(404, b"not found", "text/plain")
             return
         n = int(self.headers.get("Content-Length", "0"))
