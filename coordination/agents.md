@@ -36,4 +36,4 @@ leur budget mémoire. Voir `docs/RESUME.md` et `HECATON.md`.
 
 **Question ouverte :** « une centaine de Go » dans le brief — Go ou Mo ?
 Tant que ce n'est pas tranché, je ne fusionne pas mon document dans le
-rapport principal ; je le tiens en parallèle (ADR-006 proposé).
+rapport principal ; je le tiens en parallèle (ADR-006 proposé dans coordination/decisions.md).
