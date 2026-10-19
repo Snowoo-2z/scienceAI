@@ -1,0 +1,51 @@
+# corpus : 1880 passages, 10 fichiers
+
+==============================================================================
+Q: Quelle est la cible mémoire du produit ?
+R (skill:cible-memoire, 15.43 ms) : La cible de référence est 200 Mo de RSS ; 100 Mo reste l'aspiration et l'objectif de la piste de recherche E6.
+  preuve : architecture-200mb.md · **ADR-006 — Cible d'inférence portée à 200 Mo de RSS.**
+
+==============================================================================
+Q: Pourquoi Gemma 3 270M est-il hors budget ?
+R (skill:gemma-budget, 18.35 ms) : Gemma 3 270M pèse 253 Mo en Q4_K_M et consomme 286–296 Mo de RSS, au-dessus du budget de 200 Mo : c'est le vocabulaire de 262 144 tokens qui domine.
+  preuve : journal.md · Gemma 3 270M : 253 Mo de fichier, 286–296 Mo de RSS, hors
+
+==============================================================================
+Q: Quel est le débit d'un N100 ?
+R (skill:n100-debit, 13.23 ms) : Sur un mini-PC N100, le débit est 18–25 tok/s en mono-flux (2–4 slots, 8–10 tok/s par utilisateur, 10–15 W).
+  preuve : architecture-200mb.md · | Mini-PC N100 | 16 Go | 18–25 tok/s | 2–4 | 10–15 W |
+
+==============================================================================
+Q: Combien de RAM pour un cœur de 60 M et 10 Md de paramètres ?
+R (skill:alex-budget, 16.94 ms) : Un cœur de 60 M + une bibliothèque de 10 Md de paramètres tient en 69 Mo (2,5 Go de disque), à ~161 tok/s et ~19 J par réponse de 200 tokens.
+  preuve : README.md · Budget calculé : **69 Mo de RSS** pour un cœur de 60 M + une bibliothèque de
+
+==============================================================================
+Q: Qu'est-ce que le page cache change ?
+R (skill:page-cache, 14.72 ms) : Le page cache gonfle memory.current à 2 019 Mio pour 1,9 Go lus, alors que VmRSS reste à 35 Mio ; DONTNEED le ramène à 62 Mio pour −25 % de débit.
+  preuve : mnemosyne-note.md · à 2 019 Mio alors que `VmRSS` reste à 35 Mio ; `DONTNEED` ramène à 62 Mio
+
+==============================================================================
+Q: Quelle est la différence entre le Mode A et le Mode B ?
+R (skill:mode-ab, 15.12 ms) : Mode A = base U,V partagée, seulement c_k par compétence (compression extrême) ; Mode B = LoRA par cartouche, U_k et V_k propres (le défaut, plus expressif).
+  preuve : mnemosyne-note.md · Mode A — base partagée (compression extrême) :
+
+==============================================================================
+Q: Que dit Silex sur la mémoire plastique ?
+R (skill:silex-plastic, 12.70 ms) : Silex mesure une mémoire associative de 4 096 octets : à 128 associations et bruit 0,1, Delta β=0,25 rappelle 55,31 %, contre 52,50 % pour un cache FIFO-q8. Ce n'est pas de la capacité gratuite.
+  preuve : mnemosyne-note.md · gratuite.** À 128 associations, le rappel est ~55 %, et un simple cache
+
+==============================================================================
+Q: Que dit KAIROS sur Zipf ?
+R (retrieval, 10.82 ms) : substrats et calcule la couverture avec le modèle Zipf de KAIROS
+  source : mnemosyne-note.md · score 0.473
+
+==============================================================================
+Q: Quelle est la prochaine expérience ?
+R (skill:next-exp, 12.89 ms) : La porte go/no-go est E-M1 : mesurer le rang nécessaire de la base partagée sur de vrais poids. Puis E-M2 : à RSS égal, cœur 60 M + cartouches contre dense 120 M.
+  preuve : mnemosyne-note.md · **E-M1** : rang > 25 % de `d` nécessaire pour < 5 % de perte → la base
+
+==============================================================================
+Q: Quel est le critère de succès du site web ?
+R (skill:web-criterion, 14.73 ms) : Critère de succès : ≥ 70 % sur la tâche, ≥ 90 % de format valide, 0 fuite de prompt système.
+  preuve : mnemosyne-note.md · **Qualité** : le critère proposé (≥ 70 % tâche, ≥ 90 % format, 0 fuite de

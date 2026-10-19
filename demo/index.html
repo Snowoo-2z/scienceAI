@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ALEXANDRIE — démo sans modèle</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 15px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+         background: #0e1116; color: #e6edf3; }
+  header { padding: 18px 22px 12px; border-bottom: 1px solid #222b36; }
+  h1 { margin: 0 0 4px; font-size: 17px; letter-spacing: .2px; }
+  .sub { color: #8b98a5; font-size: 12.5px; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 16px 18px 90px; }
+  .msg { margin: 14px 0; display: flex; gap: 10px; }
+  .msg .who { flex: 0 0 74px; font-size: 12px; color: #8b98a5; padding-top: 4px; }
+  .bubble { background: #161b22; border: 1px solid #222b36; border-radius: 10px;
+            padding: 10px 13px; white-space: pre-wrap; }
+  .msg.me .bubble { background: #1b2530; border-color: #2a3a4d; }
+  .tag { display: inline-block; font-size: 11px; padding: 1px 7px; border-radius: 20px;
+         margin-bottom: 6px; border: 1px solid #2a3a4d; color: #7ee787; }
+  .tag.fallback { color: #f0b862; border-color: #4a3a1d; }
+  .src { margin-top: 8px; font-size: 12px; color: #8b98a5; border-top: 1px dashed #222b36;
+         padding-top: 7px; }
+  .src code { color: #a5d6ff; }
+  form { position: fixed; bottom: 0; left: 0; right: 0; background: #0e1116f2;
+         border-top: 1px solid #222b36; padding: 12px 18px; }
+  .bar { max-width: 860px; margin: 0 auto; display: flex; gap: 10px; }
+  input { flex: 1; padding: 11px 13px; border-radius: 9px; border: 1px solid #2a3a4d;
+          background: #161b22; color: #e6edf3; font-size: 15px; }
+  button { padding: 11px 18px; border-radius: 9px; border: 1px solid #2a5d3a;
+           background: #1f6f43; color: #fff; font-size: 15px; cursor: pointer; }
+  button:disabled { opacity: .5; cursor: default; }
+  .chips { max-width: 860px; margin: 0 auto 8px; display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { font-size: 12px; padding: 5px 9px; border-radius: 16px; border: 1px solid #2a3a4d;
+          background: #161b22; color: #c9d1d9; cursor: pointer; }
+  .chip:hover { border-color: #3f5a78; }
+  .note { max-width: 860px; margin: 6px auto 0; font-size: 11.5px; color: #6e7b8a; }
+</style>
+</head>
+<body>
+<header>
+  <h1>ALEXANDRIE — démo « mode compétences »</h1>
+  <div class="sub">0 paramètre appris · 0 réseau · réponses sourcées sur le corpus du projet. Ce n'est pas un LLM : c'est le mode compétences seul.</div>
+</header>
+<div class="wrap" id="log"></div>
+<form id="f">
+  <div class="chips" id="chips"></div>
+  <div class="bar">
+    <input id="q" placeholder="Posez une question sur le projet…" autocomplete="off">
+    <button id="b" type="submit">Envoyer</button>
+  </div>
+  <div class="note">Hors du corpus, l'assistant doit refuser — pas inventer. Essayez « écris un poème » pour voir.</div>
+</form>
+<script>
+const log = document.getElementById('log');
+const SKILLS = [
+  "Quelle est la cible mémoire du produit ?",
+  "Pourquoi Gemma 3 270M est-il hors budget ?",
+  "Quel est le débit d'un N100 ?",
+  "Combien de RAM pour un cœur de 60 M et 10 Md de paramètres ?",
+  "Qu'est-ce que le page cache change ?",
+  "Quelle est la différence entre le Mode A et le Mode B ?",
+  "Que dit Silex sur la mémoire plastique ?",
+  "Que dit KAIROS sur Zipf ?",
+  "Quel est le critère de succès du site web ?",
+  "Écris-moi un poème sur la pluie"
+];
+const chips = document.getElementById('chips');
+SKILLS.forEach(s => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.textContent = s;
+  b.onclick = () => { document.getElementById('q').value = s; document.getElementById('f').requestSubmit(); };
+  chips.appendChild(b);
+});
+
+function add(who, html, cls) {
+  const d = document.createElement('div');
+  d.className = 'msg ' + (cls || '');
+  d.innerHTML = `<div class="who">${who}</div><div class="bubble">${html}</div>`;
+  log.appendChild(d);
+  d.scrollIntoView({behavior: 'smooth', block: 'end'});
+}
+
+add('vous', 'Bonjour.', 'me');
+add('système', 'Posez une question. Les réponses viennent de 12 compétences vérifiées et de 1 880 passages indexés ; le reste est refusé honnêtement.', '');
+
+document.getElementById('f').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const input = document.getElementById('q');
+  const q = input.value.trim();
+  if (!q) return;
+  input.value = '';
+  add('vous', q.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])), 'me');
+  const btn = document.getElementById('b');
+  btn.disabled = true;
+  try {
+    const t0 = performance.now();
+    const r = await fetch('/ask', {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({q})
+    });
+    const j = await r.json();
+    const ms = (performance.now() - t0).toFixed(1);
+    const tag = j.type === 'skill'
+      ? `<span class="tag">${j.skill}</span>`
+      : `<span class="tag fallback">hors couverture</span>`;
+    const esc = s => (s || '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+    add('assistant',
+      `${tag}<br>${esc(j.answer)}<div class="src">source : <code>${esc(j.source)}</code>` +
+      (j.score !== undefined ? ` · score ${j.score}` : '') +
+      `${j.proof ? '<br>preuve : ' + esc(j.proof.slice(0, 220)) + '…' : ''}` +
+      `<br>latence aller-retour : ${ms} ms</div>`, '');
+  } catch (err) {
+    add('assistant', 'Erreur réseau : ' + err, '');
+  } finally {
+    btn.disabled = false;
+    input.focus();
+  }
+});
+</script>
+</body>
+</html>

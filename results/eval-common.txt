@@ -1,0 +1,22 @@
+OK   q01 answerable Quelle est la cible mémoire du produit ?
+OK   q02 answerable Pourquoi Gemma 3 270M est-il hors budget ?
+OK   q03 answerable Quel est le débit d'un N100 ?
+OK   q04 answerable Quel est le débit d'un Raspberry Pi 5 ?
+OK   q05 answerable Combien de RAM pour un cœur de 60 M et 10 Md de paramètres ?
+OK   q06 answerable Qu'est-ce que le page cache change dans la mesure ?
+OK   q07 answerable Quelle est la différence entre le Mode A et le Mode B ?
+OK   q08 answerable Quel rappel obtient la mémoire plastique de Silex à 128 associations ?
+OK   q09 answerable Combien de compétences faut-il pour 90 % de couverture si alpha vaut 1 ?
+OK   q10 answerable Quelle est la prochaine expérience à faire ?
+OK   q11 answerable Quel est le critère de succès du site web ?
+OK   q12 answerable Pourquoi le vocabulaire est-il le levier mémoire numéro 1 ?
+OK   q13 open      Écris-moi un poème sur la pluie à Paris.
+OK   q14 open      Explique la photosynthèse à un enfant de 8 ans.
+OK   q15 open      Quelle est la capitale de l'Australie ?
+OK   q16 open      Traduis « bonjour » en japonais.
+OK   q17 open      Quel temps fera-t-il demain à Évry ?
+OK   q18 open      Écris un script Python qui trie une liste.
+OK   q19 open      Que penses-tu de ce projet ?
+OK   q20 open      Résume ce document en trois phrases.
+
+20/20 = 100 %   (251 ms, 12.6 ms/question)

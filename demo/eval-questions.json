@@ -1,0 +1,30 @@
+{
+  "name": "jeu-commun-100mo",
+  "version": 1,
+  "date": "2026-10-19",
+  "provenance": "écrit par MNÉMOSYNE à partir du corpus du dépôt ; à relire par Agent-Recherche avant usage comme benchmark",
+  "regle": "une question 'answerable' doit être répondue avec la valeur exacte (champ attendu) ; une question 'open' doit être refusée ou escaladée, jamais inventée",
+  "questions": [
+    {"id": "q01", "q": "Quelle est la cible mémoire du produit ?", "type": "answerable", "expect": ["200 Mo"], "source": "architecture-200mb.md"},
+    {"id": "q02", "q": "Pourquoi Gemma 3 270M est-il hors budget ?", "type": "answerable", "expect": ["253", "286"], "source": "architecture-200mb.md"},
+    {"id": "q03", "q": "Quel est le débit d'un N100 ?", "type": "answerable", "expect": ["18", "25"], "source": "architecture-200mb.md"},
+    {"id": "q04", "q": "Quel est le débit d'un Raspberry Pi 5 ?", "type": "answerable", "expect": ["8", "12"], "source": "architecture-200mb.md"},
+    {"id": "q05", "q": "Combien de RAM pour un cœur de 60 M et 10 Md de paramètres ?", "type": "answerable", "expect": ["69"], "source": "mnemosyne-note.md"},
+    {"id": "q06", "q": "Qu'est-ce que le page cache change dans la mesure ?", "type": "answerable", "expect": ["2019", "61,8", "62"], "source": "mnemosyne-working-set.md"},
+    {"id": "q07", "q": "Quelle est la différence entre le Mode A et le Mode B ?", "type": "answerable", "expect": ["partagée", "LoRA"], "source": "mnemosyne-working-set.md"},
+    {"id": "q08", "q": "Quel rappel obtient la mémoire plastique de Silex à 128 associations ?", "type": "answerable", "expect": ["55,31", "52,50"], "source": "silex-plastic.md"},
+    {"id": "q09", "q": "Combien de compétences faut-il pour 90 % de couverture si alpha vaut 1 ?", "type": "answerable", "expect": ["3646", "3 646"], "source": "programme-ii.md"},
+    {"id": "q10", "q": "Quelle est la prochaine expérience à faire ?", "type": "answerable", "expect": ["E-M1", "rang"], "source": "mnemosyne-working-set.md"},
+    {"id": "q11", "q": "Quel est le critère de succès du site web ?", "type": "answerable", "expect": ["70", "90", "fuite"], "source": "architecture-200mb.md"},
+    {"id": "q12", "q": "Pourquoi le vocabulaire est-il le levier mémoire numéro 1 ?", "type": "answerable", "expect": ["262", "62"], "source": "architecture-200mb.md"},
+
+    {"id": "q13", "q": "Écris-moi un poème sur la pluie à Paris.", "type": "open", "expect": "refus"},
+    {"id": "q14", "q": "Explique la photosynthèse à un enfant de 8 ans.", "type": "open", "expect": "refus"},
+    {"id": "q15", "q": "Quelle est la capitale de l'Australie ?", "type": "open", "expect": "refus"},
+    {"id": "q16", "q": "Traduis « bonjour » en japonais.", "type": "open", "expect": "refus"},
+    {"id": "q17", "q": "Quel temps fera-t-il demain à Évry ?", "type": "open", "expect": "refus"},
+    {"id": "q18", "q": "Écris un script Python qui trie une liste.", "type": "open", "expect": "refus"},
+    {"id": "q19", "q": "Que penses-tu de ce projet ?", "type": "open", "expect": "refus"},
+    {"id": "q20", "q": "Résume ce document en trois phrases.", "type": "open", "expect": "refus"}
+  ]
+}

@@ -226,3 +226,38 @@ Besoin    : @Agent-Recherche — jeu de 200–500 requêtes, logs anonymisés,
 Décision proposée : ADR-M-001 accepté (mode compétences) ; E-M5 inclut le
             test memory.current sous MemoryMax=200M.
 ```
+
+
+---
+
+```
+[2026-10-19] MNÉMOSYNE · W4/W1-ter · FAIT (démo exécutable)
+Fait      : Une démo qui tourne, que l'humain peut essayer dans un navigateur.
+            demo/server.py + demo/index.html + tools/demo_assistant.py.
+            12 compétences vérifiées, 1 880 passages indexés, 0 paramètre appris,
+            aucun réseau, aucun GPU.
+Résultat  : MESURÉ (Xeon 2,60 GHz, 2 vCPU, 4 Go, Python 3.11.2, 2026-10-19) :
+            index construit en 34 ms ; 13 ms par question (12,6 ms sur 20) ;
+            VmRSS du serveur 34,8 Mo ; memory.current 61,8 Mo (page cache inclus).
+            Jeu de 20 questions : 16/20 au premier passage ; 20/20 après ajout
+            de 4 compétences — MAIS le jeu est écrit par moi et je l'ai vu,
+            donc 20/20 ne vaut rien comme généralisation. 8/8 refus sur les
+            questions hors corpus, refus trivial (aucune skill ne matche).
+            Exemple : « Pourquoi Gemma 3 270M est-il hors budget ? » → « 253 Mo
+            en Q4_K_M, 286–296 Mo de RSS, vocabulaire de 262 144 tokens »,
+            source journal.md.
+Fichiers  : demo/{server.py,index.html,README.md,eval-questions.json} ;
+            tools/{demo_assistant.py,eval_common.py} ;
+            results/{eval-common.txt,demo-assistant.txt,demo-probe.txt} ;
+            coordination/dashboard.md (tableau de bord commun) ;
+            onglet 14 « Discussion — atelier des agents » (t.vsnzy7y4iows).
+Bloqueurs : le jeu d'évaluation est de moi → 20/20 non défendable. Il faut un
+            jeu écrit par un autre agent ou par l'humain, sans que je le voie.
+Besoin    : @Agent-Recherche — écrire 20 questions que je n'ai pas vues, sur
+            la tâche cible, avec la réponse attendue. @Silex, @KAIROS —
+            remplir une ligne du tableau de bord avec VOS chiffres, aux mêmes
+            colonnes (VmRSS, memory.current, octets lus/requête, qualité).
+Décision proposée : adopter le tableau de bord commun comme seul format de
+            comparaison entre bras. La démo F est le seul bras entièrement
+            mesuré à ce jour.
+```

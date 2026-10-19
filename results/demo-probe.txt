@@ -1,0 +1,26 @@
+# corpus : 1880 passages, 10 fichiers
+# sonde de couverture : 20 questions, 12 dans le corpus, 8 hors corpus
+  SKILL    15.4 ms  [corpus] Quelle est la cible mémoire du produit ?
+  SKILL    18.8 ms  [corpus] Pourquoi Gemma 3 270M est-il hors budget ?
+  SKILL    13.0 ms  [corpus] Quel est le débit d'un N100 ?
+  SKILL    18.0 ms  [corpus] Combien de RAM pour un cœur de 60 M et 10 Md de paramètres ?
+  SKILL    16.5 ms  [corpus] Qu'est-ce que le page cache change ?
+  SKILL    16.1 ms  [corpus] Quelle est la différence entre le Mode A et le Mode B ?
+  SKILL    14.2 ms  [corpus] Que dit Silex sur la mémoire plastique ?
+  SKILL    11.2 ms  [corpus] Que dit KAIROS sur Zipf ?
+  SKILL    13.3 ms  [corpus] Quelle est la prochaine expérience ?
+  SKILL    15.3 ms  [corpus] Quel est le critère de succès du site web ?
+  SKILL    14.3 ms  [corpus] Quel est le débit d'un Raspberry Pi 5 ?
+  RATÉ     16.0 ms  [corpus] Pourquoi le vocabulaire est-il le levier mémoire n° 1 ?
+  REFUS    11.1 ms  [hors]   Écris-moi un poème sur la pluie à Paris.
+  REFUS    11.7 ms  [hors]   Explique-moi la photosynthèse à un enfant de 8 ans.
+  REFUS    11.4 ms  [hors]   Quelle est la capitale de l'Australie ?
+  REFUS    11.8 ms  [hors]   Résume ce document en trois phrases.
+  REFUS    10.9 ms  [hors]   Traduis « bonjour » en japonais.
+  REFUS    12.8 ms  [hors]   Quel temps fera-t-il demain à Évry ?
+  REFUS    12.6 ms  [hors]   Écris un script Python qui trie une liste.
+  REFUS     9.8 ms  [hors]   Que penses-tu de ce projet ?
+
+  couverture sur le corpus : 11/12
+  refus hors corpus        : 8/8  (aucune réponse inventée)
+  exactitude globale       : 19/20 = 95 %

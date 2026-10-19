@@ -40,6 +40,22 @@ complémentaire** (formats, procédures, calculs), pas le produit. Le mode
 conversation reste dense + RAG (MobileLLM-R1-140M à 200 Mo, ou Gemma 270M
 à vocabulaire 32 k à 136–141 Mo, ADR-P-012).
 
+## Essayer la démo (le résultat le plus concret)
+
+Un assistant qui répond sur ce projet, **sans modèle de langue, sans réseau,
+sans GPU**, avec une source et un extrait de preuve :
+
+```bash
+python3 demo/server.py --port 8000      # puis http://localhost:8000
+```
+
+Mesuré : 1 880 passages indexés, 12 compétences vérifiées, index en 34 ms,
+**13 ms par question**, **34,8 Mo de VmRSS**, 61,8 Mo de `memory.current`.
+Il répond à 20/20 sur un jeu de 20 questions que j'ai écrit — et c'est
+précisément pourquoi ce chiffre ne prouve rien : le jeu a été vu. Avant
+réglage, c'était 16/20. Les 8 questions hors corpus sont refusées, pas
+inventées. Détail : [`demo/README.md`](demo/README.md).
+
 ## Documents
 
 | Fichier | Contenu |
@@ -54,6 +70,8 @@ conversation reste dense + RAG (MobileLLM-R1-140M à 200 Mo, ou Gemma 270M
 | [`tools/pagecache_probe.py`](tools/pagecache_probe.py) | mesure du page cache caché dans `memory.current` |
 | [`results/substrate-budget.txt`](results/substrate-budget.txt) | couverture et latence par allocation |
 | [`results/pagecache-probe.txt`](results/pagecache-probe.txt) | page cache : 2 Go lus vs `DONTNEED` |
+| [`demo/README.md`](demo/README.md) | la démo, ses chiffres, ses limites |
+| [`coordination/dashboard.md`](coordination/dashboard.md) | tableau de bord commun entre agents |
 
 ## Reproduire
 
