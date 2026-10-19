@@ -4,9 +4,10 @@
 **Agent** : MNÉMOSYNE · **Branche** : `arena/ab1c7e6e-scienceai` · **Date** : 2026-10-19
 **Statut** : programme de recherche ouvert. Chaque chiffre est étiqueté
 `MESURÉ`, `CALCULÉ` ou `HYPOTHÈSE`.
-**Ne remplace pas** : l'onglet 12 (Gemma 3 270M QAT q4, 177 Mo) reste la
-baseline produit. Ce document ouvre une branche de recherche, il ne décide
-pas du produit.
+**Ne remplace pas** : l'onglet 12 (baseline produit actualisée : MobileLLM-R1-140M
+Q4_K_M, 170–182 Mo ; Gemma 3 270M après élagage du vocabulaire à 32 k,
+136–141 Mo) reste la référence. Ce document ouvre une branche de recherche,
+il ne décide pas du produit.
 
 ---
 
@@ -56,8 +57,11 @@ généraliste sous 100 Mo sans pré-entraîner un grand modèle.
 
 - `Agent-Recherche` a montré qu'un généraliste dense sous 100 Mo n'existe pas,
   mais qu'un modèle spécialisé 60–85 M est faisable (onglets 01–06).
-- La cible a été portée à ~200 Mo (ADR-006), avec Gemma 3 270M QAT q4 à
-  177 Mo de RSS à 8 k de contexte (onglet 12).
+- La cible a été portée à ~200 Mo (ADR-006). Les tailles GGUF mesurées ont
+  ensuite corrigé l'estimation : Gemma 3 270M Q4_K_M pèse 253 Mo et consomme
+  286–296 Mo de RSS, hors budget. La baseline produit est devenue
+  MobileLLM-R1-140M Q4_K_M (170–182 Mo), ou Gemma 3 270M après élagage du
+  vocabulaire à 32 k (136–141 Mo).
 - Sous 1 Go, on peut **adapter** un 270 M par QLoRA, pas le pré-entraîner
   (ADR-007).
 - L'énergie est dominée par la plateforme, pas par les poids (ADR-004).
@@ -157,7 +161,10 @@ runtime 20 Mo, cache 5 Mo sauf mention) :
 |---|---:|---:|---:|---:|---:|
 | dense 60 M q4 | 68,8 | 33,8 | 67,5 | 166,7 | 18 |
 | dense 120 M q4 | 99,5 | 67,5 | 135,0 | 83,3 | 36 |
-| Gemma 3 270M QAT q4, 8 k | 176,5 | 134,0 | 268,0 | 74,6 | 40 |
+| MobileLLM-R1-140M Q4_K_M, 2 k | 169,8 | 132,0 | 202,0 | 71,4 | 42 |
+| SmolLM2-135M Q4_K_M, 2 k | 154,6 | 105,0 | 172,5 | 74,1 | 40 |
+| Gemma 3 270M Q4_K_M, 8 k (mesuré) | 295,5 | 253,0 | 387,0 | 74,6 | 40 |
+| Gemma 3 270M, vocab 32 k, 4 k | 136,1 | 106,0 | 240,0 | 74,6 | 40 |
 | ALEX 60 M + cartouche 0,5 M | 69,0 | 34,0 | 34,0 | 165,3 | 18 |
 | ALEX 60 M + bibliothèque 300 M ternaire | 69,2 | 34,2 | 108,8 | 161,3 | 19 |
 | ALEX 60 M + bibliothèque 1 Md ternaire | 69,2 | 34,2 | 283,8 | 161,3 | 19 |
@@ -166,7 +173,17 @@ runtime 20 Mo, cache 5 Mo sauf mention) :
 
 Hypothèses : `GOPS = 20` (2 vCPU, noyau naïf), plateforme 15 W, réponse de
 200 tokens, chargement d'une cartouche de 2 Mo à 1 Go/s. Le dense 120 M est
-le **vrai concurrent** : il tient tout juste sous 100 Mo, sans bibliothèque.
+le **vrai concurrent** à 100 Mo ; MobileLLM-R1-140M est la **baseline produit
+à 200 Mo**. Les lignes MobileLLM, SmolLM2 et Gemma utilisent les tailles GGUF
+**mesurées** (`file_mb`), pas l'arithmétique bits/poids.
+
+**Correction importante.** La première version de l'onglet 12 estimait Gemma 3
+270M QAT q4 à 134 Mo et 177 Mo de RSS. La mesure des GGUF donne 253 Mo de
+fichier et 286–296 Mo de RSS : le modèle est hors budget. La cause est le
+vocabulaire (262 144 × 640 = 167,8 M paramètres d'embeddings, ~62 % du
+modèle). Toute la comptabilité de ce document utilise désormais les tailles
+mesurées quand elles existent. C'est exactement la règle « mesurer avant de
+construire » du protocole.
 
 Lecture :
 
@@ -309,7 +326,7 @@ Silex.
 | L5 | index complet, corpus | 1–100 Go | disque |
 
 Le budget 100 Mo porte sur L0–L3. L4–L5 sont du stockage. C'est la
-définition explicite que nous proposons (ADR-009).
+définition explicite que nous proposons (ADR-M-001).
 
 ---
 
@@ -671,8 +688,9 @@ négatif est un livrable.
 
 ### 8.3 À Agent-Recherche
 
-- Je ne touche pas à l'onglet 12 ni au produit Gemma 270M. Ta baseline est
-  le point de comparaison à 200 Mo.
+- Je ne touche pas à l'onglet 12 ni à la baseline produit (MobileLLM-R1-140M,
+  ou Gemma 270M après élagage du vocabulaire). Ta baseline est le point de
+  comparaison à 200 Mo.
 - J'ai besoin de : (a) la config exacte du GGUF Q4_0 et le RSS mesuré en E0 ;
   (b) le jeu d'évaluation de la tâche cible (200–500 exemples) ; (c) le
   budget de tokens utilisé pour le QLoRA.
@@ -690,11 +708,12 @@ négatif est un livrable.
 
 ### 8.5 Décision proposée
 
-**ADR-009 — Le working set est la variable de conception.**
+**ADR-M-001 — Le working set est la variable de conception.**
 
 - Ouvrir le chantier W1-ter « ALEXANDRIE » sur la branche
   `arena/ab1c7e6e-scienceai`.
-- Ne pas changer la baseline produit (Gemma 3 270M, 200 Mo).
+- Ne pas changer la baseline produit (MobileLLM-R1-140M Q4_K_M, 170–182 Mo ;
+  Gemma 270M après élagage du vocabulaire, 136–141 Mo).
 - Ajouter au protocole de mesure les champs : RSS processus, page cache,
   octets lus sur disque, taille de la bibliothèque.
 - Demander à l'humain : (a) les 100 Mo sont-ils le RSS du processus ou la

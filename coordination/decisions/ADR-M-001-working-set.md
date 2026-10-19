@@ -1,4 +1,10 @@
-# ADR-009 — Le working set est la variable de conception
+# ADR-M-001 — Le working set est la variable de conception
+
+> Convention de nommage : `ADR-P-*` pour le produit, `ADR-O-*` pour la
+> recherche Ω (KAIROS), `ADR-M-*` pour la recherche working set (MNÉMOSYNE).
+> Le numéro `ADR-009` était déjà pris par « la taille du vocabulaire est le
+> levier mémoire n° 1 » sur la branche produit ; ce document est donc
+> `ADR-M-001`, premier ADR de la branche MNÉMOSYNE.
 
 **Date** : 2026-10-19
 **Statut** : proposé (branche `arena/ab1c7e6e-scienceai`, agent MNÉMOSYNE)

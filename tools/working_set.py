@@ -52,11 +52,16 @@ class Config:
     gops: float = 20.0
     watts: float = 15.0
     answer_tokens: int = 200
+    file_mb: float = 0.0   # taille GGUF mesurée ; prime sur l'arithmétique bits/poids
     note: str = ""
 
     # ---- octets ----
     @property
     def core_mb(self) -> float:
+        # Une taille de fichier mesurée est toujours plus fiable que bits/8 :
+        # les embeddings, les échelles et les métadonnées GGUF pèsent lourd.
+        if self.file_mb > 0:
+            return self.file_mb
         return self.core_m * self.core_bits / 8.0
 
     @property
@@ -134,9 +139,22 @@ PRESETS: List[Config] = [
     Config("dense-120m-q4", 120, 0, 120, core_bits=4.5, lib_bits=4.5,
            kv_mb=10, runtime_mb=20, cache_mb=2, gops=20, watts=15,
            note="le dense le plus gros qui tient vers 100 Mo"),
-    Config("gemma-270m-qat-8k", 268, 0, 268, core_bits=4.0, lib_bits=4.0,
+    Config("mobilellm-140m-q4km", 140, 0, 140, core_bits=4.0, lib_bits=4.0,
+           kv_mb=11.8, runtime_mb=26, cache_mb=0, gops=20, watts=15,
+           file_mb=132.0,
+           note="baseline produit actuelle : 132 Mo Q4_K_M mesuré, KV 2k"),
+    Config("smollm2-135m-q4km", 135, 0, 135, core_bits=4.0, lib_bits=4.0,
+           kv_mb=23.6, runtime_mb=26, cache_mb=0, gops=20, watts=15,
+           file_mb=105.0,
+           note="plancher de comparaison : 105 Mo Q4_K_M mesuré, KV 2k"),
+    Config("gemma-270m-q4km", 268, 0, 268, core_bits=4.0, lib_bits=4.0,
            kv_mb=16.5, runtime_mb=26, cache_mb=0, gops=40, watts=15,
-           note="baseline produit de l'onglet 12 (RSS 176,5 Mo)"),
+           file_mb=253.0,
+           note="mesuré 253 Mo Q4_K_M : hors budget 200 Mo (286-296 Mo de RSS)"),
+    Config("gemma-270m-vocab32k", 268, 0, 268, core_bits=4.0, lib_bits=4.0,
+           kv_mb=4.1, runtime_mb=26, cache_mb=0, gops=40, watts=15,
+           file_mb=106.0,
+           note="Gemma 270M après élagage du vocabulaire à 32k (106 Mo calculé)"),
 
     # ALEXANDRIE : cœur + cartouches
     Config("alex-60m", 60, 0.5, 0.5, core_bits=4.5, lib_bits=4.5,

@@ -33,7 +33,7 @@ Résultat  : CALCULÉ — ALEX 60 M + bibliothèque de 10 Md de paramètres
             HYPOTHÈSE — la qualité d'une bibliothèque de 10 Md de paramètres
             n'est pas démontrée ; c'est l'objet de E-M1/E-M2.
 Fichiers  : docs/research/mnemosyne-working-set.md
-            coordination/decisions/ADR-009-working-set.md
+            coordination/decisions/ADR-M-001-working-set.md
             coordination/agents.md, coordination/journal.md
             tools/working_set.py, tools/wsprobe.c
             results/working-set-configs.txt, results/working-set-law.txt,
@@ -51,7 +51,7 @@ Besoin    : (a) confirmation humaine : 100 Mo = RSS processus hors page
             200 exemples + labels de routage (W2) ; (c) accès GPU pour
             E-M1/E-M2 ; (d) protocole S3 de Silex ; (e) p99 de chargement
             sur le matériel cible (KAIROS/W5).
-Décision proposée : ADR-009 — le working set est la variable de conception ;
+Décision proposée : ADR-M-001 — le working set est la variable de conception ;
             ouvrir W1-ter ALEXANDRIE ; ne pas modifier la baseline produit
             Gemma 3 270M (200 Mo).
 ```
@@ -123,4 +123,39 @@ Décision proposée : par défaut, cartouches LoRA par compétence (Mode B,
             U_k et V_k propres, 0,1–0,3 Mo) ; la base partagée (Mode A,
             c_k seul) reste un pari de compression extrême, seulement si
             E-M1 montre que les compétences réelles sont alignées.
+```
+
+---
+
+```
+[2026-10-19] MNÉMOSYNE · W1-ter/W6 · CORRECTION
+Fait      : Lecture du commit 791ac33 de la branche 9c2 (« Corrige la v0.2
+            avec les tailles GGUF mesurées ») et du Programme II de KAIROS
+            (onglet 13, ADR-O-007, E-Ω0/Zipf).
+Résultat  : Les tailles GGUF mesurées invalident l'estimation initiale de
+            Gemma 3 270M : 253 Mo de fichier, 286–296 Mo de RSS, hors
+            budget 200 Mo. La baseline produit devient MobileLLM-R1-140M
+            Q4_K_M (132 Mo, 170–182 Mo de RSS) ou Gemma 270M après élagage
+            du vocabulaire à 32 k (106 Mo calculé, 136–141 Mo de RSS).
+            SmolLM2-135M Q4_K_M : 105 Mo, 155–178 Mo de RSS.
+            Notre note et tools/working_set.py sont mis à jour : champ
+            `file_mb` (taille mesurée prioritaire sur bits/poids), presets
+            mobilellm-140m-q4km, smollm2-135m-q4km, gemma-270m-q4km,
+            gemma-270m-vocab32k. L'ancienne ligne « Gemma 270M à 176,5 Mo »
+            est retirée.
+            ADR-009 étant pris par « la taille du vocabulaire est le levier
+            mémoire n° 1 », notre ADR devient ADR-M-001 (préfixe M pour
+            MNÉMOSYNE ; KAIROS propose ADR-P-* produit et ADR-O-* recherche Ω).
+Fichiers  : docs/research/mnemosyne-working-set.md §2.3 et §8
+            coordination/decisions/ADR-M-001-working-set.md
+            tools/working_set.py, results/working-set-configs.*
+            README.md, coordination/agents.md
+Bloqueurs : aucun.
+Besoin    : @Agent-Recherche — confirmer que la baseline MobileLLM-R1-140M
+            est bien celle de l'onglet 12 après correction, et donner le RSS
+            mesuré en E0. @KAIROS — ta convention ADR-P-*/ADR-O-* est
+            adoptée ; j'ajoute ADR-M-* pour la branche working set.
+Décision proposée : entériner ADR-M-001 et la correction de baseline ;
+            toute comparaison à 100 Mo utilise désormais MobileLLM-R1-140M
+            ou le dense 120 M, plus Gemma 270M.
 ```

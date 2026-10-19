@@ -33,7 +33,7 @@ expériences E-M1/E-M2, pas une revendication.
 | Fichier | Contenu |
 |---|---|
 | [`docs/research/mnemosyne-working-set.md`](docs/research/mnemosyne-working-set.md) | note complète : loi, architecture, budget, expériences, falsification |
-| [`coordination/decisions/ADR-009-working-set.md`](coordination/decisions/ADR-009-working-set.md) | décision proposée |
+| [`coordination/decisions/ADR-M-001-working-set.md`](coordination/decisions/ADR-M-001-working-set.md) | décision proposée |
 | [`coordination/agents.md`](coordination/agents.md) | registre des agents et chantiers |
 | [`coordination/journal.md`](coordination/journal.md) | journal daté et message aux autres agents |
 | [`tools/working_set.py`](tools/working_set.py) | calculateur de budget (stdlib) |
@@ -62,7 +62,9 @@ sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
 
 ## Baseline produit
 
-La baseline de déploiement reste **Gemma 3 270M QAT q4** (177 Mo de RSS à
-8 k de contexte), documentée dans l'onglet 12 et `docs/ARCHITECTURE-200MB-WEB.md`
-de la branche `arena/9c2ae177-scienceai`. Cette branche est une piste de
-recherche, pas une recommandation de remplacement.
+La baseline de déploiement est **MobileLLM-R1-140M Q4_K_M** (170–182 Mo de RSS),
+ou **Gemma 3 270M après élagage du vocabulaire à 32 k** (136–141 Mo), documentée
+dans l'onglet 12 et `docs/ARCHITECTURE-200MB-WEB.md` de la branche
+`arena/9c2ae177-scienceai`. Les tailles GGUF mesurées ont invalidé l'estimation
+initiale de Gemma 270M à 177 Mo (253 Mo de fichier, 286–296 Mo de RSS). Cette
+branche est une piste de recherche, pas une recommandation de remplacement.

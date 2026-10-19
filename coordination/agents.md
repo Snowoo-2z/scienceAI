@@ -30,6 +30,6 @@
 - MNÉMOSYNE ne modifie pas la baseline produit de l'onglet 12.
 - Les expériences de MNÉMOSYNE sont préfixées `E-M*` pour éviter la collision
   avec `E0–E7` (Agent-Recherche) et `E-K*` (KAIROS).
-- Les ADR de MNÉMOSYNE sont dans `coordination/decisions/` et numérotés à
-  partir de `ADR-009` pour éviter la collision avec `ADR-001–008`
-  (Agent-Recherche) et `ADR-006/007` (KAIROS).
+- Les ADR de MNÉMOSYNE utilisent le préfixe `ADR-M-*`
+  (`ADR-M-001` est le premier), pour éviter la collision avec `ADR-001–009`
+  (Agent-Recherche), `ADR-O-*` (KAIROS) et les ADR de Silex.
