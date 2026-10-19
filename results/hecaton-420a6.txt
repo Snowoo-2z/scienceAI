@@ -1,0 +1,58 @@
+==============================================================================
+  HECATON-420A6
+==============================================================================
+  64 couches · d=2048 · 16 têtes / 4 KV · MLA · contexte 32768
+  MoE : 896 experts, top-10, d_expert=1024, 64 couches
+  (routeur dense : 48 M paramètres, relus à chaque token)
+  Précision : experts 1.7 bit · attention 4.0 bit · embeddings 6.0 bit · KV 4.0 bit
+
+PARAMÈTRES
+  total ............. 372.3 B
+  actifs / token .... 6.0 B  (1.61 % du total)
+  experts lus ....... 10/896 par couche
+
+MÉMOIRE (ctx 32768)
+  experts routés                   76.67 Go
+  expert partagé                    0.20 Go
+  attention (pleine + linéaire)      0.59 Go
+  couches mémoire                   4.61 Go
+  embeddings                        0.20 Go
+  routeur                           0.05 Go
+  FFN dense                         0.00 Go
+  normes / biais                    0.37 Go
+    → poids totaux                 82.69 Go
+  KV cache                          0.15 Go
+  état récurrent                    0.03 Go
+  runtime                           1.50 Go
+  buffers / scratch                 0.50 Go
+  TOTAL                            84.87 Go
+
+LECTURE PAR TOKEN (décodage, batch = 1)
+  experts actifs                    0.86 Go   41.7 %
+  expert partagé                    0.20 Go    9.8 %
+  attention                         0.09 Go    4.4 %
+  attention linéaire                0.50 Go   24.5 %
+  couches mémoire                   0.00 Go    0.0 %
+  tête de sortie                    0.20 Go    9.8 %
+  routeur                           0.05 Go    2.4 %
+  KV relu                           0.15 Go    7.4 %
+    → TOTAL                         2.05 Go  100.0 %
+
+DÉBIT — Ryzen AI Max+ 395 (128 Go)
+  bande passante utile .... 166 Go/s (crête 256, rendement 65%)
+  plafond mémoire ......... 81.1 tok/s
+  plafond calcul .......... 49.1 tok/s
+  → retenu ................ 49.1 tok/s  (goulot : calcul)
+  latence ................. 20.4 ms/token
+  prefill 1 000 tokens .... 15.0 s
+
+ÉNERGIE
+  DRAM + calcul ........... 165.76 mJ/token
+  plateforme (statique) ... 1833.90 mJ/token
+  → total ................. 2.000 J/token
+  part du modèle .......... 8.29 %
+  réponse (400 tokens) .... 799.9 J = 0.2222 Wh
+  batch 8 ................. 49 tok/s, 2.000 J/token
+
+TENUE EN MÉMOIRE
+  TIENT — 84.87 Go sur 128 Go, marge 43.13 Go

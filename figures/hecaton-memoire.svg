@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="310" viewBox="0 0 980 310" font-family="ui-sans-serif,system-ui,sans-serif">
+<rect width="980" height="310" fill="#ffffff"/>
+<text x="24" y="36" font-size="19" font-weight="700" fill="#111">HECATON-420A6 — budget mémoire à 32 768 tokens de contexte</text>
+<text x="24" y="58" font-size="13" fill="#555">372.3 B paramètres · 84.87 Go au total · 1.7 bit sur les experts</text>
+<rect x="90.0" y="90" width="740.7" height="74" fill="#1f4e79"><title>experts routés : 76.67 Go</title></rect>
+<rect x="830.7" y="90" width="1.9" height="74" fill="#2e75b6"><title>expert partagé : 0.20 Go</title></rect>
+<rect x="832.7" y="90" width="5.7" height="74" fill="#9dc3e6"><title>attention : 0.59 Go</title></rect>
+<rect x="838.4" y="90" width="44.5" height="74" fill="#c55a11"><title>couches mémoire : 4.61 Go</title></rect>
+<rect x="883.0" y="90" width="1.9" height="74" fill="#f4b183"><title>embeddings : 0.20 Go</title></rect>
+<rect x="884.9" y="90" width="1.0" height="74" fill="#a6a6a6"><title>routeur : 0.05 Go</title></rect>
+<rect x="885.9" y="90" width="1.5" height="74" fill="#548235"><title>KV cache : 0.15 Go</title></rect>
+<rect x="887.4" y="90" width="19.3" height="74" fill="#7f7f7f"><title>runtime + buffers : 2.00 Go</title></rect>
+<rect x="90" y="90" width="820" height="74" fill="none" stroke="#333" stroke-width="1"/>
+<rect x="90" y="184" width="12" height="12" fill="#1f4e79"/>
+<text x="108" y="194" font-size="12.5" fill="#222">experts routés — 76.67 Go (90.3 %)</text>
+<rect x="510" y="184" width="12" height="12" fill="#2e75b6"/>
+<text x="528" y="194" font-size="12.5" fill="#222">expert partagé — 0.20 Go (0.2 %)</text>
+<rect x="90" y="206" width="12" height="12" fill="#9dc3e6"/>
+<text x="108" y="216" font-size="12.5" fill="#222">attention — 0.59 Go (0.7 %)</text>
+<rect x="510" y="206" width="12" height="12" fill="#c55a11"/>
+<text x="528" y="216" font-size="12.5" fill="#222">couches mémoire — 4.61 Go (5.4 %)</text>
+<rect x="90" y="228" width="12" height="12" fill="#f4b183"/>
+<text x="108" y="238" font-size="12.5" fill="#222">embeddings — 0.20 Go (0.2 %)</text>
+<rect x="510" y="228" width="12" height="12" fill="#a6a6a6"/>
+<text x="528" y="238" font-size="12.5" fill="#222">routeur — 0.05 Go (0.1 %)</text>
+<rect x="90" y="250" width="12" height="12" fill="#548235"/>
+<text x="108" y="260" font-size="12.5" fill="#222">KV cache — 0.15 Go (0.2 %)</text>
+<rect x="510" y="250" width="12" height="12" fill="#7f7f7f"/>
+<text x="528" y="260" font-size="12.5" fill="#222">runtime + buffers — 2.00 Go (2.4 %)</text>
+</svg>

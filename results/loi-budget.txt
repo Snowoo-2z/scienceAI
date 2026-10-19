@@ -1,0 +1,49 @@
+==============================================================================
+  Loi de budget — de 100 Mo à 192 Go
+==============================================================================
+  Plateforme de référence : Ryzen AI Max+ 395 (128 Go)
+  Hypothèses : MoE 512 experts, top-10, MLA, attention sur 1/4
+  des couches, KV 4 bits, runtime borné par le budget.
+
+ budget bits    total   actifs  Go/tok   tok/s  J/tok      Λ  experts   géométrie
+---------------------------------------------------------------------------------
+  0.50G  1.7    1.3 B  156.0 M    0.07  1938.9   0.07    7.2      128      24x512
+  0.50G  2.5  935.8 M   63.5 M    0.04  4209.4   0.03   12.6      256      12x384
+  0.50G  4.0  482.0 M   62.9 M    0.05  3474.9   0.04   10.4      128      12x384
+  1.00G  1.7    2.8 B  181.5 M    0.07  1824.3   0.07   13.8      256      12x768
+  1.00G  2.5    1.9 B  231.0 M    0.12  1421.7   0.09    8.7      128      16x768
+  1.00G  4.0    1.2 B   87.2 M    0.06  2642.1   0.05   15.9      256      12x512
+  8.00G  1.7   27.4 B  554.7 M    0.20   587.8   0.22   39.1      768      40x768
+  8.00G  2.5   18.5 B    1.0 B    0.47   307.4   0.43   16.9      256      80x768
+  8.00G  4.0   11.3 B    1.3 B    0.77   214.9   0.62   10.3      128     24x1536
+ 32.00G  1.7  131.7 B    2.8 B    0.96   135.8   0.96   33.5      768     12x3072
+ 32.00G  2.5   91.5 B    2.0 B    0.93   179.5   0.74   34.5      768     12x2560
+ 32.00G  4.0   59.1 B    3.3 B    1.88    88.6   1.51   17.0      256     64x1536
+ 96.00G  1.7  436.6 B    4.3 B    1.33    83.9   1.54   72.3     1536     80x1536
+ 96.00G  2.5  295.1 B   16.2 B    6.39    23.2   5.68   15.0      256     80x3072
+ 96.00G  4.0  182.6 B    3.6 B    2.11    78.9   1.69   45.5      768     24x2560
+192.00G  1.7  875.5 B   16.3 B    4.92    23.1   5.60   39.0      768     80x3072
+192.00G  2.5  585.3 B   16.3 B    6.39    23.1   5.70   30.0      512     80x3072
+192.00G  4.0  365.0 B    7.0 B    3.91    42.6   3.13   49.2      768     48x2560
+
+Lecture : 'Λ' = budget / octets lus par token = multiplicateur
+de débit. C'est le vrai paramètre de conception, pas le nombre
+de paramètres.
+
+ATTENTION : sous ~1 Go, les coûts fixes (tokenizer, sampling,
+latence de lancement) et la qualité plafonnent bien avant la
+roofline. Les lignes 0,5-1 Go sont une borne haute théorique,
+pas un débit atteignable. Voir la branche 100 Mo pour ce régime.
+HECATON-420A6 — débit (tok/s) selon noyau et bande passante
+contexte 32768 · 1.7 bit · 6.0 B actifs · 2.05 Go/token
+
+                        60      90     166     256     400     550   Go/s utiles
+noyau   100 GOP/s       6.1     6.1     6.1     6.1     6.1     6.1
+noyau   200 GOP/s      12.3    12.3    12.3    12.3    12.3    12.3
+noyau   400 GOP/s      24.5    24.5    24.5    24.5    24.5    24.5
+noyau   800 GOP/s      29.2    43.9    49.1    49.1    49.1    49.1
+noyau  1600 GOP/s      29.2    43.9    80.9    98.2    98.2    98.2
+noyau  3200 GOP/s      29.2    43.9    80.9   124.8   195.0   196.3
+
+Seuil mémoire-borné : GOPS >= 16 * BW / bits.
+Ici : 5176 GOP/s pour être limité par la mémoire à 550 Go/s.

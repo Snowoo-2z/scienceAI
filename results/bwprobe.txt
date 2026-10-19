@@ -1,0 +1,35 @@
+# bwprobe — mesures brutes
+
+```
+bwprobe — microbenchmark mémoire pour MoE sur CPU
+tas 1024 Mo · 2 threads · 3 passes (meilleur temps retenu)
+------------------------------------------------------------------
+séquentiel (référence)             26.16 Go/s      41.0 ms
+
+lectures de blocs aléatoires (alignées 64 o)
+bloc                 Go/s    % séq.     Go lus
+64                   3.38        13%       2.0 Go
+256                  8.21        31%       2.0 Go
+1024                13.77        53%       2.0 Go
+4096                20.63        79%       2.0 Go
+16384               25.02        96%       2.0 Go
+65536               25.47        97%       2.0 Go
+262144              26.15       100%       2.0 Go
+1048576             26.74       102%       2.0 Go
+4194304             27.07       103%       2.0 Go
+
+gather top-10 d'experts (banque de 512 experts)
+  expert  256 Ko · ordre routeur  :  26.66 Go/s (102% séq.)
+  expert  256 Ko · indices triés  :  26.37 Go/s (101% séq.)
+  expert 1024 Ko · ordre routeur  :  26.66 Go/s (102% séq.)
+  expert 1024 Ko · indices triés  :  26.34 Go/s (101% séq.)
+  expert 4096 Ko · ordre routeur  :  27.56 Go/s (105% séq.)
+  expert 4096 Ko · indices triés  :  27.44 Go/s (105% séq.)
+
+------------------------------------------------------------------
+Lecture : au-delà de ~64 Ko de bloc, la dispersion ne coûte
+presque rien. En dessous de 4 Ko, on perd 40 à 80 % de la
+bande passante. Les experts d'un MoE font plusieurs Mo :
+l'« expert clustering » n'apporte donc pas de bande passante.
+Le tri des indices, lui, est gratuit côté CPU et à mesurer.
+```

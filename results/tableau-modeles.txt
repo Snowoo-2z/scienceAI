@@ -1,0 +1,10 @@
+Plateforme : Ryzen AI Max+ 395 (128 Go) · 256 Go/s · 128 Go · 3500 €
+
+modèle                         total    actifs  bits     poids       RAM   Go/tok    tok/s   J/tok  tient
+---------------------------------------------------------------------------------------------------------
+HECATON-215A6                212.9 B     6.0 B   1.7   47.4 Go   49.5 Go     2.05     49.4    1.99    oui
+HECATON-420A6                372.3 B     6.0 B   1.7   82.7 Go   84.9 Go     2.05     49.1    2.00    oui
+HECATON-95A3                  91.2 B     2.9 B   1.7   20.2 Go   22.3 Go     1.09     92.4    1.06    oui
+NanoFR-75M (autre branche)    73.2 M    73.1 M   4.5    0.0 Go    0.2 Go     0.22    537.5    0.18    oui
+Qwen3-Next-80B-A3B (référe    78.8 B     2.9 B   4.5   44.5 Go   46.7 Go     1.99     83.8    1.23    oui
+gpt-oss-120b (référence)     116.1 B     4.9 B   4.2   62.0 Go   65.2 Go     4.08     34.3    2.96    oui

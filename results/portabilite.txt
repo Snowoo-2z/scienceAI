@@ -1,0 +1,10 @@
+HECATON-420A6 — contexte 32768
+
+plateforme                        RAM     BW    tok/s   goulot   J/tok   tient
+------------------------------------------------------------------------------
+PC DDR5-5600 2 canaux            128G    96G     18.4   calcul   3.154     oui
+Ryzen AI Max+ 395 (128 Go)       128G   256G     49.1   calcul   2.611     oui
+Mac Studio M4 Max (128 Go)       128G   546G     73.6   calcul   1.049     oui
+Mac Studio M3 Ultra (192 Go)     192G   819G    110.4   calcul   0.981     oui
+Bi-EPYC 12 canaux (768 Go)       768G   460G     73.6   calcul   5.600     oui
+RTX 5090 + 128 Go DDR5 (hybrid   128G   110G     32.2  memoire  14.154     oui

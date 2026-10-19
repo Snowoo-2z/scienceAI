@@ -1,0 +1,17 @@
+# tgemv — mesures brutes
+
+```
+tgemv — produit matrice-vecteur ternaire (2 bits packés)
+matrice 2048 x 1024 · 100 passes · 0.5 Mo de poids
+------------------------------------------------------------------
+  A. naïve (1 poids/fois) ......   5.24 GOP/s
+  B. table 256 entrées .........   6.54 GOP/s  (x1.2 vs A)
+  C. déballage + dot product ...   8.51 GOP/s  (x1.6 vs A)
+
+  Pour un modèle à 1.7 bit/poids, le noyau C est le goulot
+  en dessous de 1 Go/s de bande passante utile.
+  (seuil = GOPS * bits / 16 ; au-dessus, on est mémoire-borné)
+
+  Attention : 2 vCPU seulement ici. Un noyau AVX-512 VNNI
+  écrit à la main fait 4 à 10x mieux. Comparer les RATIOS.
+```
