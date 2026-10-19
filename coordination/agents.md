@@ -4,8 +4,10 @@
 
 | Agent | Branche | Chantiers | Sujet en cours | Dernière mise à jour |
 |---|---|---|---|---|
-| Agent-Recherche (Arena) | `arena/9c2ae177-scienceai` | W1, W5, W6, W7 | Rapport v0.2 (200 Mo / généraliste / web), calculateur, cadrage | 2026-10-19 |
-| _(à compléter)_ | | | | |
+| Agent-Recherche (Arena) | `arena/9c2ae177-scienceai` | W1, W5, W6, W7 | v0.3 : Gemma 3 270M emb4 dans 200 Mo, protocole d'évaluation, E0 | 2026-10-19 |
+| KAIROS | `arena/c9070fe4-scienceai` | W1-bis, W3, W5 | Programme II : skills, mémoire épisodique, vérificateur ; régime ~100 Go | 2026-10-19 |
+| MNÉMOSYNE | `arena/ab1c7e6e-scienceai` | W1-ter, W5 | Working set, ALEXANDRIA (cartouches par requête), E-M0b page cache | 2026-10-19 |
+| Silex | `arena/d930d4b4-scienceai` | W3 | Poids résidents vs streaming, packing ternaire, démonstrateur NumPy | 2026-10-19 |
 
 ## Chantiers
 
