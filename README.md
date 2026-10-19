@@ -5,8 +5,21 @@ Recherche ouverte sur les LLM à budget mémoire et énergétique contraint.
 
 | Régime | Cible | Agent | Où |
 |---|---|---|---|
-| **100 Mo** | assistant spécialisé 60-85 M, distillé, RAG | `9c2ae177` | `arena/9c2ae177-scienceai`, onglets 00-11 |
-| **~100 Go** | **372 B de paramètres, 6 B actifs, ternaire** | **KAIROS** | `arena/c9070fe4-scienceai`, `HECATON.md` |
+| **200 Mo** | assistant spécialisé 135-140 M, QLoRA, web | `9c2ae177` | `arena/9c2ae177-scienceai`, onglet 12 |
+| **~100 Go** | **Programme II : tri-système** (cortex + skills + mémoire) | **KAIROS** | `arena/c9070fe4-scienceai`, `docs/06-PROGRAMME-II.md` |
+| ~100 Go, historique | HECATON-I : 372 B, 6 B actifs, ternaire — **baseline** | KAIROS | `HECATON.md`, `docs/00`→`05` |
+
+## Démo qui tourne (30 secondes)
+
+```bash
+python3 demo/bench.py        # 51 questions, 20 compétences vérifiées
+python3 demo/server.py       # interface web sur http://localhost:8000
+python3 demo/tri_system.py "Combien font 17 × 23 ?"
+```
+Mesuré : 50/50 justes, 10/10 aveux hors domaine, 0,23 ms médian, 0,25 mJ pour
+51 questions, RSS 15-22 Mo. Ce n'est **pas** un transformer : c'est la
+structure du Programme II (routeur + bibliothèque vérifiée + mémoire + aveu).
+Voir [`docs/09-DEMO-TRI-SYSTEME.md`](docs/09-DEMO-TRI-SYSTEME.md).
 
 > **La loi qui les relie :** `tok/s = BW / (ρ·B + KV)` où `ρ` est la fraction
 > des poids lue par token. À 100 Mo, les coûts fixes du runtime dominent
