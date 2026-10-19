@@ -70,11 +70,11 @@ contexte 8 192, MoE top-10, MLA) :
 
 | budget | bits | total | actifs | Go/token | tok/s | Λ | experts | géométrie |
 |---:|---:|---:|---:|---:|---:|---:|---:|---|
-| 8 Go | 1,7 | 27,4 B | 0,55 B | 0,20 | 814 | 39 | 768 | 40×768 |
-| 32 Go | 1,7 | 131,7 B | 2,8 B | 0,96 | 174 | 34 | 768 | 12×3072 |
-| 96 Go | 1,7 | 436,6 B | 4,3 B | 1,33 | 125 | 72 | 1536 | 80×1536 |
+| 8 Go | 1,7 | 27,4 B | 0,55 B | 0,20 | 588 | 39 | 768 | 40×768 |
+| 32 Go | 1,7 | 131,7 B | 2,8 B | 0,96 | 136 | 34 | 768 | 12×3072 |
+| 96 Go | 1,7 | 436,6 B | 4,3 B | 1,33 | 84 | 72 | 1536 | 80×1536 |
 | 96 Go | 4,0 | 182,6 B | 3,6 B | 2,11 | 79 | 46 | 768 | 24×2560 |
-| 192 Go | 1,7 | 875,5 B | 16,3 B | 4,92 | 34 | 39 | 768 | 80×3072 |
+| 192 Go | 1,7 | 875,5 B | 16,3 B | 4,92 | 23 | 39 | 768 | 80×3072 |
 
 Trois lectures :
 
@@ -89,6 +89,8 @@ Trois lectures :
    79 tok/s. Le ternaire gagne sur les deux tableaux — **si** la qualité tient.
 3. **Λ plafonne autour de 40-70.** On ne peut pas dépasser ~100 sans descendre
    sous 1 bit ou sans conteneur mémoire externe. C'est une borne dure.
+   Attention : ces débits supposent 800 GOP/s. À 1,7 bit, on est
+   **calcul-borné** ; les valeurs doublent si le noyau double (voir §2).
 
 > Attention : ce tableau maximise le **nombre de paramètres**, pas la
 > **qualité**. Une géométrie 12×3072 avec 768 experts est un artefact
