@@ -800,8 +800,8 @@ def svg_roofline(specs: Dict[str, ModelSpec], hw: Hardware, path: str,
     ml, mr, mt, mb_ = 80, 210, 60, 70
     pw, ph = W - ml - mr, H - mt - mb_
     bw_max = 900.0
-    v_max = max(evaluate(s.replace(ctx=ctx), hw, ctx).tok_s for s in specs.values())
-    v_max = max(10.0, v_max * 1.25)
+    vals = [evaluate(s.replace(ctx=ctx), hw, ctx).tok_s for s in specs.values()]
+    v_max = min(500.0, max(10.0, max(vals) * 1.25))
 
     def sx(bw: float) -> float:
         return ml + pw * bw / bw_max
@@ -843,11 +843,15 @@ def svg_roofline(specs: Dict[str, ModelSpec], hw: Hardware, path: str,
         rb = read_bytes_per_token(s, ctx)["total"]
         color = colors[i % len(colors)]
         x1, y1 = sx(0), sy(0)
-        x2, y2 = sx(bw_max), sy(bw_max * GO / rb)
+        # on arrête la droite au bord haut du graphique au lieu de la laisser
+        # sortir du cadre (les petits modèles montent très vite)
+        bw_end = min(bw_max, v_max * rb / GO)
+        x2, y2 = sx(bw_end), sy(min(bw_end * GO / rb, v_max))
         out.append(f'<line x1="{x1:.1f}" y1="{y1:.1f}" x2="{x2:.1f}" y2="{y2:.1f}" '
                    f'stroke="{color}" stroke-width="2.2"/>')
         # marqueur de la plateforme actuelle
-        px, py = sx(hw.bw_gbs * hw.efficiency), sy(min(hw.bw_gbs*hw.efficiency*GO/rb, v_max))
+        px = sx(min(hw.bw_gbs * hw.efficiency, bw_max))
+        py = sy(min(hw.bw_gbs * hw.efficiency * GO / rb, v_max))
         out.append(f'<circle cx="{px:.1f}" cy="{py:.1f}" r="5" fill="{color}"/>')
         ly = mt + 20 + i * 22
         out.append(f'<rect x="{ml+pw+18}" y="{ly-10}" width="12" height="12" fill="{color}"/>')
