@@ -1,0 +1,11 @@
+# artefacts générés (reproductibles par les scripts de tools/)
+data/corpus/
+data/*.npy
+data/*.npz
+data/*.gguf
+data/tokenizer_nanofr.*
+data/nanofr_log.json
+google_drive/
+tools/__pycache__/
+__pycache__/
+*.pyc

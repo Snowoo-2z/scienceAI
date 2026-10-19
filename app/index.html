@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NanoFR — un modèle de langue de 6,5 M de paramètres</title>
+<style>
+  :root {
+    --bg: #0f1115; --panel: #171a21; --line: #262b36; --txt: #e7e9ee;
+    --dim: #98a0b3; --acc: #6ee7b7; --acc2: #7dd3fc;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--txt);
+         font: 16px/1.55 ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 38px 20px 64px; }
+  h1 { font-size: 30px; margin: 0 0 6px; letter-spacing: -0.5px; }
+  h1 span { color: var(--acc); }
+  .sub { color: var(--dim); margin: 0 0 26px; font-size: 15px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+          padding: 18px; margin-bottom: 16px; }
+  textarea { width: 100%; min-height: 90px; resize: vertical; background: #0d0f13;
+             color: var(--txt); border: 1px solid var(--line); border-radius: 10px;
+             padding: 12px 14px; font: inherit; }
+  textarea:focus { outline: none; border-color: var(--acc2); }
+  .row { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+  button { background: var(--acc); color: #06281c; border: 0; border-radius: 10px;
+           padding: 10px 18px; font-weight: 650; cursor: pointer; font-size: 15px; }
+  button:disabled { opacity: .5; cursor: wait; }
+  .ghost { background: transparent; color: var(--dim); border: 1px solid var(--line); font-weight: 500; }
+  .out { white-space: pre-wrap; font-size: 17px; line-height: 1.65; min-height: 76px; }
+  .out .seed { color: var(--dim); }
+  .meta { margin-top: 10px; color: var(--dim); font-size: 13px; font-variant-numeric: tabular-nums; }
+  .chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+  .chip { font-size: 13px; color: var(--dim); border: 1px solid var(--line); border-radius: 999px;
+          padding: 5px 11px; cursor: pointer; background: #0d0f13; }
+  .chip:hover { color: var(--txt); border-color: var(--acc2); }
+  .note { color: var(--dim); font-size: 13.5px; }
+  .note b { color: var(--txt); }
+  .kb { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px,1fr)); gap: 10px; margin: 0; }
+  .kb div { background: #0d0f13; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; }
+  .kb b { display: block; font-size: 18px; color: var(--acc2); }
+  .kb small { color: var(--dim); }
+  .err { color: #fca5a5; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Nano<span>FR</span></h1>
+  <p class="sub">Un modèle de langue <b>entraîné ici</b>, sur ce mini-PC, en numpy — puis
+     quantifié et exécuté par llama.cpp. Il continue une phrase en français.</p>
+
+  <div class="card">
+    <div class="chips">
+      <span class="chip" data-p="Il était une fois, au bord de la Seine,">Il était une fois…</span>
+      <span class="chip" data-p="Le vieux pêcheur regarda la mer et">Le vieux pêcheur…</span>
+      <span class="chip" data-p="Elle entra dans la salle, et">Elle entra…</span>
+      <span class="chip" data-p="La nuit tombait sur le village ;">La nuit tombait…</span>
+    </div>
+    <textarea id="prompt" spellcheck="false">Il était une fois, au bord de la Seine,</textarea>
+    <div class="row">
+      <button id="go">Continuer</button>
+      <button id="again" class="ghost">Autre version</button>
+      <span class="note" id="status"></span>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="out" id="out"><span class="seed">Le texte continuera ici.</span></div>
+    <div class="meta" id="meta"></div>
+  </div>
+
+  <div class="card">
+    <div class="kb">
+      <div><b id="k1">6,5 M</b><small>paramètres</small></div>
+      <div><b id="k2">—</b><small>Mo sur disque (Q8)</small></div>
+      <div><b id="k3">—</b><small>tokens / seconde</small></div>
+      <div><b id="k4">—</b><small>Mo de RAM (processus)</small></div>
+    </div>
+    <p class="note" style="margin:12px 0 0">
+      <b>Ce que c'est :</b> un transformer « architecture LLaMA » écrit à la main en numpy,
+      entraîné de zéro sur 16 Mo de littérature française du domaine public
+      (Maupassant, Poe traduit par Baudelaire, 100 romans ELTeC 1840–1920),
+      sous 1 Go de RAM, sans GPU, puis exporté en GGUF.
+      <br><b>Ce que ce n'est pas :</b> un assistant. Il ne répond pas aux questions, il ne
+      suit pas d'instructions — à 6,5 M de paramètres et 1 h d'entraînement, il imite un style.
+      La cible du projet (un généraliste de 270 M dans 200 Mo) est un autre objet ; ceci prouve
+      la chaîne complète, de l'entraînement au navigateur.
+    </p>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+let lastPrompt = "";
+
+document.querySelectorAll(".chip").forEach(c => {
+  c.onclick = () => { $("prompt").value = c.dataset.p; };
+});
+
+async function run() {
+  const prompt = $("prompt").value.trim();
+  if (!prompt) return;
+  lastPrompt = prompt;
+  $("go").disabled = true; $("status").textContent = "génération…";
+  $("out").innerHTML = '<span class="seed">' + escapeHtml(prompt) + "</span>";
+  try {
+    const r = await fetch("/api/complete", {
+      method: "POST", headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({prompt, n_predict: 70})
+    });
+    const d = await r.json();
+    if (d.error) throw new Error(d.error);
+    $("out").innerHTML = '<span class="seed">' + escapeHtml(prompt) + "</span>" + escapeHtml(d.text);
+    $("meta").textContent = `${d.tokens} tokens en ${d.ms} ms — ${d.tps} tok/s`;
+    $("k3").textContent = d.tps.toFixed(1);
+  } catch (e) {
+    $("out").innerHTML = '<span class="err">Erreur : ' + escapeHtml(String(e)) + "</span>";
+  } finally {
+    $("go").disabled = false; $("status").textContent = "";
+  }
+}
+
+$("go").onclick = run;
+$("again").onclick = run;
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+}
+
+fetch("/api/health").then(r => r.json()).then(d => { $("k4").textContent = d.rss_mb; }).catch(() => {});
+</script>
+</body>
+</html>
