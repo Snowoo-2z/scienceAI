@@ -1,0 +1,24 @@
+# mode=buffered file=/tmp/wsprobe2.bin size=1.91 GiB chunk=8 MiB
+# start memory.current=55.8 MiB VmRSS=18.5 MiB file=40.8 MiB
+read     256 MiB    833.4 MiB/s  memory.current=  320.0  VmRSS=  34.8  file=  288.3 MiB
+read     512 MiB    862.7 MiB/s  memory.current=  576.7  VmRSS=  34.8  file=  544.6 MiB
+read     768 MiB    819.7 MiB/s  memory.current=  833.4  VmRSS=  34.8  file=  800.8 MiB
+read    1024 MiB    808.4 MiB/s  memory.current= 1090.4  VmRSS=  34.8  file= 1057.1 MiB
+read    1280 MiB    796.0 MiB/s  memory.current= 1346.0  VmRSS=  34.8  file= 1312.1 MiB
+read    1536 MiB    815.2 MiB/s  memory.current= 1602.9  VmRSS=  34.8  file= 1568.3 MiB
+read    1792 MiB    828.2 MiB/s  memory.current= 1859.7  VmRSS=  34.7  file= 1824.6 MiB
+read    1953 MiB    836.3 MiB/s  memory.current= 2019.5  VmRSS=  34.7  file= 1984.0 MiB
+# end   memory.current=2019.5 MiB VmRSS=34.7 MiB file=1984.0 MiB
+# total 1953 MiB in 2.34 s = 836.3 MiB/s
+# mode=dontneed file=/tmp/wsprobe2.bin size=1.91 GiB chunk=8 MiB
+# start memory.current=45.9 MiB VmRSS=18.6 MiB file=30.8 MiB
+read     256 MiB   1834.6 MiB/s  memory.current=   63.6  VmRSS=  34.9  file=   32.3 MiB
+read     512 MiB   1314.8 MiB/s  memory.current=   63.7  VmRSS=  34.9  file=   32.6 MiB
+read     768 MiB    912.1 MiB/s  memory.current=   64.2  VmRSS=  34.9  file=   32.8 MiB
+read    1024 MiB    788.1 MiB/s  memory.current=   64.2  VmRSS=  34.9  file=   33.1 MiB
+read    1280 MiB    767.1 MiB/s  memory.current=   63.4  VmRSS=  34.9  file=   32.1 MiB
+read    1536 MiB    719.7 MiB/s  memory.current=   63.7  VmRSS=  34.9  file=   32.3 MiB
+read    1792 MiB    640.4 MiB/s  memory.current=   63.7  VmRSS=  34.8  file=   32.6 MiB
+read    1953 MiB    625.5 MiB/s  memory.current=   61.8  VmRSS=  34.8  file=   30.8 MiB
+# end   memory.current=61.8 MiB VmRSS=34.8 MiB file=30.8 MiB
+# total 1953 MiB in 3.12 s = 625.5 MiB/s

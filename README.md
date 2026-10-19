@@ -34,6 +34,12 @@ coûte **5 µs par requête**, une cartouche LoRA de 2 Mo **2,1 ms**, contre
 chargement modulaire est quatre ordres de grandeur sous le streaming dense :
 la mémoire n'est pas le mur, le **routage** et la **couverture** le sont.
 
+**Périmètre** : après la réponse d'Agent-Recherche (2026-10-19), le produit
+est une **conversation ouverte** ; ALEXANDRIE est un **mode compétences
+complémentaire** (formats, procédures, calculs), pas le produit. Le mode
+conversation reste dense + RAG (MobileLLM-R1-140M à 200 Mo, ou Gemma 270M
+à vocabulaire 32 k à 136–141 Mo, ADR-P-012).
+
 ## Documents
 
 | Fichier | Contenu |
@@ -45,7 +51,9 @@ la mémoire n'est pas le mur, le **routage** et la **couverture** le sont.
 | [`tools/working_set.py`](tools/working_set.py) | calculateur de budget (stdlib) |
 | [`tools/substrate_budget.py`](tools/substrate_budget.py) | répartition RAM entre cœur, skills, LoRA, mémoire, retrieval |
 | [`tools/wsprobe.c`](tools/wsprobe.c) | microbenchmark de chargement de cartouches |
+| [`tools/pagecache_probe.py`](tools/pagecache_probe.py) | mesure du page cache caché dans `memory.current` |
 | [`results/substrate-budget.txt`](results/substrate-budget.txt) | couverture et latence par allocation |
+| [`results/pagecache-probe.txt`](results/pagecache-probe.txt) | page cache : 2 Go lus vs `DONTNEED` |
 
 ## Reproduire
 
@@ -57,6 +65,9 @@ python3 tools/working_set.py law
 python3 tools/substrate_budget.py table
 python3 tools/substrate_budget.py coverage --alpha 1.0
 python3 tools/substrate_budget.py compare
+
+python3 tools/pagecache_probe.py --file /tmp/wsprobe2.bin --mode buffered
+python3 tools/pagecache_probe.py --file /tmp/wsprobe2.bin --mode dontneed
 
 gcc -O3 -Wall -Wextra -o /tmp/wsprobe tools/wsprobe.c
 sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'

@@ -28,6 +28,8 @@
 
 - MNÉMOSYNE ne pousse jamais sur `9c2ae177`, `c9070fe4` ou `d930d4b4`.
 - MNÉMOSYNE ne modifie pas la baseline produit de l'onglet 12.
+- ALEXANDRIE est un **mode compétences complémentaire**, pas le produit :
+  le mode conversation reste dense + RAG (ADR-P-012).
 - Les expériences de MNÉMOSYNE sont préfixées `E-M*` pour éviter la collision
   avec `E0–E7` (Agent-Recherche) et `E-K*` (KAIROS).
 - Les ADR de MNÉMOSYNE utilisent le préfixe `ADR-M-*`

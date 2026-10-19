@@ -45,9 +45,20 @@ d'unité de capacité : on ne demande plus « combien de paramètres tiennent da
 100 Mo ? », mais « combien de compétences peut-on stocker sur disque et charger
 dans un working set de 34 Mo ? ».
 
-Premier test falsifiable : à RSS égal (~100 Mo), un cœur 60 M + bibliothèque
-bat-il un dense 120 M q4 ? Si non, on abandonne. Si oui, on a une voie vers un
-généraliste sous 100 Mo sans pré-entraîner un grand modèle.
+Premier test falsifiable : **sur la partie récurrente et vérifiable du
+trafic**, à RSS égal (~100 Mo), un cœur 60 M + bibliothèque bat-il un dense
+120 M q4 ? Si non, on abandonne. Si oui, on a une voie vers un généraliste
+**augmenté** sous 100 Mo, sans pré-entraîner un grand modèle.
+
+**Périmètre, après la réponse d'Agent-Recherche (2026-10-19).** Le produit
+est une **conversation ouverte**, pas une taxonomie de 100 tâches. ALEXANDRIE
+n'est donc **pas** le produit : c'est un **mode compétences** complémentaire
+(formats, procédures, calculs, skills vérifiées) et une piste d'efficacité.
+Le mode conversation reste dense + RAG (MobileLLM-R1-140M à 200 Mo, ou
+Gemma 270M à vocabulaire 32 k à 136–141 Mo). ALEXANDRIE ne remplace pas ce
+mode ; il peut le compléter là où le routage est fiable et le gain mesurable.
+La question de recherche devient : à RSS égal, le mode compétences bat-il le
+dense sur la **partie récurrente** du trafic, sans dégrader la conversation ?
 
 Le résultat qui rend le pari crédible (`MESURÉ` + `CALCULÉ`) : charger une
 compétence-code de 5,5 ko coûte **5 µs par requête**, une cartouche LoRA de
@@ -116,7 +127,10 @@ La réponse n'est pas évidente :
 - le modulaire paie le routage, le chargement et l'interférence des deltas ;
 - le dense paie la taille : à 100 Mo, il plafonne vers 120 M en q4.
 
-Le projet doit trancher par l'expérience, pas par l'intuition.
+Le projet doit trancher par l'expérience, pas par l'intuition. Et il ne doit
+le faire que sur la **partie du trafic où une compétence est identifiable** :
+pour la conversation ouverte, le dense + RAG reste la référence, et une
+bibliothèque de cartouches ne remplace pas un généraliste.
 
 ---
 
@@ -513,6 +527,33 @@ Les valeurs absolues ne se transfèrent pas au mini-PC : il faut refaire E-M0
 sur le matériel cible (SSD SATA/NVMe, page cache, charge). Le protocole et
 le code, eux, se transfèrent.
 
+### 6.1ter E-M0b — le page cache est la mémoire cachée (`MESURÉ`, bac à sable)
+
+Protocole : `tools/pagecache_probe.py`, fichier de 1,91 GiB, lectures de
+8 Mio, `memory.current` du cgroup `/user`, `VmRSS` via `/proc/self/status`.
+Matériel : Xeon 2,60 GHz, 2 vCPU, 4 Go, ext4, 2026-10-19.
+
+| Mode | `memory.current` avant | après | `VmRSS` | débit |
+|---|---:|---:|---:|---:|
+| buffered | 55,8 Mio | 2 019,5 Mio | 34,7 Mio | 836 Mio/s |
+| `DONTNEED` | 45,9 Mio | 61,8 Mio | 34,8 Mio | 625 Mio/s |
+
+Lecture :
+
+1. **Lire 1,9 Go de bibliothèque gonfle le cgroup de 1,9 Go**, alors que le
+   RSS du processus reste à 35 Mo. Un plafond `MemoryMax=100M` compterait
+   ces pages et évincerait le page cache — puis, sous pression, le cœur
+   résident. Le régime « bibliothèque sur disque » n'est valide que si l'on
+   compte `memory.current`, pas seulement `VmRSS`.
+2. **`posix_fadvise(DONTNEED)` après chaque cartouche rend les pages au
+   noyau** : `memory.current` reste à ~62 Mo. Coût mesuré : 836 → 625 Mio/s,
+   soit **−25 % de débit** sur ce bac à sable. Le coût absolu n'est pas
+   transférable ; l'ordre de grandeur et le remède le sont.
+3. C'est le test que demandait Agent-Recherche. Il doit être intégré à E-M5 :
+   exécuter le prototype sous `MemoryMax=200M`, mesurer `memory.current`,
+   `VmRSS` et le débit avant/après chargement ; critère : le cœur n'est pas
+   évincé et le débit reste à ±10 %.
+
 ### 6.1bis E-M2-lite — capacité et composition de la base partagée (`MESURÉ`, jouet)
 
 Protocole : `experiments/mnemosyne/toy_shared_basis.py`, `d=32`, 5 graines,
@@ -694,16 +735,26 @@ négatif est un livrable.
   mesure d'équivalence ; j'apporte le budget, le routeur et le jeu de
   compétences. On publie les deux résultats, positifs ou négatifs.
 
-### 8.3 À Agent-Recherche
+### 8.3 À Agent-Recherche — réponse du 2026-10-19
 
-- Je ne touche pas à l'onglet 12 ni à la baseline produit (MobileLLM-R1-140M,
-  ou Gemma 270M après élagage du vocabulaire). Ta baseline est le point de
-  comparaison à 200 Mo.
-- J'ai besoin de : (a) la config exacte du GGUF Q4_0 et le RSS mesuré en E0 ;
-  (b) le jeu d'évaluation de la tâche cible (200–500 exemples) ; (c) le
-  budget de tokens utilisé pour le QLoRA.
-- Si E-M2 échoue, je le dirai ; si E-M2 réussit, on aura une voie vers un
-  généraliste à 100 Mo qui **complète** ton produit à 200 Mo.
+- Merci pour les réponses. J'accepte le cadre **ADR-P-012** : deux modes
+  assumés, conversation (dense + RAG) et compétences (cœur + cartouches).
+  ALEXANDRIE est le second, pas le premier. Le mode conversation reste ta
+  baseline ; je ne la modifie pas.
+- J'accepte **ADR-M-001** et la convention `ADR-P-*` / `ADR-O-*` / `ADR-M-*`.
+  Le numéro 009 reste au vocabulaire ; le mien est `ADR-M-001`.
+- Le cœur **Gemma 270M à vocabulaire 32 k** (~106 Mo de fichier, 121 M de
+  paramètres, 2 Ko de KV/token) est un bon candidat pour le mode compétences
+  à 200 Mo. Je garde le 60 M pour le mode 100 Mo et je teste les deux comme
+  variantes de cœur dans E-M2.
+- J'utilise tes presets `file_mb` (`mobilellm-r1-140m`, `smollm2-135m-q4`) et
+  je publie désormais **`VmRSS` et `memory.current`**, pas un chiffre unique.
+- Le test page cache est déjà mesuré (E-M0b) : lire 1,9 Go gonfle le cgroup
+  à 2 019 Mio alors que `VmRSS` reste à 35 Mio ; `DONTNEED` ramène à 62 Mio
+  pour −25 % de débit. Je l'intègre à E-M5 sous `MemoryMax=200M`.
+- Ce qu'il me manque encore : (a) le jeu de 200–500 requêtes de la tâche
+  cible ; (b) les logs anonymisés pour α et k ; (c) la cible matérielle et
+  l'accord GPU pour E-M1/E-M2 ; (d) la confirmation du critère de succès.
 
 ### 8.4 À W2, W4, W5, W7
 
@@ -724,30 +775,45 @@ négatif est un livrable.
   Gemma 270M après élagage du vocabulaire, 136–141 Mo).
 - Ajouter au protocole de mesure les champs : RSS processus, page cache,
   octets lus sur disque, taille de la bibliothèque.
-- Demander à l'humain : (a) les 100 Mo sont-ils le RSS du processus ou la
-  RAM totale, page cache inclus ? (b) un disque de 1–10 Go est-il acceptable
-  sur la cible ? (c) la cible est-elle un site web avec 20–100 tâches
-  récurrentes, ou une conversation ouverte ? La réponse change le point de
-  fonctionnement.
+- Acter que **ALEXANDRIE est un mode compétences complémentaire**, pas le
+  produit : le mode conversation reste dense + RAG (ADR-P-012).
+- Ajouter à E-M5 le test `memory.current` sous `MemoryMax=200M`, avec
+  `DONTNEED`/O_DIRECT et mesure du débit avant/après.
+- Demander à l'humain : (a) la cible autoritaire (100 Mo pour le mode
+  compétences, 200 Mo pour la conversation ?) ; (b) le jeu d'évaluation et
+  les logs ; (c) le matériel cible et l'accord GPU.
 
 ---
 
-## 9. Questions à l'humain
+## 9. Réponses reçues et questions restantes
 
-1. **Unité** : les ~100 Mo sont-ils le RSS du processus d'inférence (hors
-   page cache), ou la RAM totale de la machine, page cache inclus ? Le
-   régime « bibliothèque sur disque » n'existe que dans le premier cas.
-2. **Stockage** : la cible accepte-t-elle 1 à 10 Go de disque pour la
-   bibliothèque ? Si non, la bibliothèque doit tenir en RAM, et le gain
-   disparaît.
-3. **Distribution des requêtes** : le site vise-t-il 20 à 100 tâches
-   récurrentes (où la bibliothèque excelle) ou de la conversation ouverte
-   (où le dense 270M reste meilleur) ?
-4. **Latence** : quel est le budget par requête ? 5 s, 20 s, 60 s ? Le
-   chargement des cartouches et le retrieval doivent tenir dedans.
-5. **Qualité** : quel est le critère de succès ? Le projet propose
-   « ≥ 70 % sur la tâche, ≥ 90 % de format, 0 fuite de prompt ». Le même
-   critère doit s'appliquer au modular et au dense.
+### Réponses reçues (Agent-Recherche, 2026-10-19)
+
+1. **Unité** : publier `VmRSS` **et** `memory.current` ; un plafond cgroup
+   compte le page cache. Test à ajouter à E-M5 sous `MemoryMax=200M`.
+2. **Stockage** : 1–10 Go acceptés ; le disque n'est pas la ressource rare.
+3. **Distribution** : **conversation ouverte**. Une bibliothèque de
+   cartouches ne peut pas être la réponse au brief ; ALEXANDRIE est un mode
+   compétences complémentaire, pas le produit (ADR-P-012).
+4. **Latence** : premier token 1–2 s, réponse de 200 tokens en 20–30 s ; un
+   chargement < 100 ms p99 est largement suffisant.
+5. **Qualité** : le critère proposé (≥ 70 % tâche, ≥ 90 % format, 0 fuite de
+   prompt) reste à confirmer par l'humain.
+
+### Questions restantes
+
+1. **Cible autoritaire** : le brief initial dit ~100 Mo ; l'ADR-006 produit
+   dit 200 Mo. Proposition : 100 Mo pour le mode compétences, 200 Mo pour le
+   mode conversation. Confirmer.
+2. **Jeu d'évaluation** : 200–500 requêtes de la tâche cible, avec réponses
+   de référence et format attendu.
+3. **Logs** : logs d'usage anonymisés (label de compétence, alternatives,
+   issue) pour mesurer α et k. Sans eux, la taille de la bibliothèque reste
+   une conjecture.
+4. **Matériel** : mini-PC cible (N100, RPi5, autre) et SSD ; accord pour
+   louer un T4/A10 (~500–5 000 €) pour E-M1/E-M2.
+5. **Page cache** : accepte-t-on `posix_fadvise(DONTNEED)`/O_DIRECT dans le
+   serveur, avec la perte de débit mesurée (~25 % sur le bac à sable) ?
 
 ---
 
@@ -891,6 +957,11 @@ Critères : exactitude sur 500 requêtes de la tâche cible, `J/réponse juste`,
 RSS, latence p95, taux de fallback. Go/no-go : un bras mixte doit battre le
 dense de +10 points à RSS égal, sinon le projet reste sur le dense.
 
+**Périmètre** : cette expérience porte sur la **partie récurrente et
+vérifiable** du trafic (formats, procédures, calculs). Elle ne prétend pas
+battre le dense en conversation ouverte ; le mode conversation reste
+dense + RAG (ADR-P-012).
+
 Cette expérience est la version 100 Mo de `E-Ω5` de KAIROS. Elle coûte
 ~5 000 € et 4 semaines en GPU loué + annotation ; elle peut commencer par
 un sous-ensemble à 20 compétences pour ~500 €.
@@ -906,6 +977,9 @@ un sous-ensemble à 20 compétences pour ~500 €.
   Et le cache FIFO-q8 reste-t-il le contrôle à battre ?
 - **À Agent-Recherche** : le jeu de 500 requêtes de la tâche cible et le RSS
   mesuré de MobileLLM-R1-140M en E0. C'est le socle commun des cinq bras.
+  Ses réponses du 2026-10-19 sont intégrées : `VmRSS` + `memory.current`,
+  disque 1–10 Go accepté, conversation ouverte = produit, ALEXANDRIE =
+  mode compétences complémentaire, latence 1–2 s / 20–30 s.
 - **À l'humain** : les logs d'usage (anonymisés) et l'accord d'instrumenter
   un site. C'est le seul moyen de mesurer `α` et `k`, et donc de dimensionner
   la bibliothèque.
@@ -970,6 +1044,10 @@ python3 tools/working_set.py csv > results/working-set-configs.csv
 python3 tools/substrate_budget.py table
 python3 tools/substrate_budget.py coverage --alpha 1.0
 python3 tools/substrate_budget.py compare
+
+# Page cache
+python3 tools/pagecache_probe.py --file /tmp/wsprobe2.bin --mode buffered
+python3 tools/pagecache_probe.py --file /tmp/wsprobe2.bin --mode dontneed
 
 # Chargement des cartouches
 gcc -O3 -Wall -Wextra -o /tmp/wsprobe tools/wsprobe.c

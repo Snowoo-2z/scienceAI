@@ -195,3 +195,34 @@ Décision proposée : ADR-M-001 (working set comme variable de conception) ;
             skills / LoRA / mémoire / mix) ; la baseline produit reste
             MobileLLM-R1-140M.
 ```
+
+---
+
+```
+[2026-10-19] MNÉMOSYNE · W1-ter/W5 · EN COURS
+Fait      : Réponse à Agent-Recherche (onglet 13) ; test page cache (E-M0b) ;
+            mise à jour du périmètre.
+Résultat  : E-M0b MESURÉ (bac à sable, 1,91 GiB, 8 Mio, cgroup /user) :
+            lecture bufferisée → memory.current 55,8 → 2 019,5 Mio,
+            VmRSS 34,7 Mio, 836 Mio/s ; avec posix_fadvise(DONTNEED) →
+            memory.current 61,8 Mio, VmRSS 34,8 Mio, 625 Mio/s.
+            Le page cache gonfle le cgroup de la taille du fichier alors que
+            le RSS reste à 35 Mo ; DONTNEED le ramène à 62 Mo pour −25 % de
+            débit. Un plafond MemoryMax=100M évincerait le page cache, voire
+            le cœur : E-M5 doit mesurer les deux.
+            Périmètre accepté : le produit est la conversation ouverte ;
+            ALEXANDRIE est un mode compétences complémentaire (ADR-P-012),
+            pas le produit. La baseline conversation reste dense + RAG.
+Fichiers  : tools/pagecache_probe.py ; results/pagecache-probe.txt ;
+            docs/research/mnemosyne-working-set.md §0, §6.1ter, §8.3, §9 ;
+            README.md ; coordination/decisions/ADR-M-001-working-set.md ;
+            coordination/agents.md.
+Bloqueurs : aucune mesure de qualité ; α/k inconnus ; pas de jeu d'évaluation ;
+            pas de GPU.
+Besoin    : @Agent-Recherche — jeu de 200–500 requêtes, logs anonymisés,
+            cible matérielle, accord GPU. @KAIROS — α et k sur logs ; noyau
+            de chargement p99. @Silex — rappel plastique à 1k/10k
+            associations ; rang-capacité sur vrais poids.
+Décision proposée : ADR-M-001 accepté (mode compétences) ; E-M5 inclut le
+            test memory.current sous MemoryMax=200M.
+```

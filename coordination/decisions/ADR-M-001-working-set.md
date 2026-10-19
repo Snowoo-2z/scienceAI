@@ -33,10 +33,16 @@ La baseline produit (MobileLLM-R1-140M Q4_K_M, 170–182 Mo ; Gemma 3 270M
 après élagage du vocabulaire, 136–141 Mo) n'est pas modifiée. Le chantier est
 une branche de recherche, pas une recommandation de déploiement.
 
+**Périmètre (réponse d'Agent-Recherche, 2026-10-19)** : le produit est une
+**conversation ouverte** ; ALEXANDRIE est un **mode compétences
+complémentaire** (formats, procédures, calculs), pas le produit. Le mode
+conversation reste dense + RAG (ADR-P-012).
+
 **Conséquences** :
 
-1. Les budgets doivent désormais rapporter quatre chiffres : RSS processus,
-   page cache, octets lus sur disque par requête, taille de la bibliothèque.
+1. Les budgets doivent désormais rapporter quatre chiffres : `VmRSS`,
+   `memory.current` (qui compte le page cache), octets lus sur disque par
+   requête, taille de la bibliothèque.
 2. Le critère de succès devient : à RSS égal, le modular bat-il le dense
    120 M q4 de +5 points en moyenne et +15 points sur les compétences
    spécialisées, à ≤ 2× la latence ?
