@@ -3,7 +3,7 @@
 ==============================================================================
   64 couches · d=2048 · 16 têtes / 4 KV · MLA · contexte 32768
   MoE : 896 experts, top-10, d_expert=1024, 64 couches
-  (routeur dense : 48 M paramètres, relus à chaque token)
+  (routeur rang faible : 48 M paramètres, relus à chaque token)
   Précision : experts 1.7 bit · attention 4.0 bit · embeddings 6.0 bit · KV 4.0 bit
 
 PARAMÈTRES
