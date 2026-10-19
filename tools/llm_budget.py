@@ -58,6 +58,7 @@ class Arch:
     head_dim_explicit: float = 0.0   # 0 = d_model / n_heads
     local_layers: int = 0            # couches à fenêtre glissante (Gemma, Mistral...)
     local_window: int = 0            # taille de la fenêtre
+    file_mb: float = 0.0             # taille GGUF MESURÉE sur disque (0 = estimer par bpw)
 
     # ---- paramètres -------------------------------------------------------------
     @property
@@ -107,7 +108,13 @@ class Arch:
     # ---- mémoire ----------------------------------------------------------------
     @property
     def weight_bytes(self) -> float:
+        if self.file_mb:
+            return self.file_mb * 1e6      # mesuré : inclut les embeddings haute précision
         return self.params * self.weight_bpw / 8.0
+
+    @property
+    def measured(self) -> bool:
+        return self.file_mb > 0
 
     @property
     def kv_bytes_total(self) -> float:
@@ -195,20 +202,37 @@ PRESETS: dict[str, Arch] = {
     "nano85": Arch("NanoFR-85M", 24, 512, 8, 2, 1408, 32_768, True, 2048, 4.5, 1.0),
     "nano125": Arch("NanoFR-125M", 30, 576, 9, 3, 1536, 32_768, True, 2048, 4.5, 1.0),
     # --- Régime 200 Mo : généraliste + déploiement web ---
-    "gemma3-270m-qat-2k": Arch(
-        "Gemma3-270M QAT q4 (2k)", 18, 640, 4, 1, 2048, 262_144, True,
-        ctx=2048, weight_bpw=4.0, kv_bytes=1.0,
-        head_dim_explicit=256, local_layers=15, local_window=512),
-    "gemma3-270m-qat-8k": Arch(
-        "Gemma3-270M QAT q4 (8k)", 18, 640, 4, 1, 2048, 262_144, True,
-        ctx=8192, weight_bpw=4.0, kv_bytes=1.0,
-        head_dim_explicit=256, local_layers=15, local_window=512),
-    "gemma3-270m-qat-32k": Arch(
-        "Gemma3-270M QAT q4 (32k)", 18, 640, 4, 1, 2048, 262_144, True,
-        ctx=32768, weight_bpw=4.0, kv_bytes=1.0,
-        head_dim_explicit=256, local_layers=15, local_window=512),
-    "smollm2-135m-q8": Arch("SmolLM2-135M Q8", 30, 576, 9, 3, 1536, 49_152, True, 2048, 8.5, 1.0),
-    "smollm2-360m-q4": Arch("SmolLM2-360M Q4.5", 32, 960, 15, 5, 2560, 49_152, True, 2048, 4.5, 1.0),
+    # file_mb = taille GGUF mesurée (unsloth / DevQuasar). 0 = estimation par bpw.
+    "smollm2-135m-q4": Arch("SmolLM2-135M Q4_K_M", 30, 576, 9, 3, 1536, 49_152, True,
+                            ctx=2048, weight_bpw=4.5, kv_bytes=1.0, file_mb=105.0),
+    "smollm2-135m-q4-4k": Arch("SmolLM2-135M Q4_K_M (4k)", 30, 576, 9, 3, 1536, 49_152, True,
+                               ctx=4096, weight_bpw=4.5, kv_bytes=1.0, file_mb=105.0),
+    "smollm2-135m-q5": Arch("SmolLM2-135M Q5_K_M", 30, 576, 9, 3, 1536, 49_152, True,
+                            ctx=2048, weight_bpw=5.5, kv_bytes=1.0, file_mb=112.0),
+    "smollm2-135m-q8": Arch("SmolLM2-135M Q8_0", 30, 576, 9, 3, 1536, 49_152, True,
+                            ctx=2048, weight_bpw=8.5, kv_bytes=1.0, file_mb=145.0),
+    "smollm2-135m-q2": Arch("SmolLM2-135M Q2_K", 30, 576, 9, 3, 1536, 49_152, True,
+                            ctx=2048, weight_bpw=2.6, kv_bytes=1.0, file_mb=88.2),
+    "mobilellm-r1-140m": Arch("MobileLLM-R1-140M Q4_K_M", 15, 576, 9, 3, 1536, 128_256, True,
+                              ctx=2048, weight_bpw=4.5, kv_bytes=1.0, file_mb=132.0),
+    "mobilellm-r1-140m-4k": Arch("MobileLLM-R1-140M Q4_K_M (4k)", 15, 576, 9, 3, 1536, 128_256, True,
+                                 ctx=4096, weight_bpw=4.5, kv_bytes=1.0, file_mb=132.0),
+    "gemma3-270m-q4km-2k": Arch("Gemma3-270M Q4_K_M (2k)", 18, 640, 4, 1, 2048, 262_144, True,
+                                ctx=2048, weight_bpw=4.5, kv_bytes=1.0,
+                                head_dim_explicit=256, local_layers=15, local_window=512,
+                                file_mb=253.0),
+    "gemma3-270m-q4km-8k": Arch("Gemma3-270M Q4_K_M (8k)", 18, 640, 4, 1, 2048, 262_144, True,
+                                ctx=8192, weight_bpw=4.5, kv_bytes=1.0,
+                                head_dim_explicit=256, local_layers=15, local_window=512,
+                                file_mb=253.0),
+    "gemma3-270m-vocab32k-8k": Arch("Gemma3-270M vocab 32k [calc.]", 18, 640, 4, 1, 2048, 32_768, True,
+                                    ctx=8192, weight_bpw=4.5, kv_bytes=1.0,
+                                    head_dim_explicit=256, local_layers=15, local_window=512,
+                                    file_mb=106.2),
+    "smollm2-360m-q2": Arch("SmolLM2-360M Q2_K", 32, 960, 15, 5, 2560, 49_152, True,
+                            ctx=2048, weight_bpw=2.6, kv_bytes=1.0, file_mb=219.0),
+    "smollm2-360m-q4": Arch("SmolLM2-360M Q4_K_M", 32, 960, 15, 5, 2560, 49_152, True,
+                            ctx=2048, weight_bpw=4.5, kv_bytes=1.0, file_mb=271.0),
     # Piste ternaire (BitNet b1.58)
     "ternary300": Arch("Ternaire-270M", 28, 896, 14, 4, 2432, 32_768, True, 2048, 1.58, 1.0),
     "ternary400": Arch("Ternaire-400M", 32, 1024, 16, 4, 2816, 32_768, True, 2048, 1.58, 1.0),
@@ -242,7 +266,7 @@ def show(a: Arch) -> None:
           f"[{fmt_bytes(a.kv_bytes_per_token)}/token]")
     print(f"  Runtime + scratch : {fmt_bytes(rt):>9}  ({100*rt/a.rss_bytes:4.1f} %)")
     print(f"  TOTAL RSS estimé  : {fmt_bytes(a.rss_bytes):>9}   "
-          f"{'✅ < 100 Mo' if a.rss_mb <= 100 else '❌ > 100 Mo'}")
+          f"{'✅ < 100 Mo' if a.rss_mb <= 100 else ('✅ < 200 Mo' if a.rss_mb <= 200 else '❌ > 200 Mo')}")
     print(f"  --- Énergie (borne basse mémoire) ---")
     print(f"  E/token           : {a.energy_per_token_j*1e3:8.2f} mJ")
     for tps in (5, 10, 20, 50):
@@ -252,20 +276,22 @@ def show(a: Arch) -> None:
 
 def table(names: list[str]) -> None:
     head = (
-        f"{'Modèle':<24}{'Params':>9}{'Poids':>9}{'KV':>9}{'RSS':>9}"
-        f"{'E/tok':>10}{'mW@10':>8}  {'<100Mo':>7}"
+        f"{'Modèle':<33}{'Params':>8}{'Poids':>10}{'KV':>9}{'RSS':>8}"
+        f"{'E/tok':>10}{'mW@10':>8}{'≤200Mo':>9}"
     )
     print(head)
     print("-" * len(head))
     for n in names:
         a = PRESETS[n]
+        mark = "*" if a.measured else " "
         print(
-            f"{a.name:<24}{a.params/1e6:>7.0f}M"
+            f"{a.name:<32}{mark}{a.params/1e6:>7.0f}M"
             f"{fmt_bytes(a.weight_bytes):>9}{fmt_bytes(a.kv_bytes_total):>9}"
             f"{a.rss_mb:>7.0f}Mo{a.energy_per_token_j*1e3:>9.2f}mJ"
-            f"{a.watts_at(10)*1e3:>7.0f}  {'OUI' if a.rss_mb <= 100 else 'non':>7}"
+            f"{a.watts_at(10)*1e3:>7.0f}  {'OUI' if a.rss_mb <= 200 else 'non':>7}"
         )
-    print("\nNote : E/token = borne basse DRAM+MAC ; mW@10 = puissance incrémentale à 10 tok/s.")
+    print("\nNote : * = taille GGUF mesurée ; sinon estimation bits/poids (optimiste).")
+    print("       E/token = borne basse DRAM+MAC ; mW@10 = puissance incrémentale à 10 tok/s.")
     print("       L'énergie murale vaut ~P_plateforme / débit (voir 'wall').")
 
 

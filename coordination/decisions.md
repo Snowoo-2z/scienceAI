@@ -68,9 +68,9 @@ réduit les FLOPs mais augmente l'empreinte.
 un modèle généraliste pré-entraîné devient déployable, ce qui change la nature du projet.
 **Décision** : le budget de référence passe à **200 Mo de RSS** (poids + KV + runtime). 100 Mo reste
 l'aspiration et l'objectif de la piste de recherche E6.
-**Conséquences** : Gemma 3 270M QAT q4 devient candidate (167–189 Mo selon le contexte) ;
-SmolLM2-360M reste exclue (271 Mo) ; les architectures from scratch NanoFR restent valides comme
-piste de distillation, plus comme produit.
+**Conséquences** : un 135–140 M en Q4 devient déployable (MobileLLM-R1-140M : 170–182 Mo ;
+SmolLM2-135M : 155–178 Mo). **Gemma 3 270M reste hors budget tel quel** : 253 Mo de fichier Q4_K_M,
+286–296 Mo de RSS. SmolLM2-360M reste exclue (271 Mo de fichier, 339 Mo de RSS).
 
 ---
 
@@ -101,3 +101,18 @@ sur un GGUF Q4_0 de Gemma 3 270M, derrière Caddy/nginx, avec cache applicatif S
 **Conséquences** : RSS ~177 Mo, 4 utilisateurs simultanés, ~9 tok/s chacun sur N100, montée en
 charge horizontale par réplicas sans état. Le cache applicatif est obligatoire (30–60 % de questions
 répétées sur un site public).
+
+---
+
+## ADR-009 — La taille du vocabulaire est le levier mémoire n° 1
+
+**Date** : 2026-10-19
+**Statut** : accepté
+**Contexte** : les tailles GGUF mesurées contredisent l'arithmétique bits/poids. Gemma 3 270M :
+262 144 tokens × 640 dimensions = 167,8 M paramètres d'embeddings, soit 62 % des paramètres et
+~138 Mo du fichier même en Q6_K. C'est pourquoi Q4_K_M pèse 253 Mo et Q2_K seulement 237 Mo.
+**Décision** : toute architecture cible utilise un vocabulaire de 32 768 tokens. L'élagage du
+vocabulaire de Gemma 3 (262 k → 32 k) + guérison devient l'expérience E5, prioritaire sur toute
+autre optimisation de compression.
+**Conséquences** : fichier attendu ~106 Mo, KV 2 Ko/token, jusqu'à 32 k de contexte sous 200 Mo.
+La piste est structurelle et ne dépend d'aucun kernel exotique.

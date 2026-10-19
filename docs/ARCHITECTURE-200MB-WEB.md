@@ -1,380 +1,352 @@
 # Project LLM v0.2 — 200 Mo, généraliste, déploiement web
 
 **Date** : 2026-10-19
-**Statut** : mise à jour du rapport v0.1 après précision des contraintes
+**Statut** : révision du rapport v0.1 après précision des contraintes
 **Remplace** : les recommandations de `RECHERCHE-LLM-100MB.md` §0, §6 et §9
-**Complète** : `RECHERCHE-LLM-100MB.md` (l'arithmétique et l'état de l'art restent valides)
+**Corrige** : la première version de ce document, qui utilisait une arithmétique bits/poids
+optimiste. Les tailles ci-dessous sont des **tailles GGUF mesurées sur Hugging Face**, pas des
+estimations.
 
 ---
 
 ## 0. Ce qui change
 
-| Paramètre | v0.1 (hypothèse) | v0.2 (confirmé) | Conséquence |
-|---|---|---|---|
-| RAM d'inférence | ~100 Mo | **~100 Mo, extensible à 200 Mo** | Un vrai généraliste devient possible |
-| Entraînement | ≤ 1 Go | **≤ 1 Go de RAM** | QLoRA oui, pré-entraînement 270 M non |
-| Périmètre | spécialisé envisagé | **généraliste** | Il faut une base pré-entraînée, pas un modèle from scratch |
-| Matériel | non précisé | **tout, PC aujourd'hui, petits PC en serveurs web** | Le débit et la concurrence deviennent centraux |
-| Objectif final | modèle | **site web déployé** | L'architecture système compte autant que le modèle |
+| Paramètre | v0.1 (hypothèse) | v0.2 (confirmé) |
+|---|---|---|
+| RAM d'inférence | ~100 Mo | **~100 Mo, extensible à 200 Mo** |
+| Entraînement | ≤ 1 Go | **≤ 1 Go de RAM** |
+| Périmètre | spécialisé envisagé | **généraliste** |
+| Matériel | non précisé | tout ; PC aujourd'hui, **petits PC en serveurs web** |
+| Objectif final | modèle | **site web déployé** |
 
-**Le renversement principal :** à 100 Mo, il fallait construire un petit modèle spécialisé. À 200 Mo,
-un modèle généraliste existe déjà et tient — **Gemma 3 270M en QAT INT4**. Le projet doit donc
-**fine-tuner et déployer**, pas pré-entraîner. Le pré-entraînement from scratch sous 1 Go plafonne à
-~60 M de paramètres, soit un modèle bien plus faible que Gemma 3 270M pour un coût de recherche
-incomparablement plus élevé.
+### Le fait qui commande tout
 
-> **Recommandation : arrêter la piste « entraîner un LLM depuis zéro » comme piste produit.
-> La conserver comme piste de recherche (distillation 270 M → 60 M), pas comme chemin critique.**
+À cette échelle, **le vocabulaire domine le fichier**, pas les paramètres du transformer.
+
+```
+Gemma 3 270M : 262 144 tokens × 640 dimensions = 167,8 M paramètres d'embeddings
+               soit 62 % des 270 M de paramètres annoncés
+               et ~138 Mo du fichier, même en Q6_K
+```
+
+C'est pourquoi un modèle « 270 M » pèse 253 Mo en Q4_K_M, et pourquoi Q2_K ne descend qu'à 237 Mo :
+la quantification agressive porte sur le transformer, pas sur les embeddings. **Le levier n° 1
+n'est donc pas la quantification, c'est la taille du vocabulaire.**
 
 ---
 
 ## 1. Qui tient réellement dans 200 Mo ?
 
-Tous les chiffres sont calculés par `tools/llm_budget.py`, avec le KV cache réel (fenêtre glissante
-prise en compte pour Gemma), un runtime de 20 Mo et 6 Mo de scratch.
+Tailles de fichiers mesurées (unsloth, DevQuasar), KV en q8, runtime 26 Mo (20 Mo moteur + 6 Mo
+scratch).
 
-| Modèle | Params | Poids | KV | **RSS** | Verdict |
-|---|---:|---:|---:|---:|---|
-| **Gemma 3 270M IT, QAT q4, 2 k ctx** | 268 M | 134,0 Mo | 7,1 Mo | **167 Mo** | ✅ marge 33 Mo |
-| **Gemma 3 270M IT, QAT q4, 8 k ctx** | 268 M | 134,0 Mo | 16,5 Mo | **177 Mo** | ✅ **le bon réglage** |
-| **Gemma 3 270M IT, QAT q4, 16 k ctx** | 268 M | 134,0 Mo | 29,1 Mo | **189 Mo** | ✅ marge 11 Mo |
-| Gemma 3 270M IT, QAT q4, 32 k ctx | 268 M | 134,0 Mo | 54,3 Mo | 214 Mo | ❌ |
-| SmolLM2-135M, Q8 | 135 M | 142,9 Mo | 23,6 Mo | 193 Mo | ✅ mais anglais et plus faible |
-| SmolLM2-135M, Q4.5 | 135 M | 75,7 Mo | 23,6 Mo | 125 Mo | ✅ marge, mais qualité faible |
-| SmolLM2-360M, Q4.5 | 362 M | 203,5 Mo | 41,9 Mo | 271 Mo | ❌ |
-| MobileLLM-R1-140M, Q4.5 | 140 M | 78,8 Mo | 11,8 Mo | 117 Mo | ✅ mais spécialisé maths/code |
-| Ternaire-400M (pari), 2 k ctx | 394 M | 77,9 Mo | 33,6 Mo | 137 Mo | ✅ mais non entraînable sous 1 Go |
+| Modèle | Fichier | KV 2k | KV 4k | KV 8k | **RSS 2k** | **RSS 4k** | Verdict |
+|---|---:|---:|---:|---:|---:|---:|---|
+| **MobileLLM-R1-140M Q4_K_M** | 132 Mo | 11,8 | 23,6 | 47,2 | **170 Mo** | **182 Mo** | ✅ le meilleur compromis |
+| **SmolLM2-135M Q4_K_M** | 105 Mo | 23,6 | 47,2 | 94,4 | **155 Mo** | **178 Mo** | ✅ mais anglais et faible |
+| SmolLM2-135M Q5_K_M | 112 Mo | 23,6 | 47,2 | 94,4 | 162 Mo | 185 Mo | ✅ |
+| SmolLM2-135M Q8_0 | 145 Mo | 23,6 | 47,2 | 94,4 | 195 Mo | 218 Mo | ⚠️ 2 k seulement |
+| **Gemma 3 270M Q4_K_M** | **253 Mo** | 7,1 | 11,8 | 16,5 | **286 Mo** | **291 Mo** | ❌ **hors budget** |
+| Gemma 3 270M IQ4_XS | 241 Mo | 7,1 | 11,8 | 16,5 | 274 Mo | 279 Mo | ❌ |
+| Gemma 3 270M Q2_K | 237 Mo | 7,1 | 11,8 | 16,5 | 270 Mo | 275 Mo | ❌ |
+| SmolLM2-360M Q2_K | 219 Mo | 41,9 | 83,9 | — | 287 Mo | 329 Mo | ❌ |
+| SmolLM2-360M Q4_K_M | 271 Mo | 41,9 | 83,9 | — | 339 Mo | 381 Mo | ❌ |
+| **Gemma 3 270M, vocab ramené à 32 k** | ~106 Mo* | 4,1 | 8,2 | 16,5 | **136 Mo** | **141 Mo** | ✅ mais chirurgie requise |
 
-### Pourquoi Gemma 3 270M gagne
+\* calculé, pas mesuré : 253 Mo − (262 144 − 32 768) × 640 octets (embeddings Q8) ≈ 106 Mo.
 
-Sa configuration exacte (config officielle) :
+### Conclusion de la section
+
+**Le relèvement de 100 à 200 Mo ne débloque pas le généraliste 270 M prêt à l'emploi.** Il débloque
+un 135–140 M en Q4 avec un contexte utile, ou un 270 M **après chirurgie du vocabulaire**.
+
+Trois options, par ordre de risque croissant :
+
+1. **MobileLLM-R1-140M Q4_K_M** — 170 Mo à 2 k, 182 Mo à 4 k.
+   4,2 billions de tokens d'entraînement, 128 k de vocabulaire, très bon en maths/code pour sa
+   taille, contexte natif large. C'est le meilleur rapport qualité/risque **immédiat**.
+   Réserve : il est affiné pour le raisonnement (maths/code), pas pour la conversation générale —
+   mais il est plus facile à réorienter qu'un modèle sous-entraîné.
+2. **SmolLM2-135M Q4_K_M** — 155 Mo à 2 k, 178 Mo à 4 k. Le plus léger, le plus documenté,
+   mais principalement anglais et faible en raisonnement (GSM8K 1,4 %). Utile comme plancher de
+   comparaison, pas comme produit francophone.
+3. **Gemma 3 270M + vocabulaire réduit à 32 k** — 136–141 Mo de RSS, le meilleur modèle de base
+   (6 000 Md de tokens, 140+ langues), mais il faut **élaguer les embeddings, réentraîner la couche
+   de sortie et faire une phase de guérison**. C'est un vrai travail de recherche, pas une commande.
+
+### Pourquoi Gemma 3 270M reste intéressant malgré tout
+
+Son architecture est excellente pour l'inférence contrainte :
 
 ```
-18 couches · hidden 640 · 4 têtes Q · 1 tête KV · head_dim 256
-FFN 2048 · vocab 262 144 · embeddings partagés
-15 couches à fenêtre glissante (512) + 3 couches globales
-contexte natif 32 768 · 6 000 Md de tokens · 140+ langues
+18 couches · hidden 640 · 4 têtes Q · 1 seule tête KV · head_dim 256
+FFN 2048 · 15 couches à fenêtre glissante (512) + 3 globales
+→ 2 Ko de KV par token seulement (contre 11,5 Ko pour SmolLM2-135M)
 ```
 
-Trois propriétés décisives :
-
-1. **Une seule tête KV.** Le KV par token est de 512 octets par couche en q8, soit ~2,5 Ko/token
-   en moyenne avec la fenêtre glissante. À 8 k de contexte, cela ne coûte que **16,5 Mo**.
-   C'est ce qui rend le généraliste compatible avec 200 Mo.
-2. **La fenêtre glissante 5:1.** 15 couches sur 18 ne stockent que 512 tokens. Sans elle, le même
-   modèle à 8 k coûterait ~40 Mo de KV.
-3. **La QAT officielle.** Google publie un checkpoint entraîné à supporter l'INT4
-   (`gemma-3-270m-it-qat-q4_0-unquantized`). À 4 bits, un 270 M coûte 134 Mo au lieu de 536 Mo en bf16.
-
-**Point de vigilance :** les GGUF `Q4_K_M` de ce modèle pèsent ~250 Mo, car ils gardent les
-embeddings en Q8 (170 M de paramètres = 170 Mo à eux seuls). Pour tenir sous 200 Mo, il faut un
-**Q4_0 / QAT sur l'ensemble des tenseurs, embeddings compris**. C'est le seul réglage qui donne 134 Mo.
-
-### Pourquoi pas SmolLM2
-
-SmolLM2 est entraîné principalement en anglais. Pour un site francophone, Gemma 3 (140+ langues) est
-un meilleur point de départ, même à taille comparable. SmolLM2-360M, qui serait qualitativement
-intéressant, ne rentre pas (271 Mo).
+À 32 k de contexte, son KV ne coûte que ~64 Mo. Aucun autre modèle de cette taille ne fait mieux.
+**Son seul défaut est un vocabulaire de 262 144 tokens, hérité du multilingue.** Si l'on n'a besoin
+que du français, de l'anglais et du code, 32 768 tokens suffisent — et le modèle devient
+immédiatement déployable sous 200 Mo, avec 5× plus de contexte que SmolLM2 pour un coût mémoire
+inférieur.
 
 ---
 
 ## 2. Entraînement : ce que 1 Go permet vraiment
 
-### 2.1 L'arithmétique, sans illusion
+### 2.1 L'arithmétique
 
-| Méthode sur Gemma 3 270M | Poids de base | Optimiseur | Total sans activations | Tient sous 1 Go ? |
+| Méthode sur un modèle de 140–270 M | Poids de base | Optimiseur | Total sans activations | Sous 1 Go ? |
 |---|---:|---:|---:|---|
-| Full fine-tuning, Adam fp32 | 1,07 Go | 3,2 Go | 4,3 Go | ❌ |
-| Full fine-tuning, Adam 8-bit | 1,07 Go | 1,6 Go | 2,7 Go | ❌ |
-| LoRA, base bf16 | 0,54 Go | ~0,06 Go | 0,6 Go | ⚠️ avec activations, non |
-| **QLoRA, base NF4** | **0,134 Go** | **~0,03 Go** | **0,16 Go** | ✅ |
+| Full fine-tuning, Adam fp32 | 0,54–1,07 Go | 1,6–3,2 Go | 2,1–4,3 Go | ❌ |
+| Full fine-tuning, Adam 8-bit | 0,54–1,07 Go | 0,8–1,6 Go | 1,3–2,7 Go | ❌ |
+| LoRA, base bf16 | 0,27–0,54 Go | ~0,03–0,06 Go | 0,3–0,6 Go | ⚠️ avec activations, non |
+| **QLoRA, base NF4** | **0,07–0,13 Go** | **~0,02–0,03 Go** | **0,09–0,16 Go** | ✅ |
 
-Avec les activations (batch 1, séquence 512 à 1 024, gradient checkpointing) et, sur GPU, le contexte
-CUDA (200 à 400 Mo) :
+Avec les activations (batch 1, séquence 512–1 024, gradient checkpointing) et, sur GPU, le contexte
+CUDA (200–400 Mo) :
 
-- **sur CPU** : ~350 à 500 Mo de RSS → **tient largement sous 1 Go** ;
-- **sur GPU 1 Go** : ~600 à 900 Mo → tient, mais sans marge ;
+- **sur CPU** : 300–500 Mo de RSS → tient largement sous 1 Go ;
+- **sur GPU 1 Go** : 500–900 Mo → tient, sans marge ;
 - **sur GPU ≥ 2 Go** : confortable.
 
-### 2.2 La règle à retenir
+### 2.2 La règle
 
-> **Sous 1 Go, on peut *adapter* un modèle de 270 M, mais pas *pré-entraîner* un modèle de 270 M.**
-> Le pré-entraînement from scratch plafonne autour de **60 M de paramètres** (600 Mo d'optimiseur
-> Adam 8-bit + ~250 Mo d'activations), et un 60 M généraliste est très inférieur à Gemma 3 270M.
+> **Sous 1 Go, on peut *adapter* un modèle de 140–270 M, mais pas *pré-entraîner* un modèle de
+> 270 M.** Le pré-entraînement from scratch plafonne autour de **60 M de paramètres**
+> (600 Mo d'optimiseur Adam 8-bit + ~250 Mo d'activations).
 
-### 2.3 Ce que ça coûte en temps
+### 2.3 Temps et coût
 
 | Run | FLOPs | CPU 30 GFLOPS | GPU T4 ~8 TFLOPS | Coût GPU loué |
 |---|---:|---:|---:|---:|
-| QLoRA SFT, 5 M tokens | 8,0 × 10¹⁵ | ~3 jours | ~20 min | < 0,50 $ |
+| QLoRA SFT, 5 M tokens (140 M) | 8,0 × 10¹⁵ | ~3 jours | ~20 min | < 0,50 $ |
 | QLoRA distillation, 20 M tokens | 3,2 × 10¹⁶ | ~12 jours | ~1,1 h | ~1 $ |
 | Pré-entraînement 60 M, 1,2 Md tokens | 4,3 × 10¹⁷ | ~166 jours | ~15 h | ~10 $ |
 | Pré-entraînement 270 M, 2 Md tokens | 3,2 × 10¹⁸ | ~3,4 ans | ~110 h | ~70 $ |
 
-**Conclusion opérationnelle :** un QLoRA sérieux (5 à 20 M tokens) est un run de **quelques heures**
-sur un GPU loué, pour **1 à 2 $**. C'est le seul entraînement qui respecte à la fois le budget
-mémoire, le budget temps et le budget argent.
+Un QLoRA sérieux est donc un run de **quelques heures** pour **1 à 2 $**.
 
 ---
 
-## 3. La recette : Gemma 3 270M, français, domaine, sous 1 Go
+## 3. La recette
 
-### 3.1 Chaîne complète
+### 3.1 Option A — sans recherche : MobileLLM-R1-140M
 
 ```
-1. Base     : google/gemma-3-270m-it-qat-q4_0-unquantized
-              (checkpoint QAT, poids "unquantized" mais robustes à l'INT4)
-2. Données  : 5 à 20 M tokens de français de qualité + domaine
-              (instructions, dialogues courts, format JSON, refus)
-3. QLoRA    : NF4, r=16, alpha=32, cibles q/k/v/o + gate/up/down
-              seq 1 024, batch 1, gradient checkpointing, LR 1e-4
-4. Fusion   : merge des adaptateurs dans les poids bf16
-5. Export   : Q4_0 (tous tenseurs à 4 bits, embeddings compris) ou QAT q4_0
-6. Mesure   : RSS, tok/s, qualité sur le jeu de test, avant toute mise en ligne
+1. Base     : facebook/MobileLLM-R1-140M (ou base)
+2. Données  : 5 à 10 M tokens de français général + domaine
+3. QLoRA    : NF4, r=16, alpha=32, seq 1 024, batch 1, LR 1e-4
+4. Fusion   : merge en bf16
+5. Export   : Q4_K_M (fichier mesuré 132 Mo)
+6. Mesure   : RSS, tok/s, qualité — avant mise en ligne
 ```
 
-**Pourquoi partir du checkpoint QAT plutôt que du modèle fp16 ?** Parce que la QAT apprend au modèle
-à vivre avec 4 bits. Fine-tuner le modèle fp16 puis le quantifier à 4 bits après coup cumule deux
-pertes : celle du fine-tuning et celle de la PTQ. Partir du QAT réduit la seconde à presque rien.
+### 3.2 Option B — la vraie recherche : Gemma 3 270M à vocabulaire réduit
 
-**Attention :** un QLoRA sur un checkpoint QAT peut dégrader sa robustesse à la quantification si le
-learning rate est trop élevé. Utiliser un LR faible (5e-5 à 1e-4) et vérifier la perplexité après
-export Q4_0. Si la dégradation dépasse 3 %, refaire un court QAT de récupération.
+```
+1. Sélection de vocabulaire : garder les 32 768 tokens les plus fréquents
+   en français + anglais + code, mesurés sur le corpus cible.
+2. Chirurgie : tronquer token_embd et lm_head ; réindexer ; conserver
+   les tokens spéciaux (BOS, EOS, <start_of_turn>, <image_soft_token>...).
+3. Guérison : 200 à 500 M tokens (français + anglais), LoRA sur toutes
+   les couches + embeddings dégelés, LR faible.
+4. Export Q4_K_M → fichier attendu ~106 Mo (à mesurer).
+5. Évaluation : comparer au modèle d'origine sur 3 jeux ; accepter une
+   perte ≤ 3 points.
+```
 
-### 3.2 Données : le vrai goulot d'étranglement
+**Pourquoi c'est le bon pari de recherche :** le gain est structurel (62 % du fichier), il ne
+dépend d'aucun kernel exotique, et il compose avec tout le reste. Il rejoint l'ADR-002 de la v0.1
+(vocab 32 768, embeddings partagés), qui était juste — mais pour la mauvaise raison : ce n'était pas
+une optimisation de calcul, c'était **la** condition de tenue en mémoire.
+
+### 3.3 Données
 
 - 5 à 20 M tokens suffisent pour le style, le format, le français et le ton.
-- Ils **ne suffisent pas** à ajouter des connaissances. Les faits vont dans le RAG.
-- Composition recommandée : 40 % instructions générales françaises, 30 % domaine, 20 % format
-  structuré (JSON, tableaux, listes), 10 % refus et « je ne sais pas ».
-- Générer les données avec un grand modèle (distillation) est plus rentable que collecter du web.
+- Ils **ne suffisent pas** à ajouter des connaissances : les faits vont dans le RAG.
+- Composition : 40 % instructions générales françaises, 30 % domaine, 20 % format structuré,
+  10 % refus et « je ne sais pas ».
+- Générer avec un grand modèle (distillation) est plus rentable que collecter du web.
 - Garder 5 % de données réelles pour éviter l'uniformisation du style.
 
-### 3.3 Évaluation avant déploiement
+### 3.4 Évaluation avant déploiement
 
-Trois jeux, 200 à 500 exemples chacun :
-1. **Tâche** : ce que le site doit savoir faire (exactitude binaire).
-2. **Français** : grammaire, accords, registre (évaluation humaine ou juge LLM).
-3. **Sécurité** : hors-sujet, prompt injection, demandes sensibles (taux de refus correct).
-
-Critère de mise en ligne : **≥ 70 % sur la tâche, ≥ 90 % de format valide, 0 fuite de prompt système.**
+Trois jeux de 200 à 500 exemples : tâche (exactitude binaire), français (grammaire, registre),
+sécurité (hors-sujet, injection, refus).
+Critère : **≥ 70 % sur la tâche, ≥ 90 % de format valide, 0 fuite de prompt système.**
 
 ---
 
 ## 4. Déploiement web sur petits PCs
 
-### 4.1 Matériel : ce qui est réaliste
+### 4.1 Contrainte de dimensionnement
 
-| Plateforme | RAM | Débit mono-flux [estim.] | Utilisateurs confortables | Puissance |
-|---|---:|---:|---:|---:|
-| Raspberry Pi 5 | 8 Go | 5–9 tok/s | 1–2 | 5–8 W |
-| Mini-PC N100 | 16 Go | 12–18 tok/s | 3–5 | 10–15 W |
-| Mini-PC Ryzen 5 5500U / i5-1235U | 16 Go | 25–40 tok/s | 8–12 | 15–25 W |
-| Ancien laptop i5-8250U | 8–16 Go | 15–25 tok/s | 4–8 | 15 W |
+Le KV cache est un **pool partagé** : `--ctx-size` est le total pour tous les slots, pas la taille
+par slot. À 200 Mo, cela donne :
 
-**Le Raspberry Pi 5 est possible mais lent** (≈ 50 s pour une réponse de 200 tokens à 4 slots).
-Un N100 est le meilleur rapport performance/prix/consommation pour démarrer. Un Ryzen 5 offre
-2 à 3× plus de confort pour ~2× le prix.
+| Modèle | Fichier | KV/token | Contexte total max (~175 Mo de marge) | Slots réalistes |
+|---|---:|---:|---:|---|
+| SmolLM2-135M Q4_K_M | 105 Mo | 11,5 Ko | ~4 000 tokens | 2 × 2 k |
+| MobileLLM-R1-140M Q4_K_M | 132 Mo | 5,8 Ko | ~7 000 tokens | 4 × 1,75 k |
+| Gemma 270M vocab 32 k | ~106 Mo | 2,0 Ko | ~32 000 tokens | 4 × 8 k |
 
-**Ne pas acheter de GPU.** À 270 M de paramètres, le décodage est limité par la bande passante
-mémoire, pas par le calcul. Un GPU n'apporte presque rien et coûte 10× plus cher.
+**Gemma à vocabulaire réduit est le seul à offrir un contexte confortable sous 200 Mo.** C'est un
+argument produit décisif : un assistant de site web a besoin de 4 à 8 k de contexte par utilisateur.
 
 ### 4.2 Architecture logicielle
 
 ```
-Navigateur
-  │  HTTPS + SSE (streaming)
-  ▼
-Caddy / nginx  ── TLS, rate limit, cache HTTP, compression
-  │
-  ├──► cache applicatif (SQLite) : questions fréquentes, réponses pré-calculées
-  │
-  ▼
-llama-server (llama.cpp)  ── API compatible OpenAI
-  │   --ctx-size 8192 --parallel 4 --cont-batching --metrics
-  ▼
-GGUF sur disque (mmap, lecture seule)
+Navigateur → HTTPS + SSE → Caddy/nginx (TLS, rate limit)
+          → cache applicatif SQLite (questions fréquentes)
+          → llama-server (API compatible OpenAI)
+          → GGUF sur disque en mmap
 ```
 
-**Un seul processus llama-server par nœud**, modèle chargé une fois, poids partagés entre les slots.
-Le KV cache est **un pool partagé** : `--ctx-size` est le total pour tous les slots, pas par slot.
-Avec `--parallel 4 --ctx-size 8192`, chaque requête dispose de ~2 048 tokens.
+Un seul processus par nœud, poids partagés entre les slots, `--cont-batching` actif.
 
-### 4.3 Configuration de référence
+### 4.3 Configuration de référence (MobileLLM-R1-140M)
 
 ```bash
 llama-server \
-  --model /models/gemma-3-270m-it-qat-q4_0.gguf \
+  --model /models/mobilellm-r1-140m-q4_k_m.gguf \
   --host 0.0.0.0 --port 8080 \
-  --ctx-size 8192 \
-  --parallel 4 \
-  --cont-batching \
-  --threads 4 \
+  --ctx-size 7168 --parallel 4 \
+  --cont-batching --threads 4 \
   --batch-size 1024 --ubatch-size 256 \
   --cache-type-k q8_0 --cache-type-v q8_0 \
-  --metrics \
-  --api-key file:/etc/llama/api-key
+  --metrics --api-key file:/etc/llama/api-key
 ```
-
-Mesures attendues [à valider par E0/E1] :
 
 | Poste | Valeur |
 |---|---|
-| Poids | 134 Mo |
-| KV (8 k total, q8) | 16,5 Mo |
-| Runtime + scratch | ~26 Mo |
-| **RSS** | **~177 Mo** |
-| Slots | 4 × ~2 k tokens |
-| Débit agrégé (N100) | ~35–40 tok/s |
-| Débit par utilisateur | ~9 tok/s |
-| Latence, 200 tokens | ~21 s (streaming : premier token en ~1 s) |
+| Poids | 132 Mo |
+| KV (7 168 total, q8) | 41,3 Mo |
+| Runtime + scratch | 26 Mo |
+| **RSS** | **~199 Mo** |
+| Slots | 4 × 1 792 tokens |
+| Débit agrégé (N100) | ~30–40 tok/s |
+| Débit par utilisateur | ~8–10 tok/s |
 
-**Limite système :** placer le service sous `MemoryMax=256M` (systemd) ou `mem_limit: 256m`
-(Docker). Si le processus dépasse, c'est un bug de configuration, pas une fatalité.
+### 4.4 Matériel
 
-### 4.4 Dimensionnement et montée en charge
+| Plateforme | RAM | Débit mono-flux [estim.] | Utilisateurs | Puissance |
+|---|---:|---:|---:|---:|
+| Raspberry Pi 5 | 8 Go | 8–12 tok/s | 1–2 | 5–8 W |
+| Mini-PC N100 | 16 Go | 18–25 tok/s | 2–4 | 10–15 W |
+| Mini-PC Ryzen 5 5500U / i5-1235U | 16 Go | 35–50 tok/s | 6–10 | 15–25 W |
 
-| Trafic | Nœuds N100 nécessaires | Commentaire |
-|---|---:|---|
-| 1 000 req/jour | 1 | ~0,01 req/s, largement sous la capacité |
-| 10 000 req/jour | 1 | ~0,12 req/s, confortable |
-| 100 000 req/jour | 3–4 | ~1,2 req/s, avec réplicas |
-| 1 M req/jour | 20–30 | il faut passer à un vrai serveur |
+**Pas de GPU.** À 135–270 M de paramètres, le décodage est limité par la bande passante mémoire.
+Un GPU n'apporte presque rien et coûte 10× plus cher.
 
-Capacité d'un nœud : 4 slots / 21 s ≈ **0,19 req/s ≈ 16 000 req/jour** en pointe continue.
-Au-delà, ajouter des réplicas derrière nginx (round-robin). Les réplicas sont **sans état** :
-la session est côté client ou dans le cache, pas dans le processus.
+### 4.5 Dimensionnement et énergie
 
-**Le cache est le levier n° 1.** Sur un site public, 30 à 60 % des questions sont répétées.
-Un cache SQLite de 10 000 réponses coûte quelques Mo et divise la charge par 2 à 3.
+Capacité d'un nœud à 4 slots et ~25 tok/s agrégés : environ **1 requête toutes les 8 s**, soit
+~10 000 requêtes/jour en pointe continue. Au-delà, réplicas sans état derrière nginx.
 
-### 4.5 Énergie et coût
+Pour 1 000 requêtes/jour de 200 tokens sur un N100 (15 W) : ~5,8 h de calcul, ~87 Wh/jour,
+**~8 €/an** à 0,25 €/kWh. Le serveur coûte plus cher en veille qu'en calcul : réveil à la demande.
 
-Pour 1 000 requêtes/jour de 200 tokens sur un N100 (15 W) :
+### 4.6 Sécurité
 
-```
-temps de calcul ≈ 1000 × 21 s = 5,8 h
-énergie        ≈ 15 W × 5,8 h = 87 Wh/jour
-coût annuel    ≈ 32 kWh ≈ 8 € à 0,25 €/kWh
-```
-
-**Le serveur coûte plus cher en veille qu'en calcul.** À 1 000 requêtes/jour, l'énergie est
-négligeable. Le vrai enjeu énergétique est de **ne pas laisser le service tourner à vide** :
-réveil à la demande, mise en veille la nuit, ou mutualisation sur un seul nœud.
-
-### 4.6 Sécurité et robustesse
-
-- **Clé API** sur llama-server, jamais exposé directement à Internet.
-- **Rate limit** par IP (nginx `limit_req`), 10 req/min par défaut.
-- **Taille d'entrée** limitée (2 000 caractères) et **sortie** limitée (`max_tokens` 200–300).
-- **Timeout** de 60 s ; le client voit le streaming, mais la requête est coupée au-delà.
-- **Prompt système court** (200–400 tokens) pour préserver le contexte utile.
-- **Historique tronqué** aux 2–3 derniers tours.
-- **Filtre de sortie** : refus des sujets sensibles, détection de fuite du prompt système.
-- **Sauvegarde** du GGUF et des adaptateurs ; mise à jour atomique par symlink + restart.
-- **Supervision** : `/metrics` (RSS, slots occupés, tok/s), logs JSON, alerte si RSS > 200 Mo.
+Clé API sur llama-server (jamais exposé), rate limit par IP, entrée ≤ 2 000 caractères, sortie
+≤ 200–300 tokens, timeout 60 s, prompt système court (200–400 tokens), historique tronqué,
+filtre de sortie, `MemoryMax=256M` sous systemd, alerte si RSS > 200 Mo.
 
 ---
 
-## 5. Qualité attendue : être honnête
+## 5. Qualité attendue
 
-Avec Gemma 3 270M en Q4 :
-
-| Ce qu'il sait faire | Ce qu'il ne sait pas faire |
+| Sait faire | Ne sait pas faire |
 |---|---|
-| Répondre à des questions simples et courtes | Raisonner en plusieurs étapes |
-| Reformuler, résumer un court texte | Produire un texte long cohérent |
+| Questions simples et courtes | Raisonnement en plusieurs étapes |
+| Reformuler, résumer un court texte | Texte long cohérent |
 | Traduire des phrases simples | Garantir des faits sans RAG |
-| Suivre un format (JSON, liste, tableau) | Calculer de façon fiable |
-| Tenir une conversation de 2–3 tours | Se souvenir d'un long historique |
-| Dire « je ne sais pas » (si entraîné) | Être un « ChatGPT » |
+| Suivre un format (JSON, liste) | Calcul fiable |
+| Conversation de 2–3 tours | Mémoire d'un long historique |
 
-**Un site qui présente ce modèle comme un assistant généraliste décevra.** Un site qui l'utilise
-comme **interface en langage naturel au-dessus d'une base de connaissances** (RAG + réponses courtes
-+ sources) sera utile.
-
-### Garde-fous produit
-
-1. **RAG obligatoire** pour toute question factuelle.
-2. **Réponses courtes** (≤ 200 tokens), avec sources cliquables.
-3. **Boutons / suggestions** plutôt que champ libre pour les cas fréquents.
-4. **Avertissement** : « assistant automatique, peut se tromper ».
-5. **Escalade humaine** quand la confiance est basse (score de retrieval faible).
+**Un site qui présente ce modèle comme un ChatGPT décevra.** Un site qui l'utilise comme interface
+en langage naturel au-dessus d'une base de connaissances (RAG + réponses courtes + sources) sera
+utile. Garde-fous : RAG obligatoire pour le factuel, réponses ≤ 200 tokens avec sources, boutons
+plutôt que champ libre, avertissement, escalade humaine si le retrieval est faible.
 
 ---
 
-## 6. Plan d'expériences v0.2
+## 6. Plan d'expériences
 
-| # | Expérience | Question | Critère go/no-go | Effort |
-|---|---|---|---|---|
-| **E0** | RSS réel de Gemma 3 270M QAT q4 dans llama.cpp | Tient-on sous 200 Mo ? | RSS < 190 Mo à 8 k | 1 j |
-| **E1** | Débit mono-flux et 4 slots sur le mini-PC cible | Le site est-il utilisable ? | ≥ 8 tok/s/utilisateur | 1 j |
-| **E2** | QLoRA français, 5 M tokens | Gain perceptible vs base ? | +10 pts en win rate humain | 3 j |
-| **E3** | RAG + garde-fous | Le système répond-il juste ? | ≥ 70 % sur la tâche | 3 j |
-| **E4** | Gemma 270M vs SmolLM2-135M Q8 en français | Le choix est-il confirmé ? | Gemma gagne sur 3 jeux/4 | 2 j |
-| **E5** | Contexte 16 k (189 Mo) | A-t-on besoin de plus que 8 k ? | gain réel sur les prompts | 1 j |
-| **E6** | Distillation 270M → 60M | Peut-on descendre sous 100 Mo ? | 60M ≥ 90 % du 270M sur la tâche | 2 sem. |
-| **E7** | Ternaire 400M | Pari de capacité | — (hors budget d'entraînement) | — |
+| # | Expérience | Critère go/no-go | Effort |
+|---|---|---|---|
+| **E0** | RSS réel de MobileLLM-R1-140M Q4_K_M et SmolLM2-135M Q4_K_M dans llama.cpp | écart < 10 % vs calcul | 1 j |
+| **E1** | Débit mono-flux et 4 slots sur le mini-PC cible | ≥ 8 tok/s/utilisateur | 1 j |
+| **E2** | QLoRA français sur MobileLLM, 5–10 M tokens | +10 pts en win rate humain | 3 j |
+| **E3** | RAG + garde-fous | ≥ 70 % sur la tâche | 3 j |
+| **E4** | Comparaison à l'aveugle MobileLLM / SmolLM2 / Gemma tronqué | gagnant net sur 3 jeux/4 | 3 j |
+| **E5** | **Chirurgie du vocabulaire Gemma 3 : 262 k → 32 k** | perte ≤ 3 pts, fichier ≤ 110 Mo | 2 sem. |
+| **E6** | Distillation 140–270 M → 60 M | 60 M ≥ 90 % du parent sur la tâche | 2 sem. |
 
-**Ordre : E0 → E1 → E3 → E2 → E4.** E0 et E1 se font en une journée et décident de tout le reste.
-
-E6 est la seule vraie piste de recherche : elle permettrait un modèle à 100 Mo qui conserve 90 % de
-la qualité du 270M. C'est le sujet scientifique du projet, mais il ne doit pas bloquer le produit.
+**Ordre : E0 → E1 → E2/E3 → E5 → E4 → E6.**
+E5 est le cœur scientifique du projet : c'est lui qui rend un vrai généraliste déployable sous
+200 Mo. E6 est l'option « sous 100 Mo ».
 
 ---
 
 ## 7. Décisions
 
 **ADR-006 — Cible d'inférence portée à 200 Mo de RSS.**
-Conséquence : Gemma 3 270M devient candidate ; SmolLM2-360M reste exclue (271 Mo).
+Conséquence : un 135–140 M en Q4 devient déployable ; Gemma 3 270M reste hors budget **tel quel**
+(253 Mo de fichier) et n'entre dans la cible qu'après réduction du vocabulaire.
 
 **ADR-007 — Pas de pré-entraînement from scratch pour le produit.**
-Le budget de 1 Go plafonne à ~60 M de paramètres, très inférieur à Gemma 3 270M.
-Conséquence : QLoRA + distillation ; le from-scratch devient un sujet de recherche (E6).
+Conséquence : QLoRA d'un modèle pré-entraîné ; le from-scratch devient un sujet de recherche (E6).
 
-**ADR-008 — Déploiement via llama-server sur petits PCs, 8 k de contexte total, 4 slots.**
-Conséquence : RSS ~177 Mo, 4 utilisateurs simultanés, montée en charge horizontale par réplicas.
-Le cache applicatif est obligatoire, pas optionnel.
+**ADR-009 — La taille du vocabulaire est le levier mémoire n° 1.**
+Constat mesuré : 62 % des paramètres de Gemma 3 270M sont des embeddings (262 144 × 640).
+Conséquence : toute architecture cible doit utiliser un vocabulaire de 32 k, et E5 (élagage +
+guérison) est prioritaire sur toute autre optimisation de compression.
+
+**ADR-008 — Déploiement via llama-server, pool de contexte partagé.**
+Conséquence : le nombre de slots se déduit du budget mémoire restant, pas l'inverse.
 
 ---
 
-## 8. Risques spécifiques à la v0.2
+## 8. Risques
 
 | Risque | Probabilité | Impact | Mitigation |
 |---|---|---|---|
-| Le GGUF Q4_0 dégrade trop la qualité | moyenne | élevé | utiliser le checkpoint QAT ; mesurer la perplexité |
-| Le débit sur N100 est insuffisant | moyenne | élevé | tester E1 avant d'acheter ; viser Ryzen 5 |
-| Les utilisateurs attendent ChatGPT | élevée | élevé | cadrer le produit : RAG + réponses courtes |
+| MobileLLM déçoit en conversation française | moyenne | élevé | E4 à l'aveugle ; prévoir QLoRA français |
+| La chirurgie de vocabulaire dégrade trop | moyenne | moyen | accepter ≤ 3 pts ; sinon rester sur MobileLLM |
+| Débit insuffisant sur N100 | moyenne | élevé | E1 avant achat ; viser Ryzen 5 |
+| Attente « ChatGPT » | élevée | élevé | cadrer le produit : RAG + réponses courtes |
 | Fuite de prompt système | moyenne | moyen | filtre de sortie, tests adverses |
-| Coût d'exploitation sous-estimé | faible | faible | 8 €/an à 1 000 req/jour |
-| Le 1 Go bloque le QLoRA sur GPU | moyenne | moyen | CPU (lent) ou GPU loué 2 Go |
-| Dépendance à un modèle sous licence Gemma | certaine | moyen | vérifier les termes ; garder SmolLM2 en secours |
+| Licence Gemma | certaine | moyen | vérifier les termes ; SmolLM2 en secours |
 
 ---
 
 ## 9. Ce qu'il faut retenir
 
-1. **200 Mo suffisent pour un généraliste** : Gemma 3 270M QAT q4, 177 Mo, 8 k de contexte.
-2. **1 Go suffit pour l'adapter**, pas pour le pré-entraîner : QLoRA, 5 à 20 M tokens, quelques heures
-   de GPU, 1 à 2 $.
-3. **Le déploiement web est simple et bon marché** : un mini-PC N100, llama-server, 4 slots,
-   ~9 tok/s par utilisateur, 8 €/an d'électricité.
-4. **La qualité sera celle d'un petit assistant**, pas d'un ChatGPT. Le produit doit être conçu
-   autour du RAG et de réponses courtes.
-5. **La seule recherche qui vaut le coup** est la distillation 270 M → 60 M, pour passer sous 100 Mo
-   sans perdre l'essentiel. Tout le reste est de l'ingénierie.
+1. **200 Mo ne donnent pas un généraliste 270 M prêt à l'emploi.** Gemma 3 270M pèse 253 Mo de
+   fichier et ~290 Mo de RSS. Le budget est dépassé de 45 %.
+2. **La raison est le vocabulaire, pas la quantification** : 262 144 tokens × 640 dimensions =
+   167,8 M paramètres, 62 % du modèle, ~138 Mo du fichier.
+3. **Sous 200 Mo aujourd'hui** : MobileLLM-R1-140M Q4_K_M (170–182 Mo) ou SmolLM2-135M Q4_K_M
+   (155–178 Mo).
+4. **La voie vers un vrai généraliste sous 200 Mo** : ramener le vocabulaire de Gemma 3 à 32 k.
+   Le fichier tombe à ~106 Mo, le KV à 2 Ko/token, et 32 k de contexte deviennent possibles.
+5. **1 Go suffit pour adapter, pas pour pré-entraîner** : QLoRA, 5–20 M tokens, quelques heures,
+   1–2 $.
+6. **Le déploiement web est bon marché** : un N100, 4 slots, ~8–10 tok/s par utilisateur, ~8 €/an.
 
 ---
 
-## Annexe — Commandes utiles
+## Annexe — commandes
 
 ```bash
-# Budget mémoire et énergie
-python tools/llm_budget.py show gemma3-270m-qat-8k
-python tools/llm_budget.py serve gemma3-270m-qat-8k --parallel 4 --ctx-per-slot 2048
-python tools/llm_budget.py wall gemma3-270m-qat-8k --device-watts 15
+python tools/llm_budget.py table
+python tools/llm_budget.py show mobilellm-r1-140m
+python tools/llm_budget.py serve mobilellm-r1-140m --parallel 4 --ctx-per-slot 1792
+python tools/llm_budget.py wall mobilellm-r1-140m --device-watts 15
 
-# Mesure réelle du RSS (à faire en E0)
-/usr/bin/time -v llama-server -m model.gguf -c 8192 -np 4 -t 4 &
+# E0 : mesure réelle
+/usr/bin/time -v llama-server -m mobilellm-r1-140m-q4_k_m.gguf -c 7168 -np 4 -t 4 &
 watch -n 1 'grep VmRSS /proc/$(pgrep llama-server)/status'
 ```

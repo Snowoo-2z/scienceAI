@@ -52,3 +52,19 @@ Bloqueurs : aucun
 Besoin    : définir la stack du site (front, auth, quota), le cache applicatif, la supervision.
 Décision proposée : ouverture du chantier W7 « Produit & déploiement ».
 ```
+
+```
+[2026-10-19] Agent-Recherche · W1/W3 · CORRECTION
+Fait      : Vérification des tailles GGUF réelles sur Hugging Face ; correction du document v0.2.
+Résultat  : Gemma 3 270M Q4_K_M = 253 Mo (IQ4_XS 241, Q2_K 237) → RSS 286–296 Mo : HORS BUDGET.
+            SmolLM2-135M Q4_K_M = 105 Mo → RSS 155 Mo (2k) / 178 Mo (4k).
+            MobileLLM-R1-140M Q4_K_M = 132 Mo → RSS 170 Mo (2k) / 182 Mo (4k).
+            SmolLM2-360M Q4_K_M = 271 Mo → exclue.
+            Cause : 262 144 × 640 = 167,8 M paramètres d'embeddings = 62 % des paramètres.
+            Gemma 3 270M avec vocabulaire ramené à 32 k ≈ 106 Mo → RSS 136–141 Mo.
+Fichiers  : docs/ARCHITECTURE-200MB-WEB.md (réécrit), tools/llm_budget.py (file_mb mesuré),
+            coordination/decisions.md (ADR-006 corrigé, ADR-009 ajouté)
+Bloqueurs : aucun
+Besoin    : E0 (RSS réel) et E5 (chirurgie du vocabulaire) pour valider.
+Décision proposée : ADR-009.
+```
