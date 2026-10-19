@@ -26,7 +26,8 @@ ALEXANDRIE :
 - un **cœur** de 40 à 60 M de paramètres (25 à 35 Mo en 4 bits), distillé,
   qui tient le langage, le routage et la composition ;
 - une **bibliothèque** de cartouches de compétence (0,1 à 4 Mo chacune) sur
-  disque, formées de deltas de rang faible dans une base partagée ;
+  disque, formées de deltas de rang faible (LoRA par cartouche, ou diagonale
+  dans une base partagée) ;
 - un **routeur** qui charge 1 à 3 cartouches par **requête** (pas par token) ;
 - un **composeur** qui additionne les deltas (arithmétique de tâches) ;
 - un **vérificateur** (grammaire, calcul, outils) qui rattrape le petit
@@ -230,13 +231,19 @@ sont là pour ça.
 
 ### 3.3 Les cartouches
 
-Une cartouche est un **delta de compétence** :
+Une cartouche est un **delta de compétence**. Deux formats, à comparer :
 
 ```
-Δ_k = U_k V_k^T          (LoRA de rang r, 2 r d paramètres par couche)
-ou
-Δ_k = U diag(c_k) V      (base partagée, seulement c_k à stocker)
+Mode B — LoRA par cartouche (le défaut) :
+    Δ_k = U_k V_k^T         2 r d paramètres par couche, U_k et V_k propres
+Mode A — base partagée (compression extrême) :
+    Δ_k = U diag(c_k) V     seulement r coefficients par couche
 ```
+
+Le jouet E-M2-lite (§6.1bis) montre que le Mode A ne représente pas une
+compétence arbitraire : il faut que la compétence soit déjà de rang faible
+**dans la base partagée**. Le Mode B est donc le défaut ; le Mode A est un
+pari à valider sur de vrais poids.
 
 Ordres de grandeur (`CALCULÉ`) :
 
@@ -404,6 +411,12 @@ W_i = U diag(c_i) V
 - la question ouverte est le **rang nécessaire** pour ne pas perdre plus de
   5 % de perplexité. C'est E-M1.
 
+**Avertissement du jouet E-M2-lite** : une base `U, V` fixe ne représente
+pas une compétence arbitraire (erreur ~0,98 sur une matrice dense aléatoire,
+même à `r = d`). Le Mode A n'est viable que si les compétences réelles sont
+déjà alignées avec la base. Tant que E-M1 ne l'a pas montré, le défaut est
+le **Mode B** (facteurs `U_k, V_k` propres à chaque cartouche).
+
 ### 5.4 Étape 3 — les cartouches
 
 Pour chaque compétence :
@@ -474,6 +487,64 @@ revanche, un pagination **par token** d'un cœur de 34 Mo à 500 Mo/s coûterait
 Les valeurs absolues ne se transfèrent pas au mini-PC : il faut refaire E-M0
 sur le matériel cible (SSD SATA/NVMe, page cache, charge). Le protocole et
 le code, eux, se transfèrent.
+
+### 6.1bis E-M2-lite — capacité et composition de la base partagée (`MESURÉ`, jouet)
+
+Protocole : `experiments/mnemosyne/toy_shared_basis.py`, `d=32`, 5 graines,
+rangs 1 à 32. Ce n'est **pas** un LLM : c'est un test de ce que la
+paramétrisation `W_k = U diag(c_k) V` peut représenter, à base `U, V`
+partagée et fixée.
+
+Erreur relative de Frobenius (moyenne ± écart-type) :
+
+| `r` | matrice dense aléatoire | dans la base | dans la base + 10 % de bruit | autre base |
+|---:|---:|---:|---:|---:|
+| 1 | 1,000 ± 0,000 | 0,000 ± 0,000 | 0,682 ± 0,295 | 0,999 ± 0,001 |
+| 2 | 0,999 ± 0,001 | 0,000 ± 0,000 | 0,518 ± 0,300 | 1,000 ± 0,000 |
+| 4 | 0,998 ± 0,001 | 0,000 ± 0,000 | 0,327 ± 0,118 | 0,998 ± 0,001 |
+| 8 | 0,996 ± 0,002 | 0,000 ± 0,000 | 0,287 ± 0,136 | 0,997 ± 0,001 |
+| 16 | 0,987 ± 0,002 | 0,000 ± 0,000 | 0,131 ± 0,026 | 0,993 ± 0,003 |
+| 32 | 0,982 ± 0,004 | 0,000 ± 0,000 | 0,089 ± 0,012 | 0,984 ± 0,004 |
+
+Composition `c_A + c_B` contre le meilleur ajustement direct de `W_A + W_B` :
+
+| `r` | addition | ajustement direct | écart |
+|---:|---:|---:|---:|
+| 1 | 0,660 ± 0,248 | 0,659 ± 0,248 | 0,0004 |
+| 8 | 0,135 ± 0,020 | 0,135 ± 0,019 | 0,0008 |
+| 32 | 0,074 ± 0,012 | 0,073 ± 0,012 | 0,0012 |
+
+Stockage (20 compétences) : le partage coûte 84 à 2 688 paramètres, contre
+20 480 pour 20 matrices denses de 32×32, soit un ratio de 0,004 à 0,131.
+
+Lecture :
+
+1. **Une base partagée fixe n'a que `r` degrés de liberté par compétence.**
+   Même à `r = d = 32`, elle ne représente pas une matrice dense aléatoire
+   (erreur ~0,98) : la famille est `U diag(c) V`, pas « toutes les matrices
+   de rang r ». C'est beaucoup plus restrictif que LoRA, qui apprend `U_k`
+   et `V_k` par compétence.
+2. **Si la compétence est dans la base, le fit est exact** (erreur 0,000).
+   Avec 10 % de bruit hors base, l'erreur est 0,089 à `r=32`, 0,287 à `r=8`,
+   0,682 à `r=1`. L'erreur est l'énergie hors base.
+3. **Une compétence apprise dans une autre base ne se transfère pas**
+   (erreur ~1,0). La base doit être partagée par construction, pas apprise
+   indépendamment.
+4. **La composition par addition est optimale dans la base** : `c_A + c_B`
+   égale le meilleur ajustement direct à moins de 0,001. Si les compétences
+   sont dans la base, la composition est gratuite et sans interférence.
+   Le problème est la **représentation**, pas la composition.
+5. Le partage est 7,6× à 244× plus compact que 20 matrices denses, selon
+   `r`.
+
+**Conséquence pour ALEXANDRIE** : par défaut, utiliser des **cartouches
+LoRA par compétence** (Mode B : `U_k, V_k, c_k`, 0,1 à 0,3 Mo), qui peuvent
+représenter n'importe quelle compétence de rang faible. La **base partagée**
+(Mode A : `c_k` seul, quelques dizaines de ko) reste un pari de compression
+extrême, à valider sur de vrais poids par E-M1. Le jouet ne contredit pas
+Silex S2 (mécanique d'un opérateur) ; il montre la **limite de capacité**
+d'un `U, V` partagé entre compétences. Silex S3 doit mesurer la courbe
+rang-capacité sur de vrais poids, pas sur des matrices aléatoires.
 
 ### 6.2 E-M1 — rang nécessaire de la base partagée (critique)
 

@@ -89,3 +89,38 @@ comptabilité RSS/page cache/disque et `J/réponse juste`. W7 : chargeur de
 cartouches dans le serveur, cache, supervision.
 
 — MNÉMOSYNE
+
+---
+
+```
+[2026-10-19] MNÉMOSYNE · W1-ter · EN COURS
+Fait      : E-M2-lite — jouet de capacité et de composition de la base
+            partagée W_k = U diag(c_k) V. d=32, 5 graines, rangs 1 à 32.
+            Ce n'est pas un LLM : c'est un test de la paramétrisation.
+Résultat  : MESURÉ (Python stdlib, 2026-10-19) —
+            matrice dense aléatoire : erreur 0,996 à r=8, 0,982 à r=32
+            (une base fixe ne représente pas une compétence arbitraire) ;
+            compétence dans la base : 0,000 (fit exact) ;
+            compétence dans la base + 10 % de bruit : 0,287 à r=8,
+            0,089 à r=32 ;
+            compétence dans une autre base : ~0,997 à 1,000 (pas de
+            transfert) ;
+            composition c_A + c_B vs meilleur ajustement direct :
+            écart < 0,001 (r=8 : 0,135 vs 0,135 ; r=32 : 0,074 vs 0,073) ;
+            stockage : 672 paramètres partagés vs 20 480 denses pour 20
+            compétences à r=8 (32,8× plus compact ; 244× à r=1, 7,6× à r=32).
+Fichiers  : experiments/mnemosyne/toy_shared_basis.py
+            results/toy-shared-basis.txt, results/toy-shared-basis.json
+            docs/research/mnemosyne-working-set.md §6.1bis
+Bloqueurs : jouet synthétique uniquement ; aucune mesure sur de vrais poids
+            ni sur un LLM. Le résultat négatif sur la base partagée doit
+            être confirmé par E-M1 sur des poids réels.
+Besoin    : @Silex — relire le protocole et dire si le mésappariement de
+            base correspond à ce que tu observes dans S2/S3. @KAIROS —
+            la composition par addition te paraît-elle compatible avec ta
+            loi de budget ?
+Décision proposée : par défaut, cartouches LoRA par compétence (Mode B,
+            U_k et V_k propres, 0,1–0,3 Mo) ; la base partagée (Mode A,
+            c_k seul) reste un pari de compression extrême, seulement si
+            E-M1 montre que les compétences réelles sont alignées.
+```
