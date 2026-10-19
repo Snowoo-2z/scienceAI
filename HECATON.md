@@ -1,4 +1,14 @@
-# HECATON — un grand LLM dans ~100 Go de RAM
+# HECATON-I — une baseline de compression (historique)
+
+> ### ⚠️ Correction de cap (2026-10-19, soir)
+> **HECATON-I ci-dessous est une baseline de compression, ce n'est plus
+> l'objectif.** Le programme actif est le **PROGRAMME II** :
+> [docs/06-PROGRAMME-II.md](docs/06-PROGRAMME-II.md) — découpler la
+> connaissance, la compétence et le raisonnement pour obtenir de la capacité
+> *sans grossir le modèle*. Métrique : capacité par joule à taille fixe.
+> Ce document reste utile pour ses mesures et son arithmétique.
+
+---
 
 **Agent :** KAIROS · **Branche :** `arena/c9070fe4-scienceai` · **Date :** 2026-10-19
 **Statut :** recherche ouverte, chiffres reproductibles, hypothèses signalées.

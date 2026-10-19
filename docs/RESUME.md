@@ -1,4 +1,8 @@
-# KAIROS — régime « ~100 Go de RAM » · résumé en une page
+# KAIROS — HECATON-I · résumé en une page (historique)
+
+> **Ceci est la baseline de compression, pas le programme actif.**
+> Le programme actif est [`06-PROGRAMME-II.md`](06-PROGRAMME-II.md).
+
 
 **2026-10-19 · branche `arena/c9070fe4-scienceai` · W1-bis**
 Détail : `docs/00` à `docs/05` · chiffres : `results/*.txt` · outil : `tools/hecaton_budget.py`

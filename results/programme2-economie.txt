@@ -1,0 +1,41 @@
+==============================================================================
+  PROGRAMME II — rendement d'un gigaoctet : poids ou compétences ?
+==============================================================================
+  Hypothèses : 0.5 J/token · plan 10 tokens · génération 300 tokens
+               exécution 0.2 J · vérification 0.5 J · retrieval 0.3 J
+               Zipf γ=1.0 · 1 décomposition(s) · 5 Ko/skill
+
+BIBLIOTHÈQUE : couverture et coût par requête
+    skills      Go  couverture  J/requête  réussite  réussite/J
+---------------------------------------------------------------
+     10000    0.05       45.9%       86.7     74.7%     0.00862
+    100000    0.50       56.8%       70.6     79.4%     0.01125
+   1000000    5.00       67.6%       54.4     84.0%     0.01544
+  10000000   50.00       78.4%       38.3     88.7%     0.02317
+  30000000  150.00       83.5%       30.6     90.9%     0.02973
+ 100000000  500.00       89.2%       22.1     93.3%     0.04216
+
+SYSTÈMES COMPARÉS (mêmes joules, même matériel)
+système                                       réussite  J/requête  réussite/J
+cortex 8 B seul (baseline)                       55.0%      150.0     0.00367
+gros modèle 400 B (HECATON-I, 2 J/tok)           77.9%      800.0     0.00097
+tri-système (cortex 8 B + 1e+06 skills)          84.0%       54.4     0.01544
+tri-système (cortex 8 B + 1e+07 skills)          88.7%       38.3     0.02317
+
+SEUIL : à partir de quelle couverture le tri-système bat-il le cortex seul ?
+  couverture minimale = 2%  (réussite 55.8%, 152.3 J, 0.00367 réussite/J)
+
+RENDEMENT MARGINAL D'UN GIGAOCTET (points de réussite par Go)
+  taille du cortex      Go        poids   bibliothèque
+-------------------------------------------------------
+            8 B       2       0.0511         0.0004
+           70 B      15       0.0036         0.0004
+          200 B      42       0.0010         0.0004
+          400 B      85       0.0004         0.0004
+
+Lecture : 'poids' = points gagnés par Go de poids supplémentaires ;
+'bibliothèque' = points gagnés par Go de compétences, au point 50 Go.
+Si les deux colonnes se croisent, la répartition optimale change.
+
+⚠  Toutes ces valeurs sont des HYPOTHÈSES paramétrées, pas des mesures.
+   L'expérience E-Ω5 est précisément celle qui les mesure.
