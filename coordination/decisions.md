@@ -170,3 +170,18 @@ distinct et documenté séparément.
 **Conséquences** : RAG par BM25/FTS5 par défaut (zéro modèle, ~10 Mo) ; modèle d'embedding réservé
 aux requêtes paraphrasées et précalculé hors ligne pour le corpus ; service écrit en Go plutôt
 qu'en Python (~35 Mo gagnés).
+
+---
+
+## ADR-P-010 — Quantifier les embeddings en 4 bits est la condition de tenue sous 200 Mo
+
+**Date** : 2026-10-19
+**Statut** : accepté (à valider par E1)
+**Contexte** : le Q4_K_M standard de Gemma 3 270M pèse 253 Mo parce qu'il garde les embeddings à
+~8 bits (167,8 M paramètres = 170 Mo). Le checkpoint officiel est une QAT
+(`gemma-3-270m-it-qat-q4_0-unquantized`), entraînée à supporter l'INT4.
+**Décision** : produire le GGUF de déploiement avec `llama-quantize --token-embedding-type q4_0
+--output-tensor-type q4_0`. Fichier attendu ~150 Mo (145–151), RSS 183 Mo à 2 k et 193 Mo à 8 k.
+**Conséquences** : un généraliste de 270 M devient déployable sous 200 Mo avec 8 k de contexte.
+Condition qualité : perplexité +5 % max, exactitude −3 pts max (E1). Sinon repli sur
+MobileLLM-R1-140M (170 Mo) ou Q4_K_M hors budget.

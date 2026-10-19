@@ -210,7 +210,7 @@ PRESETS: dict[str, Arch] = {
     "smollm2-135m-q5": Arch("SmolLM2-135M Q5_K_M", 30, 576, 9, 3, 1536, 49_152, True,
                             ctx=2048, weight_bpw=5.5, kv_bytes=1.0, file_mb=112.0),
     "smollm2-135m-q8": Arch("SmolLM2-135M Q8_0", 30, 576, 9, 3, 1536, 49_152, True,
-                            ctx=2048, weight_bpw=8.5, kv_bytes=1.0, file_mb=145.0),
+                            ctx=2048, weight_bpw=8.5, kv_bytes=1.0, file_mb=150.0),
     "smollm2-135m-q2": Arch("SmolLM2-135M Q2_K", 30, 576, 9, 3, 1536, 49_152, True,
                             ctx=2048, weight_bpw=2.6, kv_bytes=1.0, file_mb=88.2),
     "mobilellm-r1-140m": Arch("MobileLLM-R1-140M Q4_K_M", 15, 576, 9, 3, 1536, 128_256, True,
@@ -229,6 +229,18 @@ PRESETS: dict[str, Arch] = {
                                     ctx=8192, weight_bpw=4.5, kv_bytes=1.0,
                                     head_dim_explicit=256, local_layers=15, local_window=512,
                                     file_mb=106.2),
+    # Gemma 3 270M QAT INT4 avec embeddings quantifiés en 4 bits eux aussi.
+    # C'est le seul réglage qui fait tomber le fichier de 253 Mo à ~145 Mo :
+    # llama-quantize --token-embedding-type q4_0 (la QAT rend l'INT4 viable sur les embeddings).
+    "gemma3-270m-q4emb": Arch("Gemma3-270M Q4_0 emb4 (2k)", 18, 640, 4, 1, 2048, 262_144, True,
+                              ctx=2048, weight_bpw=4.0, kv_bytes=1.0,
+                              head_dim_explicit=256, local_layers=15, local_window=512, file_mb=150.0),
+    "gemma3-270m-q4emb-8k": Arch("Gemma3-270M Q4_0 emb4 (8k)", 18, 640, 4, 1, 2048, 262_144, True,
+                                 ctx=8192, weight_bpw=4.0, kv_bytes=1.0,
+                                 head_dim_explicit=256, local_layers=15, local_window=512, file_mb=150.0),
+    "gemma3-270m-q4emb-16k": Arch("Gemma3-270M Q4_0 emb4 (16k)", 18, 640, 4, 1, 2048, 262_144, True,
+                                  ctx=16384, weight_bpw=4.0, kv_bytes=1.0,
+                                  head_dim_explicit=256, local_layers=15, local_window=512, file_mb=150.0),
     "smollm2-360m-q2": Arch("SmolLM2-360M Q2_K", 32, 960, 15, 5, 2560, 49_152, True,
                             ctx=2048, weight_bpw=2.6, kv_bytes=1.0, file_mb=219.0),
     "smollm2-360m-q4": Arch("SmolLM2-360M Q4_K_M", 32, 960, 15, 5, 2560, 49_152, True,

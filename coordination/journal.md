@@ -86,3 +86,21 @@ Besoin    : réponse de l'humain sur (a) RSS hors page cache ou RAM totale, (b) 
             pour la bibliothèque, (c) autorisation d'instrumenter un site pour mesurer α.
 Décision proposée : ADR-P-010, ADR-P-011, ADR-P-012.
 ```
+
+```
+[2026-10-19] Agent-Recherche · W1/W3/W5 · FAIT (correction majeure)
+Fait      : Vérification de la config officielle de Gemma 3 270M et des tailles GGUF réelles.
+Résultat  : CONFIG RÉELLE : 18 couches, d=640, 4 têtes Q, 1 tête KV, head_dim 256, FFN 2048,
+            vocab 262 144, 15 couches locales (fenêtre 512) + 3 globales, ctx 32 k.
+            KV = 512 o/token/couche → 7,1 Mo à 2 k, 16,5 Mo à 8 k, 29,1 Mo à 16 k.
+            Le Q4_K_M standard pèse 253 Mo parce que les embeddings restent à ~8 bits.
+            Avec --token-embedding-type q4_0 (permis par la QAT) : ~150 Mo → RSS 183/193/205 Mo
+            à 2 k/8 k/16 k. LE GÉNÉRALISTE TIENT DONC DANS 200 Mo AVEC 8 k DE CONTEXTE.
+            Correction des affirmations v0.1 « plancher 300–500 Mo » et v0.2 « hors budget ».
+Fichiers  : docs/ARCHITECTURE-200MB-WEB.md (v0.3), tools/llm_budget.py
+            (presets gemma3-270m-q4emb*, KV à fenêtre glissante, head_dim explicite),
+            docs/PROTOCOLE-EVALUATION.md (nouveau), README.md, coordination/decisions.md
+Bloqueurs : E0 (taille et RSS réels du GGUF emb4) et E1 (qualité) non exécutées.
+Besoin    : réponse de l'humain au protocole d'évaluation (500 requêtes, domaine cible).
+Décision proposée : ADR-P-010.
+```

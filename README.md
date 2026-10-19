@@ -15,16 +15,16 @@ en est la version vérifiable.
 python tools/llm_budget.py table
 
 # Détail d'une configuration (tailles GGUF mesurées)
-python tools/llm_budget.py show mobilellm-r1-140m
+python tools/llm_budget.py show gemma3-270m-q4emb-8k
 
 # Dimensionner un serveur web (slots, RSS, latence, énergie)
-python tools/llm_budget.py serve mobilellm-r1-140m --parallel 4 --ctx-per-slot 1792
+python tools/llm_budget.py serve gemma3-270m-q4emb-8k --parallel 4 --ctx-per-slot 2048
 
 # Énergie réellement payée au mur
-python tools/llm_budget.py wall smollm2-135m-q4 --device-watts 15
+python tools/llm_budget.py wall gemma3-270m-q4emb-8k --device-watts 15
 
 # Budget d'entraînement (mémoire, jours, coût)
-python tools/llm_budget.py train smollm2-135m-q4 --tokens 2.0e7
+python tools/llm_budget.py train gemma3-270m-q4emb-8k --tokens 2.0e7
 ```
 
 Aucune dépendance : Python 3.9+ suffit.
@@ -53,20 +53,22 @@ https://docs.google.com/document/d/13-LF4vy1dyeh3JyWM8hHw5aoKJz1fpf5OeaUXn7CzjA/
 4. **Généraliste**, pas spécialisé.
 5. **Livraison = site web** servi par des petits PC.
 
-## Résultat principal (v0.2)
+## Résultat principal (v0.3)
 
-- **200 Mo ne donnent pas un généraliste 270 M prêt à l'emploi.** Gemma 3 270M pèse **253 Mo de
-  fichier** (Q4_K_M) et ~290 Mo de RSS : hors budget de 45 %.
-- **La cause est le vocabulaire, pas la quantification** : 262 144 tokens × 640 = 167,8 M paramètres,
-  soit **62 % du modèle** et ~138 Mo du fichier même en Q6_K.
-- **Sous 200 Mo aujourd'hui** : MobileLLM-R1-140M Q4_K_M (170–182 Mo) ou SmolLM2-135M Q4_K_M
-  (155–178 Mo).
-- **La voie vers un vrai généraliste sous 200 Mo** : ramener le vocabulaire de Gemma 3 à 32 k →
-  fichier ~106 Mo, KV 2 Ko/token, 32 k de contexte possibles (E5).
-- **1 Go suffit pour adapter, pas pour pré-entraîner** : QLoRA 5–20 M tokens, quelques heures de GPU,
-  1–2 $. Le from scratch plafonne à ~60 M de paramètres.
-- **Déploiement** : un mini-PC N100, `llama-server`, pool de contexte partagé, ~8–10 tok/s par
-  utilisateur, ~8 €/an d'électricité à 1 000 requêtes/jour.
+- **Un généraliste tient dans 200 Mo.** Gemma 3 270M QAT INT4 avec embeddings quantifiés en 4 bits :
+  **183 Mo de RSS à 2 k de contexte, 193 Mo à 8 k**.
+- **La condition est la quantification des embeddings.** Les GGUF Q4_K_M standard les gardent à
+  8 bits : 262 144 × 640 = 167,8 M paramètres, 253 Mo de fichier, 286–296 Mo de RSS. En Q4_0 sur
+  tous les tenseurs, le fichier tombe à ~150 Mo.
+- **Pourquoi ça marche** : la QAT officielle est entraînée à supporter l'INT4 ; et Gemma 3 a une
+  seule tête KV avec 15 couches sur 18 à fenêtre glissante, soit 512 octets de KV par token et par
+  couche — 16,5 Mo pour 8 k de contexte.
+- **1 Go suffit pour adapter, pas pour pré-entraîner** : QLoRA NF4 (0,16 Go), 5–20 M tokens,
+  quelques heures de GPU, 1–2 $.
+- **Déploiement** : un mini-PC N100, `llama-server`, `--ctx-size 8192 --parallel 4`,
+  ~9 tok/s par visiteur, ~8 €/an d'électricité pour 1 000 requêtes/jour.
+- **Qualité** : celle d'un petit assistant. Le produit doit être bâti autour du **RAG** et de
+  réponses courtes, pas présenté comme un ChatGPT.
 
 ### Résultat historique (v0.1, hypothèse 100 Mo)
 
