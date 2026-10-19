@@ -193,3 +193,41 @@ token. La sortie n'est donc pas « tout sur le disque », c'est « un cœur
 résident petit, et des morceaux non recouvrants lus à la demande » — ce qui
 n'est vrai que si l'activation est creuse. C'est le seul régime où le débit
 disque cesse d'être proportionnel à la taille du modèle.
+
+## Banc 4 — le seul régime où le disque redevient bon marché
+
+Le banc 3 disait : un modèle **dense** plus gros que la RAM se relit en entier
+à chaque token. Celui-ci construit le contre-exemple. Même volume total
+(64 experts × 2 Mo = 128 Mo, l'équivalent du modèle dense), mais seuls
+**2 experts sont activés par token** : 4 Mo lus au lieu de 128.
+
+`tools/sparse_probe.py`, 200 tokens, 3 passes par configuration, même disque
+que le banc 3 (donc même variance).
+
+| routage | cache | Mo/token | tok/s médian | min–max | hits |
+|---|---|---|---|---|---|
+| uniforme | aucun | 4,00 | 107–122 | 70–388 | — |
+| uniforme | 24 Mo | 3,35 | 83–98 | 75–173 | 16 % |
+| Zipf | aucun | 4,00 | 73–213 | 68–224 | — |
+| Zipf | 24 Mo | **2,21** | 117–159 | 116–245 | 45 % |
+
+Comparaison directe, même disque, même passe : **2,4 à 3,1 tok/s** pour le
+dense à 132 Mo/token, **68 à 245 tok/s** ici. L'écart n'est pas un facteur
+d'implémentation, c'est un facteur d'octets lus : 132 Mo contre 2–4 Mo.
+
+Trois précautions, parce que ce banc est bruyant :
+
+- Les tok/s varient d'un facteur 3 entre deux passes identiques. Seul l'ordre
+  de grandeur est défendable : **des dizaines de tok/s, pas des unités**.
+- Le cache de 24 Mo n'accélère pas toujours, et c'est instructif : avec un
+  routage uniforme, 16 % de hits économisent 0,65 Mo/token, moins que le
+  bruit du disque. Le cache ne paie que si le routage est **skewed** (Zipf :
+  45 % de hits, 2,21 Mo/token).
+- Ce n'est pas un modèle entraîné, c'est une mesure d'entrées/sorties. Elle
+  dit ce que coûterait un modèle creux, pas s'il apprendrait.
+
+Le résultat utile est donc une condition, pas une promesse :
+**pour que 100 Mo de RAM tiennent un modèle de plusieurs centaines de Mo, il
+faut que l'activation par token soit petite et skewed.** Un dense streamé ne
+tient pas ; un creux, oui — à condition d'apprendre le routage, ce qui reste
+le vrai travail.

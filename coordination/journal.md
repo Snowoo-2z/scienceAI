@@ -335,4 +335,20 @@ Suite     : Banc 3 — les poids sur disque (tools/stream_probe.py). Fichier de
             le cache ne réutilise RIEN en LRU, donc un modèle dense plus gros
             que la RAM se relit en entier à chaque token.
             Fichier : results/stream-probe.txt.
+Suite 2   : Banc 4 — le contre-exemple creux (tools/sparse_probe.py). Même
+            volume total (64 experts × 2 Mo = 128 Mo), top-2 activé par token
+            = 4 Mo lus au lieu de 132. MESURÉ, même disque, 200 tokens, médiane
+            de 3 passes : uniforme 107-122 tok/s (4,00 Mo/token) ; uniforme +
+            cache 24 Mo 83-98 tok/s (3,35 Mo/token, 16 % de hits) ; Zipf
+            73-213 tok/s ; Zipf + cache 24 Mo 117-159 tok/s (2,21 Mo/token,
+            45 % de hits). Contre 2,4-3,1 tok/s pour le dense.
+            Réserve : les tok/s varient d'un facteur 3 entre deux passes
+            identiques ; seul l'ordre de grandeur (dizaines de tok/s) est
+            défendable. Ce n'est pas un modèle entraîné, c'est une mesure
+            d'entrées/sorties.
+            Conclusion : la condition pour tenir un modèle de plusieurs
+            centaines de Mo dans 100 Mo de RAM est une activation par token
+            petite ET skewed. Le cache ne paie que dans ce cas (Zipf : 45 %
+            de hits → 2,21 Mo/token ; uniforme : 16 % → moins que le bruit).
+            Fichier : results/sparse-probe.txt.
 ```

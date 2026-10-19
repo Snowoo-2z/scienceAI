@@ -1,0 +1,11 @@
+64 experts × 2 Mo = 128 Mo (même volume qu'un modèle dense), top-2 activé par token
+
+routage     cache  Mo/token  tok/s médian       min-max   hits
+--------------------------------------------------------------
+uniforme      0 Mo      4.00         107.0   70.3-377.3       -
+uniforme     24 Mo      3.35          98.4   91.3-173.0    16 %
+zipf          0 Mo      4.00         213.1  133.8-224.3       -
+zipf         24 Mo      2.21         159.4  150.6-244.6    45 %
+(3 passes par configuration, médiane)
+
+Rappel du banc dense (même disque) : 2,4–3,1 tok/s pour 132 Mo/token.

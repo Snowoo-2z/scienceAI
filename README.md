@@ -81,6 +81,10 @@ de faits arbitraires tient dans un paramètre.
   cyclique ne réutilise rien en LRU). Pour 20 tok/s avec 132 Mo de poids, il
   faut 2,6 Go/s soutenus. Mesuré ici : 25–33 Mo de RSS, mais 0,3–1,5 Go/s
   selon la rafale du disque virtuel, soit 2,4 à 10,9 tok/s.
+- **Sauf si le modèle est creux.** Même volume (128 Mo d'experts), mais
+  2 experts activés par token : 4 Mo lus au lieu de 128, et **68 à 245 tok/s**
+  au lieu de 2,4–3,1. La condition : une activation petite *et* skewed (avec
+  un routage Zipf, un cache de 24 Mo divise encore les lectures par 1,8).
 
 Conclusion partielle, et elle est falsifiable : à 100 Mo, on ne gagne pas en
 changeant la forme du réseau, on gagne en décidant **où vivent les bits**. Le
@@ -102,6 +106,7 @@ poids, table de faits ou cartouche de compétence. Note complète :
 | [`tools/wsprobe.c`](tools/wsprobe.c) | microbenchmark de chargement de cartouches |
 | [`tools/pagecache_probe.py`](tools/pagecache_probe.py) | mesure du page cache caché dans `memory.current` |
 | [`tools/stream_probe.py`](tools/stream_probe.py) | débit et tokens/s quand les poids sont relus sur disque |
+| [`tools/sparse_probe.py`](tools/sparse_probe.py) | le contre-exemple creux : experts activés par token |
 | [`results/substrate-budget.txt`](results/substrate-budget.txt) | couverture et latence par allocation |
 | [`results/pagecache-probe.txt`](results/pagecache-probe.txt) | page cache : 2 Go lus vs `DONTNEED` |
 | [`demo/README.md`](demo/README.md) | la démo, ses chiffres, ses limites |
