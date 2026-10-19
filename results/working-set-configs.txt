@@ -1,0 +1,17 @@
+config                         RSS   actif   biblio   load   tok/s    eff.   J/rép verdict
+------------------------------------------------------------------------------------------
+dense-60m-q4                  68.8    33.8     67.5    0.0   166.7   166.7      18 OK <=100
+dense-120m-q4                 99.5    67.5    135.0    0.0    83.3    83.3      36 OK <=100
+gemma-270m-qat-8k            176.5   134.0    268.0    0.0    74.6    74.6      40 OK <=200
+alex-60m                      69.0    34.0     34.0    0.3   165.3   165.3      18 OK <=100
+alex-60m-lib300m              69.2    34.2    108.8    0.5   161.3   161.2      19 OK <=100
+alex-60m-lib1g                69.2    34.2    283.8    0.5   161.3   161.2      19 OK <=100
+alex-60m-lib10g               69.2    34.2   2533.8    0.5   161.3   161.2      19 OK <=100
+alex-100m-lib1g               92.2    57.2    306.2    1.0    96.2    96.1      31 OK <=100
+alex-60m-lib1g-slowdisk       69.2    34.2    283.8    5.0   161.3   160.6      19 OK <=100
+
+RSS = cœur + cartouche + KV + runtime + cache (Mo décimaux).
+actif = octets de poids résidents et calculés par token.
+biblio = octets totaux sur disque (cœur + bibliothèque).
+eff. = débit sur une réponse de 200 tokens, chargement inclus.
+J/rép = énergie murale par réponse de 200 tokens (plateforme seule).

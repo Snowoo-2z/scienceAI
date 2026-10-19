@@ -1,0 +1,21 @@
+# wsprobe v1
+# date=2026-10-19
+# file=/tmp/wsprobe.bin size_mb=512
+# cache_control=posix_fadvise(DONTNEED)
+# syscall=pread(buffered)
+# hw=Intel Xeon 2.60GHz, 2 vCPU, 4 Go RAM, ext4 /dev/root
+# protocole=stockage · bloc · cache · syscall · materiel · date
+sequential block_mb=8.39 n=61 bw_mbs=3417.8
+random block_kib=256 n=64 latency_ms=0.36 bw_mbs=722.8
+random block_kib=512 n=64 latency_ms=0.52 bw_mbs=1009.0
+random block_kib=1024 n=64 latency_ms=0.74 bw_mbs=1421.3
+random block_kib=2048 n=64 latency_ms=1.43 bw_mbs=1461.7
+random block_kib=4096 n=64 latency_ms=5.06 bw_mbs=828.6
+random block_kib=8192 n=64 latency_ms=8.95 bw_mbs=937.4
+# cartridge_load (16 tirages independants, cache evince a chaque tirage)
+cartridge size_kib=256 n=16 load_ms_med=0.37 load_ms_mean=0.37 load_ms_min=0.25 load_ms_max=0.51
+cartridge size_kib=512 n=16 load_ms_med=0.68 load_ms_mean=0.79 load_ms_min=0.41 load_ms_max=2.71
+cartridge size_kib=1024 n=16 load_ms_med=0.83 load_ms_mean=0.84 load_ms_min=0.66 load_ms_max=1.08
+cartridge size_kib=2048 n=16 load_ms_med=2.58 load_ms_mean=2.53 load_ms_min=2.13 load_ms_max=3.02
+cartridge size_kib=4096 n=16 load_ms_med=4.20 load_ms_mean=10.39 load_ms_min=3.75 load_ms_max=104.47
+cartridge size_kib=8192 n=16 load_ms_med=6.15 load_ms_mean=18.72 load_ms_min=5.24 load_ms_max=108.51

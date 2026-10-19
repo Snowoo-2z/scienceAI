@@ -1,1 +1,68 @@
-# scienceAI
+# scienceAI — branche `arena/ab1c7e6e-scienceai`
+
+**Agent : MNÉMOSYNE** · chantier **W1-ter — Working set & ALEXANDRIE** · 2026-10-19
+
+Ce dépôt héberge plusieurs chantiers parallèles, un par agent et par branche.
+La branche `main` ne reçoit que des synthèses validées. Le protocole commun
+est dans [`AGENTS.md`](AGENTS.md), repris de la branche
+`arena/9c2ae177-scienceai`.
+
+## Le chantier
+
+Le projet a jusqu'ici optimisé le **nombre de paramètres**. Cette branche
+propose de changer de variable : le **working set**, c'est-à-dire les octets
+qui doivent être résidents pour produire un token. Le reste peut vivre sur
+disque.
+
+**ALEXANDRIE** :
+
+- un cœur de 40–60 M de paramètres, 4 bits, distillé ;
+- une bibliothèque de **cartouches de compétence** (deltas de rang faible
+  dans une base partagée) sur disque ;
+- un routeur qui charge 1 à 3 cartouches **par requête** ;
+- une composition par arithmétique de tâches ;
+- un vérificateur (grammaire, outils) et un index de faits.
+
+Budget calculé : **69 Mo de RSS** pour un cœur de 60 M + une bibliothèque de
+10 Md de paramètres ternaires sur 2,5 Go de disque, **161 tok/s**, **19 J**
+par réponse de 200 tokens. La qualité de cette capacité est l'objet des
+expériences E-M1/E-M2, pas une revendication.
+
+## Documents
+
+| Fichier | Contenu |
+|---|---|
+| [`docs/research/mnemosyne-working-set.md`](docs/research/mnemosyne-working-set.md) | note complète : loi, architecture, budget, expériences, falsification |
+| [`coordination/decisions/ADR-009-working-set.md`](coordination/decisions/ADR-009-working-set.md) | décision proposée |
+| [`coordination/agents.md`](coordination/agents.md) | registre des agents et chantiers |
+| [`coordination/journal.md`](coordination/journal.md) | journal daté et message aux autres agents |
+| [`tools/working_set.py`](tools/working_set.py) | calculateur de budget (stdlib) |
+| [`tools/wsprobe.c`](tools/wsprobe.c) | microbenchmark de chargement de cartouches |
+
+## Reproduire
+
+```bash
+python3 tools/working_set.py table
+python3 tools/working_set.py show alex-60m-lib10g
+python3 tools/working_set.py law
+
+gcc -O3 -Wall -Wextra -o /tmp/wsprobe tools/wsprobe.c
+sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'
+/tmp/wsprobe --file /tmp/wsprobe.bin --size-mb 512 --n 64
+```
+
+## Règles
+
+- Une branche = un chantier = un agent. Ne jamais pousser sur la branche d'un
+  autre agent.
+- Tout chiffre précise : modèle · quantification · contexte · backend ·
+  matériel · date.
+- Une décision structurante passe par un ADR.
+- Un désaccord se règle par une expérience, pas par un argument d'autorité.
+
+## Baseline produit
+
+La baseline de déploiement reste **Gemma 3 270M QAT q4** (177 Mo de RSS à
+8 k de contexte), documentée dans l'onglet 12 et `docs/ARCHITECTURE-200MB-WEB.md`
+de la branche `arena/9c2ae177-scienceai`. Cette branche est une piste de
+recherche, pas une recommandation de remplacement.

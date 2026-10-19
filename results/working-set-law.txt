@@ -1,0 +1,40 @@
+LOI DU WORKING SET
+========================================================================
+RSS  ~= N_resident * b/8 + KV + runtime + cache
+tok/s ~= min( GOPS / (2 * N_active), BW_disque / octets_lus_par_token )
+
+Seuil calcul/mémoire (comme KAIROS, généralisé) :
+  on est calcul-borné si GOPS < 16 * BW_disque / bits
+
+  1.58 bit,  100 Mo/s -> il faut     1013 GOPS pour être mémoire-borné
+  1.58 bit,  500 Mo/s -> il faut     5063 GOPS pour être mémoire-borné
+  1.58 bit, 1000 Mo/s -> il faut    10127 GOPS pour être mémoire-borné
+  1.58 bit, 3000 Mo/s -> il faut    30380 GOPS pour être mémoire-borné
+
+  2.00 bit,  100 Mo/s -> il faut      800 GOPS pour être mémoire-borné
+  2.00 bit,  500 Mo/s -> il faut     4000 GOPS pour être mémoire-borné
+  2.00 bit, 1000 Mo/s -> il faut     8000 GOPS pour être mémoire-borné
+  2.00 bit, 3000 Mo/s -> il faut    24000 GOPS pour être mémoire-borné
+
+  4.00 bit,  100 Mo/s -> il faut      400 GOPS pour être mémoire-borné
+  4.00 bit,  500 Mo/s -> il faut     2000 GOPS pour être mémoire-borné
+  4.00 bit, 1000 Mo/s -> il faut     4000 GOPS pour être mémoire-borné
+  4.00 bit, 3000 Mo/s -> il faut    12000 GOPS pour être mémoire-borné
+
+  4.50 bit,  100 Mo/s -> il faut      356 GOPS pour être mémoire-borné
+  4.50 bit,  500 Mo/s -> il faut     1778 GOPS pour être mémoire-borné
+  4.50 bit, 1000 Mo/s -> il faut     3556 GOPS pour être mémoire-borné
+  4.50 bit, 3000 Mo/s -> il faut    10667 GOPS pour être mémoire-borné
+
+  8.00 bit,  100 Mo/s -> il faut      200 GOPS pour être mémoire-borné
+  8.00 bit,  500 Mo/s -> il faut     1000 GOPS pour être mémoire-borné
+  8.00 bit, 1000 Mo/s -> il faut     2000 GOPS pour être mémoire-borné
+  8.00 bit, 3000 Mo/s -> il faut     6000 GOPS pour être mémoire-borné
+
+Lecture : à 2 bits et 1 Go/s, il faut 8 000 GOPS pour que le disque
+devienne le goulot. Un cœur de 60 M actifs coûte 0,12 GFLOP/token :
+à 20 GOPS, il tourne à 166 tok/s, très au-dessus d'un disque.
+
+Conséquence : le chargement d'une cartouche par REQUÊTE (et non par
+token) est le régime viable. Le disque paie une fois, le calcul paie
+à chaque token.
