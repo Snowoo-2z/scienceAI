@@ -253,6 +253,36 @@ Clé API sur llama-server (jamais exposé), rate limit par IP, entrée ≤ 2 000
 ≤ 200–300 tokens, timeout 60 s, prompt système court (200–400 tokens), historique tronqué,
 filtre de sortie, `MemoryMax=256M` sous systemd, alerte si RSS > 200 Mo.
 
+### 4.7 Le budget caché : le reste de la pile
+
+Jusqu'ici, « 200 Mo » désignait le processus d'inférence. Un site web, lui, fait tourner autre chose.
+
+| Poste | RSS [estimé] |
+|---|---:|
+| `llama-server` + MobileLLM-R1-140M Q4 + KV 7 168 | **199 Mo** |
+| Reverse proxy (Caddy) | 20 Mo |
+| Application (Python/FastAPI/uvicorn) | 55 Mo |
+| Cache SQLite + index FTS5 (BM25) | 10 Mo |
+| **Total service, sans RAG vectoriel** | **~284 Mo** |
+| Modèle d'embedding MiniLM-L6 int8 + onnxruntime | +53 Mo |
+| **Total avec RAG vectoriel en processus** | **~337 Mo** |
+| Noyau Linux + systemd minimal | 300–600 Mo |
+
+**Conséquences, et elles sont structurantes :**
+
+1. **« 200 Mo » ne peut pas être la mémoire de la machine.** Un noyau Linux minimal consomme à lui
+   seul 300 à 600 Mo. L'interprétation cohérente avec « site web sur un petit PC » est donc :
+   **200 Mo = RSS du processus d'inférence**, machine à 8–16 Go par ailleurs.
+2. **Le RAG vectoriel coûte cher.** Un modèle d'embedding de 22,7 M paramètres en int8 pèse 23 Mo
+   de poids et ~30 Mo de runtime : 53 Mo, soit plus d'un quart du budget, pour une capacité que
+   BM25 couvre souvent mieux sur un corpus fermé et spécialisé.
+3. **Recommandation : SQLite FTS5 (BM25) plutôt qu'un index vectoriel.** Zéro modèle, zéro
+   dépendance, ~10 Mo, et de meilleurs résultats sur les requêtes à mots-clés d'un site métier.
+   L'embedding ne se justifie que pour des requêtes paraphrasées, et peut alors être précalculé
+   hors ligne pour le corpus — seule la requête aurait besoin du modèle.
+4. **Écrire le service en Go plutôt qu'en Python** fait passer l'application de ~55 Mo à ~20 Mo.
+   Sur un budget de 300 Mo, c'est 12 % gagnés sans toucher au modèle.
+
 ---
 
 ## 5. Qualité attendue
@@ -345,6 +375,11 @@ Un 60 M + bibliothèque peut concourir ; un 270 M ne concourt pas s'il réside e
 **ADR-P-011 — La capacité externalisée est une piste produit conditionnelle.**
 Condition : un test modulaire vs dense à RSS égal (type E-M2) doit montrer +5 pts à ≤ 2× la
 latence. Tant qu'il n'a pas réussi, la baseline reste le dense MobileLLM-R1-140M.
+
+**ADR-P-013 — « 200 Mo » désigne le processus d'inférence, pas la machine.**
+Conséquence : le budget machine est distinct et vaut 300–600 Mo (OS) + le service. Toute
+comparaison publie le périmètre mesuré. Le RAG utilise BM25/FTS5 par défaut, pas un modèle
+d'embedding en processus.
 
 **ADR-P-012 — Deux modes assumés : conversation et compétences.**
 Le produit ne promet pas le généraliste par les cartouches. Il promet le généraliste par le dense +

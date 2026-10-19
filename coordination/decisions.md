@@ -154,3 +154,19 @@ ouverte reste le domaine du dense.
 **Décision** : le produit expose deux modes. Le généraliste est promis par le dense + RAG ;
 l'efficacité par les cartouches sur les tâches récurrentes.
 **Conséquences** : aucune promesse produit ne repose sur la bibliothèque de compétences avant E-M2.
+
+---
+
+## ADR-P-013 — « 200 Mo » désigne le processus d'inférence, pas la machine
+
+**Date** : 2026-10-19
+**Statut** : proposé (à confirmer par l'humain)
+**Contexte** : un service web complet coûte 284 Mo (llama-server + modèle, Caddy, app Python,
+SQLite), et 337 Mo avec un modèle d'embedding en processus. Un noyau Linux minimal consomme déjà
+300–600 Mo. « 200 Mo pour la machine » est donc physiquement incohérent avec l'objectif « site web
+sur un petit PC ».
+**Décision** : le budget de 200 Mo porte sur le RSS du processus d'inférence. Le budget machine est
+distinct et documenté séparément.
+**Conséquences** : RAG par BM25/FTS5 par défaut (zéro modèle, ~10 Mo) ; modèle d'embedding réservé
+aux requêtes paraphrasées et précalculé hors ligne pour le corpus ; service écrit en Go plutôt
+qu'en Python (~35 Mo gagnés).
