@@ -91,3 +91,10 @@ Ne pas convertir les pourcentages de gains du rapport initial en garanties
 universelles. Chaque comparaison doit retrouver sa source, sa configuration et
 ses incertitudes. Un généraliste utile sous 100 Mo est **non démontré ici**, pas
 mathématiquement impossible sur la seule base de cette arithmétique.
+
+## Mise à jour utilisateur — 2026-10-19
+
+100 Mo confirmés ; cible généraliste et portabilité large, pas spécialisation
+imposée ni plafond arbitraire de paramètres. La note ci-dessus reste un examen
+conditionnel du streaming standard, pas une raison d'interdire les autres
+architectures. Voir `experiments/silex/README.md` pour S2, opérateurs partagés.

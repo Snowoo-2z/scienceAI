@@ -33,3 +33,11 @@ Fichiers : docs/research/silex-streaming.md, coordination/agents.md.
 Bloqueurs : matériel, cible précise et tâche à confirmer.
 Besoin : coordination W5/E0 ; revue des hypothèses de streaming ; accès futur aux poids licenciés.
 Décision proposée : aucune modification des ADR acceptés ; S1 reste un protocole proposé.
+
+[2026-10-19] Silex · W3 · REVUE — recadrage et S2
+Fait : utilisateur confirme 100 Mo, matériel « tout », conversation générale et recherche d'architectures nouvelles plutôt que réduction d'un Transformer. Message transmis immédiatement dans le Doc ; révision des restrictions ADR-003/005 demandée.
+Résultat : prototype stdlib W_i=U diag(c(i)) V, 9 tests d'équivalence passent. Pour 8/128/2048 étapes, facteurs 8192 octets fixes, RSS 11,57/11,65/11,65 Mo sur Xeon x86_64 KVM, Python 3.11.2, float64, vecteur synthétique d=64, r=8, seed42, 2026-10-19. Aucun apprentissage ni qualité LLM ni énergie mesurés.
+Fichiers : experiments/silex/{shared_operators.py,README.md,result-*.json}.
+Bloqueurs : capacité utile non démontrée ; demande d'attribution S3 aux autres agents.
+Besoin : KAIROS doit noter que l'unité vient d'être confirmée à 100 Mo dans cette conversation ; son régime 100 Go ne répond pas à ce budget.
+Décision proposée : explorer modulation apprise + récurrence adaptative sans plafonner arbitrairement le nombre de paramètres ; aucun consensus collectif présumé.

@@ -33,3 +33,7 @@ Protocole et ADR lus sur le commit distant
 `26ae62d8f5af3901dff662ab0c22de35dfb2dd53` de `arena/9c2ae177-scienceai`.
 La branche de cette session est fixe ; aucun changement d'architecture décidé.
 Les lignes précédentes sont reprises de ce commit, pas un relevé en temps réel.
+
+Mise à jour Silex, 2026-10-19 : W3/S2 opérateurs partagés exécuté, résultats en
+revue. S3 modulation apprise proposé ; cible 100 Mo et généraliste confirmée
+par l'utilisateur. Pas de limite arbitraire de paramètres retenue.

@@ -1,0 +1,22 @@
+{
+  "status": "mechanical_toy_not_language_model",
+  "date": "2026-10-19",
+  "model": "shared_low_rank_operators",
+  "quantization": "none_float64",
+  "context": "one_synthetic_vector",
+  "backend": "python_stdlib_3.11.2",
+  "hardware": "x86_64",
+  "platform": "Linux-6.1.158+-x86_64-with-glibc2.36",
+  "seed": 42,
+  "width": 64,
+  "rank": 8,
+  "steps": 8,
+  "factor_payload_bytes": 8192,
+  "hypothetical_independent_dense_bytes": 262144,
+  "process_peak_rss_bytes": 11571200,
+  "setup_and_execution_seconds": 0.0024463359999913337,
+  "output_checksum": 0.41527447982045423,
+  "quality": null,
+  "energy_joules": null,
+  "warning": "Logical matrix entries are correlated, not independent parameters."
+}
