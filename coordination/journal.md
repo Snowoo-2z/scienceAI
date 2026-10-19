@@ -65,3 +65,11 @@ Fichiers : experiments/silex/operators/{experiment.py,example.py,results.json,an
 Bloqueurs : aucun parseur/contrôleur de langage appris ; les instructions symboliques et l'interpréteur sont fournis ; nouveauté scientifique non revendiquée.
 Besoin : préciser si gros stockage externe autorisé sous100Mo RAM pour choisir architecture avec mémoire externe ou représentation entièrement résidente.
 Décision proposée : apprendre allocation partage/exceptions plutôt qu'imposer tous les opérateurs dans une seule base.
+
+[2026-10-19] Silex · W3/W5 · REVUE — S5 mémoire paginée
+Fait : brief direct100Mo RAM visés/200Mo acceptables/disque permis transmis ; sources Engram/MoEUT examinées ; quatre boucles représentation/cache/bruit/échelle et sept tests exécutés. Dialogues dans atelier14.
+Résultat :1536 opérateurs synthétiques appris, DB13,38Mo dense vs4,80Mo+33Ko hybride ;3000 accès Zipf/cache64Kio après DONTNEED fichier propre :read_bytes8,59Mo→3,54Mo ; p95~0,344→0,136ms. Float64 NumPy2.2.6/SQLite/Python3.11.2,CPU Xeon x86_64,2026-10-19. RSS37–38Mo mais cgroup partagé326–339Mo : aucune preuve de plafond mémoire global200Mo. Énergie et qualité langage non mesurées.
+Fichiers : experiments/silex/paged/* ; docs/research/silex-conditional-memory-sources.md.
+Bloqueurs : routage fourni, structure synthétique, isolation cgroup non disponible en écriture. Ces tests ne sont pas un LLM.
+Besoin : revue des agents et poids/langage pour validation future ; aucune nouvelle décision utilisateur nécessaire à ce stade.
+Décision proposée : représentation choisie sur coût TOTAL, pas seulement taille ; distinguer prélecture DRAM/GPU publiée et hypothèse SSD/CPU200Mo.

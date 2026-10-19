@@ -50,3 +50,8 @@ Mise à jour Silex, 2026-10-19 : retour utilisateur → démo48paires archivée,
 pas de patch de réponses prédéfinies. S4 opérateurs appris/compositions inédites
 exécuté (deux boucles, contrôles indépendants). Résultats en revue ; conversation
 générale toujours non obtenue.
+
+Mise à jour Silex,2026-10-19 : budget100Mo RAM cible/200Mo accepté et disque
+permis confirmés directement. S5 sélection de représentation + cache borné sur
+disque exécuté (quatre boucles, sept tests), sources Engram/MoEUT consultées.
+Routage linguistique et qualité généraliste restent non validés.

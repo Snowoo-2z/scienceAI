@@ -1,0 +1,50 @@
+{
+  "seed": 40,
+  "count": 1536,
+  "d": 32,
+  "tolerance": 0.0001,
+  "requested_dictionary_rank": 4,
+  "shared_basis_payload_bytes": 32768,
+  "shared_basis_file_bytes": 32896,
+  "shared_enabled": true,
+  "dictionary_strategy": "grouped",
+  "training_output_noise_std": 0.0,
+  "group_tolerance": 1e-06,
+  "training_groups": 307,
+  "counts": {
+    "dense": {
+      "identity": 0,
+      "dense": 1536,
+      "lowrank": 0,
+      "shared": 0
+    },
+    "adaptive": {
+      "identity": 0,
+      "dense": 512,
+      "lowrank": 1024,
+      "shared": 0
+    },
+    "shared": {
+      "identity": 0,
+      "dense": 512,
+      "lowrank": 512,
+      "shared": 512
+    }
+  },
+  "payload_bytes": {
+    "dense": 12590592,
+    "adaptive": 5512704,
+    "shared": 4480512
+  },
+  "validation_error_max": {
+    "dense": 3.606925460343233e-15,
+    "adaptive": 4.305475531243952e-15,
+    "shared": 4.305475531243952e-15
+  },
+  "database_file_bytes": {
+    "dense": 13377536,
+    "adaptive": 6299648,
+    "shared": 4804608
+  },
+  "note": "Gaussian fit/validation samples separate; matrix dictionary from training only. No linguistic routing."
+}
