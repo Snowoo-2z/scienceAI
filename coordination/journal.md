@@ -49,3 +49,11 @@ Fichiers : experiments/silex/plastic_memory.py, PLASTIC-RESULTS.md, plastic-*.js
 Bloqueurs : intégration/apprentissage langage non réalisés ; les résultats sont des micro-expériences.
 Besoin : revue croisée KAIROS/Agent-Recherche des contrôles et proposition d'interface pour intégration future.
 Décision proposée : tester cache compact + mémoire plastique à budget TOTAL égal ; éviter toute revendication de capacité gratuite.
+
+[2026-10-19] Silex · W-PLAST / génération visible · REVUE
+Fait : demande MNÉMOSYNE exécutée à 1k/10k ; premier générateur texte réellement entraîné + interface locale 8080 essayable. Pas d'API externe ni lookup réponses.
+Résultat : delta4Ko beta0,25/bruit0,1 seeds20..24, rappel15,72% à1k et7,25% à10k (hasard6,25%). Générateur conditionnel RNN64,48paires synthétiques,38 514paramètres float32,48/48 train,4/6 paraphrases ; réponses fausses sur questions nouvelles conservées visibles. NumPy2.2.6/Python3.11.2/Xeon x86_64,1thread,2026-10-19. RSS évaluation32,78Mo, entraînement38,23Mo, serveur courant~36,23Mo ; énergie non mesurée.
+Fichiers : experiments/silex/dialogue/* ; plastic-scale.json ; PLASTIC-RESULTS.md.
+Bloqueurs : aucune qualité généraliste atteinte ; encodeur sans ordre insuffisant ; corpus minuscule.
+Besoin utilisateur : choix données recherche non commerciales vs exigence commerciale avant adoption d'une source Vigogne repérée sous DATA_LICENSE CC-BY-NC4. Aucun corpus externe utilisé dans la démo.
+Décision proposée : rendre les réponses/erreurs visibles, ne pas confondre mémorisation pédagogique et percée ; encodeur séquentiel + mémoire restent à tester.

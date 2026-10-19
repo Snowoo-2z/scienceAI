@@ -1,0 +1,574 @@
+{
+  "train": {
+    "exact_match": 1.0,
+    "examples": [
+      {
+        "question": "bonjour",
+        "expected": "bonjour ! comment puis-je aider ?",
+        "answer": "bonjour ! comment puis - je aider ?",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "salut",
+        "expected": "bonjour ! comment puis-je aider ?",
+        "answer": "bonjour ! comment puis - je aider ?",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qui es-tu ?",
+        "expected": "je suis un prototype expérimental de conversation.",
+        "answer": "je suis un prototype expérimental de conversation.",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "présente-toi",
+        "expected": "je suis un prototype expérimental de conversation.",
+        "answer": "je suis un prototype expérimental de conversation.",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "comment fonctionnes-tu ?",
+        "expected": "je génère des mots avec un réseau récurrent entraîné.",
+        "answer": "je génère des mots avec un réseau récurrent entraîné.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "comment produis-tu tes réponses ?",
+        "expected": "je génère des mots avec un réseau récurrent entraîné.",
+        "answer": "je génère des mots avec un réseau récurrent entraîné.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "es-tu fiable ?",
+        "expected": "non. mes réponses peuvent être fausses et doivent être vérifiées.",
+        "answer": "non. mes réponses peuvent être fausses et doivent être vérifiées.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "peux-tu te tromper ?",
+        "expected": "oui. mes réponses peuvent être fausses et doivent être vérifiées.",
+        "answer": "oui. mes réponses peuvent être fausses et doivent être vérifiées.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "merci",
+        "expected": "avec plaisir !",
+        "answer": "avec plaisir !",
+        "unknown_words": [],
+        "generated_tokens": 3,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "merci beaucoup",
+        "expected": "avec plaisir !",
+        "answer": "avec plaisir !",
+        "unknown_words": [],
+        "generated_tokens": 3,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "au revoir",
+        "expected": "au revoir et à bientôt !",
+        "answer": "au revoir et à bientôt !",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "à bientôt",
+        "expected": "au revoir et à bientôt !",
+        "answer": "au revoir et à bientôt !",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "quelle est la capitale de la france ?",
+        "expected": "la capitale de la france est paris.",
+        "answer": "la capitale de la france est paris.",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "donne la capitale de la france",
+        "expected": "la capitale de la france est paris.",
+        "answer": "la capitale de la france est paris.",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "quelle est la capitale de l'italie ?",
+        "expected": "la capitale de l'italie est rome.",
+        "answer": "la capitale de l'italie est rome.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "donne la capitale de l'italie",
+        "expected": "la capitale de l'italie est rome.",
+        "answer": "la capitale de l'italie est rome.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "combien font deux plus deux ?",
+        "expected": "deux plus deux font quatre.",
+        "answer": "deux plus deux font quatre.",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "calcule deux plus deux",
+        "expected": "deux plus deux font quatre.",
+        "answer": "deux plus deux font quatre.",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "combien font trois plus trois ?",
+        "expected": "trois plus trois font six.",
+        "answer": "trois plus trois font six.",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "calcule trois plus trois",
+        "expected": "trois plus trois font six.",
+        "answer": "trois plus trois font six.",
+        "unknown_words": [],
+        "generated_tokens": 6,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "pourquoi le ciel est bleu ?",
+        "expected": "l'atmosphère diffuse davantage la lumière bleue du soleil.",
+        "answer": "l'atmosphère diffuse davantage la lumière bleue du soleil.",
+        "unknown_words": [],
+        "generated_tokens": 11,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique le bleu du ciel",
+        "expected": "l'atmosphère diffuse davantage la lumière bleue du soleil.",
+        "answer": "l'atmosphère diffuse davantage la lumière bleue du soleil.",
+        "unknown_words": [],
+        "generated_tokens": 11,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qu'est-ce que la gravité ?",
+        "expected": "la gravité est une interaction attractive entre les masses.",
+        "answer": "la gravité est une interaction attractive entre les masses.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique la gravité",
+        "expected": "la gravité est une interaction attractive entre les masses.",
+        "answer": "la gravité est une interaction attractive entre les masses.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qu'est-ce que la photosynthèse ?",
+        "expected": "les plantes utilisent la lumière pour produire des sucres.",
+        "answer": "les plantes utilisent la lumière pour produire des sucres.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique la photosynthèse",
+        "expected": "les plantes utilisent la lumière pour produire des sucres.",
+        "answer": "les plantes utilisent la lumière pour produire des sucres.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qu'est-ce qu'un ordinateur ?",
+        "expected": "un ordinateur exécute des instructions et traite des données.",
+        "answer": "un ordinateur exécute des instructions et traite des données.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique un ordinateur",
+        "expected": "un ordinateur exécute des instructions et traite des données.",
+        "answer": "un ordinateur exécute des instructions et traite des données.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qu'est-ce qu'un algorithme ?",
+        "expected": "un algorithme est une suite d'étapes pour résoudre un problème.",
+        "answer": "un algorithme est une suite d'étapes pour résoudre un problème.",
+        "unknown_words": [],
+        "generated_tokens": 13,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique un algorithme",
+        "expected": "un algorithme est une suite d'étapes pour résoudre un problème.",
+        "answer": "un algorithme est une suite d'étapes pour résoudre un problème.",
+        "unknown_words": [],
+        "generated_tokens": 13,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "qu'est-ce que la mémoire ?",
+        "expected": "la mémoire permet de conserver et de retrouver des informations.",
+        "answer": "la mémoire permet de conserver et de retrouver des informations.",
+        "unknown_words": [],
+        "generated_tokens": 11,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "explique la mémoire",
+        "expected": "la mémoire permet de conserver et de retrouver des informations.",
+        "answer": "la mémoire permet de conserver et de retrouver des informations.",
+        "unknown_words": [],
+        "generated_tokens": 11,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "raconte une histoire",
+        "expected": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+        "answer": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+        "unknown_words": [],
+        "generated_tokens": 15,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "raconte une petite histoire",
+        "expected": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+        "answer": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+        "unknown_words": [],
+        "generated_tokens": 15,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "donne une idée de repas",
+        "expected": "tu peux préparer du riz avec des légumes.",
+        "answer": "tu peux préparer du riz avec des légumes.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "que manger ce soir ?",
+        "expected": "tu peux préparer du riz avec des légumes.",
+        "answer": "tu peux préparer du riz avec des légumes.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "comment apprendre ?",
+        "expected": "commence par un petit exercice puis vérifie ce que tu comprends.",
+        "answer": "commence par un petit exercice puis vérifie ce que tu comprends.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "comment étudier ?",
+        "expected": "commence par un petit exercice puis vérifie ce que tu comprends.",
+        "answer": "commence par un petit exercice puis vérifie ce que tu comprends.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "je suis triste",
+        "expected": "je suis désolé. veux-tu parler de ce qui te préoccupe ?",
+        "answer": "je suis désolé. veux - tu parler de ce qui te préoccupe ?",
+        "unknown_words": [],
+        "generated_tokens": 14,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "je me sens triste",
+        "expected": "je suis désolé. veux-tu parler de ce qui te préoccupe ?",
+        "answer": "je suis désolé. veux - tu parler de ce qui te préoccupe ?",
+        "unknown_words": [],
+        "generated_tokens": 14,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "peux-tu accéder à internet ?",
+        "expected": "non. ce prototype fonctionne sans accès à internet.",
+        "answer": "non. ce prototype fonctionne sans accès à internet.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "as-tu internet ?",
+        "expected": "non. ce prototype fonctionne sans accès à internet.",
+        "answer": "non. ce prototype fonctionne sans accès à internet.",
+        "unknown_words": [],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "quelle heure est-il ?",
+        "expected": "je ne connais pas l'heure actuelle.",
+        "answer": "je ne connais pas l'heure actuelle.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "donne l'heure actuelle",
+        "expected": "je ne connais pas l'heure actuelle.",
+        "answer": "je ne connais pas l'heure actuelle.",
+        "unknown_words": [],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "quelle météo demain ?",
+        "expected": "je ne connais pas la météo. consulte un service météorologique.",
+        "answer": "je ne connais pas la météo. consulte un service météorologique.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "va-t-il pleuvoir demain ?",
+        "expected": "je ne connais pas la météo. consulte un service météorologique.",
+        "answer": "je ne connais pas la météo. consulte un service météorologique.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "écris un poème",
+        "expected": "le vent traverse le jardin. la nuit attend le matin.",
+        "answer": "le vent traverse le jardin. la nuit attend le matin.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "donne un petit poème",
+        "expected": "le vent traverse le jardin. la nuit attend le matin.",
+        "answer": "le vent traverse le jardin. la nuit attend le matin.",
+        "unknown_words": [],
+        "generated_tokens": 12,
+        "stopped_on_eos": true,
+        "exact_match": true
+      }
+    ]
+  },
+  "paraphrases": {
+    "exact_match": 0.6666666666666666,
+    "examples": [
+      {
+        "question": "bonjour à toi",
+        "expected": "bonjour ! comment puis-je aider ?",
+        "answer": "je suis un prototype expérimental de conversation.",
+        "unknown_words": [],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": false
+      },
+      {
+        "question": "explique-moi la gravité",
+        "expected": "la gravité est une interaction attractive entre les masses.",
+        "answer": "la gravité est une interaction attractive entre les masses.",
+        "unknown_words": [
+          "moi"
+        ],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "peux-tu expliquer la photosynthèse ?",
+        "expected": "les plantes utilisent la lumière pour produire des sucres.",
+        "answer": "les plantes utilisent la lumière pour produire des sucres.",
+        "unknown_words": [
+          "expliquer"
+        ],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "dis-moi la capitale de la france",
+        "expected": "la capitale de la france est paris.",
+        "answer": "la capitale de la france est paris.",
+        "unknown_words": [
+          "dis",
+          "moi"
+        ],
+        "generated_tokens": 8,
+        "stopped_on_eos": true,
+        "exact_match": true
+      },
+      {
+        "question": "peux-tu raconter une histoire ?",
+        "expected": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+        "answer": "non. ce prototype fonctionne sans accès à internet.",
+        "unknown_words": [
+          "raconter"
+        ],
+        "generated_tokens": 10,
+        "stopped_on_eos": true,
+        "exact_match": false
+      },
+      {
+        "question": "je voudrais une idée de repas",
+        "expected": "tu peux préparer du riz avec des légumes.",
+        "answer": "tu peux préparer du riz avec des légumes.",
+        "unknown_words": [
+          "voudrais"
+        ],
+        "generated_tokens": 9,
+        "stopped_on_eos": true,
+        "exact_match": true
+      }
+    ]
+  },
+  "unseen": [
+    {
+      "question": "quelle est la capitale du japon ?",
+      "answer": "la capitale de l'italie est rome.",
+      "unknown_words": [
+        "japon"
+      ],
+      "generated_tokens": 9,
+      "stopped_on_eos": true
+    },
+    {
+      "question": "combien font deux plus trois ?",
+      "answer": "deux plus deux font quatre.",
+      "unknown_words": [],
+      "generated_tokens": 6,
+      "stopped_on_eos": true
+    },
+    {
+      "question": "explique la différence entre la gravité et la photosynthèse",
+      "answer": "la gravité est une interaction attractive entre les masses.",
+      "unknown_words": [
+        "différence"
+      ],
+      "generated_tokens": 10,
+      "stopped_on_eos": true
+    },
+    {
+      "question": "écris une fonction python qui trie une liste",
+      "answer": "je suis un prototype expérimental de conversation.",
+      "unknown_words": [
+        "fonction",
+        "python",
+        "trie",
+        "liste"
+      ],
+      "generated_tokens": 8,
+      "stopped_on_eos": true
+    },
+    {
+      "question": "mon prénom est léa. quel est mon prénom ?",
+      "answer": "la gravité est une interaction attractive entre les masses.",
+      "unknown_words": [
+        "mon",
+        "prénom",
+        "léa",
+        "quel",
+        "mon",
+        "prénom"
+      ],
+      "generated_tokens": 10,
+      "stopped_on_eos": true
+    },
+    {
+      "question": "raconte une histoire avec un chien sur la lune",
+      "answer": "un chat trouve une clé. il ouvre une porte et découvre un jardin.",
+      "unknown_words": [
+        "chien",
+        "sur",
+        "lune"
+      ],
+      "generated_tokens": 15,
+      "stopped_on_eos": true
+    }
+  ],
+  "inference_peak_rss_bytes": 32776192
+}

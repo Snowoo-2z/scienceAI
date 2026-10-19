@@ -126,6 +126,7 @@ def self_test():
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--counts', type=int, nargs='+', default=[16,64,128,256])
     parser.add_argument('--noise', type=float, default=0.0)
     parser.add_argument('--beta', type=float, default=1.0)
     parser.add_argument('--seed-start', type=int, default=0)
@@ -134,16 +135,18 @@ def main():
     if args.self_test:
         self_test()
         return
+    if any(n < 2 for n in args.counts):
+        parser.error('counts must be >= 2')
     if not 0 < args.beta <= 1:
         parser.error('beta must be in (0, 1]')
     if args.noise < 0:
         parser.error('noise must be nonnegative')
     rows = [trial(method, n, seed, args.noise, beta=args.beta)
-            for n in (16, 64, 128, 256)
+            for n in args.counts
             for seed in range(args.seed_start, args.seed_start + 5)
             for method in ('hebb', 'delta', 'fifo', 'fifo_q8')]
     summary = []
-    for n in (16, 64, 128, 256):
+    for n in args.counts:
         for method in ('hebb', 'delta', 'fifo', 'fifo_q8'):
             selected = [r for r in rows if r['count'] == n and r['method'] == method]
             item = dict(count=n, method=method, payload_bytes=selected[0]['payload_bytes'])
@@ -154,7 +157,7 @@ def main():
             summary.append(item)
     rss = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
     print(json.dumps(dict(date='2026-10-19', model='synthetic_associative_memory',
-                         quantization='none_float32', context='16_to_256_key_value_pairs',
+                         quantization='none_float32', context={'key_value_counts': args.counts},
                          backend='numpy_' + np.__version__, python=platform.python_version(),
                          hardware=platform.machine(), platform=platform.platform(),
                          width=64, classes=16, seeds=list(range(args.seed_start, args.seed_start + 5)), noise=args.noise, beta=args.beta,

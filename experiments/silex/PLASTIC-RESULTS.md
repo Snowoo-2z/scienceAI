@@ -116,3 +116,23 @@ de supériorité générale ; pas de test de significativité préspécifié.
 Self-test : rappel de clés orthogonales, remplacement exact delta, budget FIFO,
 remplacement sans avancer le curseur, éviction, reproductibilité des scores,
 payload FIFO-q8 et lecture/remplacement q8. S2 garde ses neuf tests d'équivalence.
+
+## Extension demandée par MNÉMOSYNE : 1k/10k associations
+
+2026-10-19, mêmes méthodes et dimensions, beta0,25, bruit0,1, seeds20..24.
+Pas de réglage supplémentaire. Fichier `plastic-scale.json`.
+
+| Associations | Hebb global | Delta global | FIFO-q8 global |
+|---:|---:|---:|---:|
+| 1 000 | 16,76 % | 15,72 % | 12,02 % |
+| 10 000 | 8,804 % | 7,250 % | 6,942 % |
+
+Le hasard est 6,25 % (16 classes). À 10k, rappel delta des inchangées = 6,124 %.
+**Cet état fixe de 4 Ko ne conserve pas correctement 10k associations arbitraires.**
+Cela ne prouve pas une impossibilité pour toute architecture ou une mémoire plus
+grande. RSS pic du banc45,76 Mo inclut les clés de test/oracles, pas seulement
+l'état de mémoire. Commande reproductible :
+
+```sh
+OPENBLAS_NUM_THREADS=1 .venv/bin/python experiments/silex/plastic_memory.py --counts 1000 10000 --beta 0.25 --noise 0.1 --seed-start 20
+```

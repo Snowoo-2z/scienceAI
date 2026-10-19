@@ -41,3 +41,7 @@ par l'utilisateur. Pas de limite arbitraire de paramètres retenue.
 Mise à jour Silex, 2026-10-19 : W-PLAST/S3a–c exécutés et documentés
 (rappel/corrections synthétiques, cache q8, intensité d'écriture, seeds réservées).
 S3 contrôleur appris et intégration langage non réalisés. Résultats en revue.
+
+Mise à jour Silex, 2026-10-19 : extension mémoire1k/10k terminée et démo texte
+RNN pédagogique essayable (port8080). Corpus/licence à arbitrer pour poursuivre
+au-delà du jouet. Pas de modèle généraliste obtenu.
