@@ -1,0 +1,156 @@
+[
+  {
+    "kind": "deep1",
+    "facts": 4000,
+    "params": 80416,
+    "applications": 2,
+    "train_acc": 0.9942,
+    "test_acc_unseen_keys": 0.0156,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 52.3
+  },
+  {
+    "kind": "deep1",
+    "facts": 8000,
+    "params": 80416,
+    "applications": 2,
+    "train_acc": 1.0,
+    "test_acc_unseen_keys": 0.0273,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 61.5
+  },
+  {
+    "kind": "deep1",
+    "facts": 16000,
+    "params": 80416,
+    "applications": 2,
+    "train_acc": 0.9377,
+    "test_acc_unseen_keys": 0.0312,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 65.0
+  },
+  {
+    "kind": "deep1",
+    "facts": 32000,
+    "params": 80416,
+    "applications": 2,
+    "train_acc": 0.4487,
+    "test_acc_unseen_keys": 0.0391,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 67.2
+  },
+  {
+    "kind": "loop2",
+    "facts": 4000,
+    "params": 80416,
+    "applications": 3,
+    "train_acc": 0.9805,
+    "test_acc_unseen_keys": 0.0469,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 62.3
+  },
+  {
+    "kind": "loop2",
+    "facts": 8000,
+    "params": 80416,
+    "applications": 3,
+    "train_acc": 0.9832,
+    "test_acc_unseen_keys": 0.0371,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 65.4
+  },
+  {
+    "kind": "loop2",
+    "facts": 16000,
+    "params": 80416,
+    "applications": 3,
+    "train_acc": 0.9358,
+    "test_acc_unseen_keys": 0.0312,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 66.5
+  },
+  {
+    "kind": "loop2",
+    "facts": 32000,
+    "params": 80416,
+    "applications": 3,
+    "train_acc": 0.6002,
+    "test_acc_unseen_keys": 0.0352,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 250.9
+  },
+  {
+    "kind": "deep2",
+    "facts": 4000,
+    "params": 146208,
+    "applications": 3,
+    "train_acc": 1.0,
+    "test_acc_unseen_keys": 0.0254,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 54.9
+  },
+  {
+    "kind": "deep2",
+    "facts": 8000,
+    "params": 146208,
+    "applications": 3,
+    "train_acc": 0.9799,
+    "test_acc_unseen_keys": 0.0312,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 62.8
+  },
+  {
+    "kind": "deep2",
+    "facts": 16000,
+    "params": 146208,
+    "applications": 3,
+    "train_acc": 0.9627,
+    "test_acc_unseen_keys": 0.0508,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 64.1
+  },
+  {
+    "kind": "deep2",
+    "facts": 32000,
+    "params": 146208,
+    "applications": 3,
+    "train_acc": 0.8047,
+    "test_acc_unseen_keys": 0.0332,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 66.0
+  },
+  {
+    "kind": "wide1",
+    "facts": 16000,
+    "params": 169760,
+    "applications": 2,
+    "train_acc": 0.9761,
+    "test_acc_unseen_keys": 0.0371,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 67.7
+  },
+  {
+    "kind": "wide1",
+    "facts": 32000,
+    "params": 169760,
+    "applications": 2,
+    "train_acc": 0.7278,
+    "test_acc_unseen_keys": 0.041,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 70.8
+  }
+]

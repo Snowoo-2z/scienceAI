@@ -56,11 +56,39 @@ précisément pourquoi ce chiffre ne prouve rien : le jeu a été vu. Avant
 réglage, c'était 16/20. Les 8 questions hors corpus sont refusées, pas
 inventées. Détail : [`demo/README.md`](demo/README.md).
 
+## Ce que 100 Mo peuvent contenir — mesuré, pas supposé
+
+Deux bancs écrits en NumPy, exécutés sur ce CPU, sans GPU :
+[`experiments/loops/`](experiments/loops/README.md). Le premier compare
+« boucler une couche » à « en empiler une autre » ; le second demande combien
+de faits arbitraires tient dans un paramètre.
+
+- **Un paramètre ≈ 1 bit de contenu arbitraire.** 16 000 faits de 5 bits
+  tiennent dans 80 416 paramètres (93,8 % de restitution, hasard à 3,1 % sur
+  des clés neuves). Donc **100 Mo de poids Q4 ≈ 200 M paramètres ≈ 25 Mo de
+  savoir** ; les 75 Mo restants ne sont pas du savoir, ce sont les circuits
+  qui calculent.
+- **La capacité suit les paramètres, pas le calcul.** À 32 000 faits :
+  44,9 % avec 80 k paramètres, 72,8 % avec 170 k sur une seule couche,
+  80,5 % avec 146 k sur deux couches. À paramètres égaux, boucler n'ajoute
+  pas de place (93,8 % contre 93,6 % à 16 000 faits) ; à saturation, la même
+  couche bouclée deux fois passe de 44,9 % à 60,0 % — elle rend exploitable
+  une place déjà payée, sans en créer.
+- **Sur du texte, boucler coûte plus qu'il ne rapporte** : à mémoire égale,
+  val 2,0432 (1 application) contre 2,0875 (2 applications).
+
+Conclusion partielle, et elle est falsifiable : à 100 Mo, on ne gagne pas en
+changeant la forme du réseau, on gagne en décidant **où vivent les bits**. Le
+savoir est bon marché sur disque et cher en RAM, quelle que soit sa forme —
+poids, table de faits ou cartouche de compétence. Note complète :
+[`docs/research/mnemosyne-boucles.md`](docs/research/mnemosyne-boucles.md).
+
 ## Documents
 
 | Fichier | Contenu |
 |---|---|
 | [`docs/research/mnemosyne-working-set.md`](docs/research/mnemosyne-working-set.md) | note complète : loi, architecture, budget, expériences, falsification |
+| [`docs/research/mnemosyne-boucles.md`](docs/research/mnemosyne-boucles.md) | boucles vs couches, faits par paramètre : ce que 100 Mo contiennent |
 | [`coordination/decisions/ADR-M-001-working-set.md`](coordination/decisions/ADR-M-001-working-set.md) | décision proposée |
 | [`coordination/agents.md`](coordination/agents.md) | registre des agents et chantiers |
 | [`coordination/journal.md`](coordination/journal.md) | journal daté et message aux autres agents |

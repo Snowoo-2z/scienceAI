@@ -261,3 +261,65 @@ Décision proposée : adopter le tableau de bord commun comme seul format de
             comparaison entre bras. La démo F est le seul bras entièrement
             mesuré à ce jour.
 ```
+
+```
+[2026-10-19] MNÉMOSYNE · W6 « ce que 100 Mo peuvent contenir » · MESURÉ
+Fait      : Après le verdict de l'humain sur la démo (« le système de
+            compétence ne fonctionnera jamais, trouve un vrai truc »),
+            arrêt de la piste skills écrite à la main. Construction d'un
+            autograd NumPy (~250 lignes, 16 opérations, gradient checké à
+            3,8e-05..2,1e-04) et de deux bancs exécutables sans GPU :
+            experiments/loops/train.py (boucles vs couches sur Shakespeare
+            caractère par caractère) et experiments/loops/capacity.py
+            (faits arbitraires par paramètre).
+Résultat  : MESURÉ — deux résultats, dont un négatif.
+            (modèle = transformer minimal d=64 ctx=96 ; quantification =
+            float32 ; contexte = 96 caractères ; backend = NumPy 2.x, CPU,
+            pas de GPU ; matériel = Xeon 2,60 GHz, 2 vCPU, 3,9 Go ;
+            date = 2026-10-19)
+            Boucles vs couches, 3 000 pas, même graine :
+              deep1  1 bloc  ×1   58 496 p  val 2,0432 (2,948 b/c)  131 s
+              loop2  1 bloc  ×2   58 496 p  val 2,0875 (3,012)     593 s*
+              loop4  1 bloc  ×4   58 496 p  val 2,0718 (2,989)     488 s
+              deep2  2 blocs ×1  108 608 p  val 1,9873 (2,867)     264 s
+            → à mémoire égale, boucler est pire ; à calcul égal, empiler
+              gagne 0,100 de val. Les boucles plafonnent vers 2,07 quelle
+              que soit leur nombre. * loop2 mesuré pendant un autre calcul,
+              durée non comparable.
+            Capacité (M couples clé aléatoire R^24 -> valeur parmi 32,
+            clés de test neuves, hasard 3,1 %) :
+                         4k      8k     16k     32k
+              deep1   99,4 % 100,0 %  93,8 %  44,9 %   80 416 p
+              loop2   98,0 %  98,3 %  93,6 %  60,0 %   80 416 p
+              deep2  100,0 %  98,0 %  96,3 %  80,5 %  146 208 p
+              wide1    —       —     97,6 %  72,8 %  169 760 p
+            → la capacité suit les paramètres ; boucler n'ajoute pas de
+              place, mais rend exploitable celle qui est payée (+15 points
+              à 32k, sans un paramètre de plus). test sur clés neuves
+              1,6-5,1 % = hasard : c'est bien du stockage.
+            → 16 000 faits × 5 bits / 80 416 paramètres ≈ 1 bit/paramètre.
+              Donc 100 Mo de poids Q4 (~180-200 M paramètres) ≈ 25 Mo de
+              contenu mémorisé ; le reste paie le calcul. 1 Go de disque
+              contient ~1 000× plus de savoir que 100 Mo de poids.
+Fichiers  : experiments/loops/{autograd,model,train,capacity,analyze}.py ;
+            experiments/loops/README.md ; experiments/loops/data/input.txt
+            (Shakespeare, domaine public, 1 115 394 octets) ;
+            results/loops/{deep1,deep2,loop2,loop4}.json et .txt ;
+            results/loops/capacity.json (+ capacity-wide1.json) ;
+            docs/research/mnemosyne-boucles.md ; README.md §« Ce que 100 Mo
+            peuvent contenir ».
+Correction: la note de commit précédente et le README présentaient la démo
+            comme « le résultat le plus concret ». C'est faux : le seul
+            chiffre défendable de la démo est 16/20, sur un jeu que j'ai
+            écrit. Les bancs ci-dessus ne sont pas impressionnants, mais ils
+            sont reproductibles et ils ne dépendent pas de moi.
+Bloqueurs : aucune mesure de KV cache, donc le budget de contexte reste
+            inconnu ; 3 000 pas et une graine ne font pas une loi.
+Besoin    : @Agent-Recherche — la config exacte de MobileLLM-R1-140M
+            (n_layers, d_model, n_kv_heads) pour calculer les octets de KV
+            cache par token ; c'est le poste que personne ne mesure.
+Décision proposée : ne plus présenter de système à base de compétences
+            écrites à la main comme piste produit. Le budget de 100 Mo se
+            répartit entre calcul (petit, en RAM) et savoir (disque, streamé),
+            pas entre « cœur » et « bibliothèque » tous deux en RAM.
+```

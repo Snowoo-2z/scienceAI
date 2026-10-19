@@ -1,0 +1,24 @@
+[
+  {
+    "kind": "wide1",
+    "facts": 16000,
+    "params": 169760,
+    "applications": 2,
+    "train_acc": 0.9761,
+    "test_acc_unseen_keys": 0.0371,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 67.7
+  },
+  {
+    "kind": "wide1",
+    "facts": 32000,
+    "params": 169760,
+    "applications": 2,
+    "train_acc": 0.7278,
+    "test_acc_unseen_keys": 0.041,
+    "chance": 0.0312,
+    "bits_per_fact": 5.0,
+    "seconds": 70.8
+  }
+]

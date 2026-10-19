@@ -1,0 +1,56 @@
+{
+  "name": "smoke",
+  "blocks": 2,
+  "loops": 1,
+  "d": 64,
+  "ctx": 96,
+  "batch": 12,
+  "steps": 300,
+  "lr": 0.003,
+  "seed": 0,
+  "params": 108608,
+  "block_applications": 2,
+  "val_loss": 2.6025448083877563,
+  "val_bits_per_char": 3.7546784887523335,
+  "seconds": 27.3,
+  "hist": [
+    {
+      "step": 1,
+      "train": 4.174387454986572,
+      "val": 4.173531889915466
+    },
+    {
+      "step": 50,
+      "train": 3.359671115875244,
+      "val": 3.3703354001045227
+    },
+    {
+      "step": 100,
+      "train": 3.412051200866699,
+      "val": 3.329345166683197
+    },
+    {
+      "step": 150,
+      "train": 3.130476713180542,
+      "val": 3.1037094593048096
+    },
+    {
+      "step": 200,
+      "train": 2.7421271800994873,
+      "val": 2.7358612418174744
+    },
+    {
+      "step": 250,
+      "train": 2.6649396419525146,
+      "val": 2.614912748336792
+    },
+    {
+      "step": 300,
+      "train": 2.62562894821167,
+      "val": 2.604884386062622
+    }
+  ],
+  "sample": "\nIg we the ther l igas myour ave rist me pre then thilof tithe rgok sst loor stither t t hen i e arare'sis:\nAy d den hend, sand be ghthisithe mafas thave t s ilonthed it y:\nNHan my that fy thisas leaf ndelosinol werel bligt mar aalandrthert an olam:\nOR:\nRAR:\nASOka t Yote hescathad are thore H: rtep ameeanethiceelanthe I ay\nD\nNA REOUI! s tiis beane tathe mele t thor lelen he averathy melad ray fonam",
+  "date": "2026-10-19",
+  "hardware": "Xeon 2.60GHz, 2 vCPU, 4 Go, NumPy 2.4.6, float32"
+}
