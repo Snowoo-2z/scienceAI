@@ -45,3 +45,29 @@ Les assertions de comparaison couvrent la sous-chaîne fautive, les nombres
 
 Les demandes de correction/revue ont été transmises ; aucune confirmation
 que KAIROS les a intégrées n'est encore disponible.
+
+## Deuxième revue : tokeniseur du GPT de KAIROS
+
+Nouveau commit inspecté : `b07d2dcf6b781ca463675fb5de6be8dc02c0c5f3`.
+`audit_tokenizer.py` exécute son tokeniseur épinglé (pas le forward du modèle).
+Les entrées «mon code est zorpulix» et «mon code est vaxotron» ont exactement
+les mêmes IDs : les deux identifiants sont remplacés par `<unk>`.
+Même perte pour des noms de villes rares ; majuscules et espaces sont aussi
+normalisés irréversiblement. Sorties brutes dans `tokenizer-audit.json`.
+
+Conséquences :
+- Un modèle qui ne reçoit que ces IDs ne peut pas différencier ces noms.
+  Ce n'est pas un défaut qu'un entraînement plus long peut corriger seul.
+- Une perte en tokens rapportée au nombre de caractères d'origine n'est pas
+  directement comparable à un coût sans perte en bits/caractère : l'orthographe
+  des inconnus, la casse et les espaces ne sont pas encodés dans ce coût.
+- `train()` apprend le vocabulaire sur le texte entier avant de réserver les
+  derniers tokens pour validation. Pas de validation entièrement isolée du
+  prétraitement ; cela ne signifie pas que les poids ont vu tous ses tokens.
+
+Commande :
+`OPENBLAS_NUM_THREADS=1 .venv/bin/python experiments/silex/review/audit_tokenizer.py`
+
+Piste transmise au collègue : tokenisation réversible avec fallback octets,
+vocabulaire appris sur train seulement, et taux d'inconnus publié. Ce n'est pas
+une invitation à ajouter ces quatre mots manuellement au vocabulaire.

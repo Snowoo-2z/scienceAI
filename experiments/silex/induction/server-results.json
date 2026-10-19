@@ -1,0 +1,41 @@
+{
+  "checks": [
+    "health",
+    "unknown_session_rejected",
+    "invalid_value_rejected",
+    "learned_from_examples",
+    "new_input_correct",
+    "asks_discriminating_question",
+    "incremental_filter",
+    "observation_persisted_across_requests",
+    "resource_limits_rejected",
+    "delete_effective"
+  ],
+  "example_result": {
+    "status": "consensus",
+    "output": "salut paris",
+    "hypotheses": 22,
+    "guarantee": "agreement_only_within_enumerated_DSL_and_depth"
+  },
+  "question": {
+    "status": "question",
+    "input": "x  xB,_  ,,,aY___",
+    "entropy_bits": 1.9904129681145393,
+    "partitions": 5,
+    "largest_partition": 11,
+    "hypotheses": 22
+  },
+  "health": {
+    "ok": true,
+    "language_model": false,
+    "address_space_limit_bytes": 100000000
+  },
+  "server_process_memory": {
+    "VmPeak": "28024 kB",
+    "VmSize": "27832 kB",
+    "VmHWM": "20452 kB",
+    "VmRSS": "20452 kB"
+  },
+  "server_address_space_limit": "Max address space         100000000            100000000            bytes     ",
+  "scope": "actual_server_process_not_shell_parent; OS/page_cache excluded"
+}

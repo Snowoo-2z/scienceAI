@@ -1,0 +1,73 @@
+{
+  "peer_commit": "b07d2dcf6b781ca463675fb5de6be8dc02c0c5f3",
+  "mode": "word",
+  "vocabulary": 8000,
+  "examples": [
+    {
+      "first": "mon code est zorpulix.",
+      "second": "mon code est vaxotron.",
+      "first_ids": [
+        68,
+        7217,
+        24,
+        1,
+        4
+      ],
+      "second_ids": [
+        68,
+        7217,
+        24,
+        1,
+        4
+      ],
+      "identical": true,
+      "first_unknowns": 1,
+      "second_unknowns": 1,
+      "decoded_first": "Mon code est <unk>.",
+      "decoded_second": "Mon code est <unk>."
+    },
+    {
+      "first": "BONJOUR   MONDE",
+      "second": "bonjour monde",
+      "first_ids": [
+        2884,
+        192
+      ],
+      "second_ids": [
+        2884,
+        192
+      ],
+      "identical": true,
+      "first_unknowns": 0,
+      "second_unknowns": 0,
+      "decoded_first": "Bonjour monde",
+      "decoded_second": "Bonjour monde"
+    },
+    {
+      "first": "Je vis à Erquy.",
+      "second": "Je vis à Plouescat.",
+      "first_ids": [
+        19,
+        688,
+        11,
+        1,
+        4
+      ],
+      "second_ids": [
+        19,
+        688,
+        11,
+        1,
+        4
+      ],
+      "identical": true,
+      "first_unknowns": 1,
+      "second_unknowns": 1,
+      "decoded_first": "Je vis à <unk>.",
+      "decoded_second": "Je vis à <unk>."
+    }
+  ],
+  "inference": "Identical encoded contexts necessarily give identical deterministic model logits; checkpoint forward not executed here.",
+  "bpc_caveat": "Word-token loss divided by source-character count is not lossless character coding cost: unknown spellings, case and whitespace are omitted.",
+  "split_caveat": "train() builds tokenizer on entire text before splitting train/validation IDs; vocabulary frequencies include validation text."
+}

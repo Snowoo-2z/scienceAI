@@ -1,0 +1,127 @@
+{
+  "results": [
+    {
+      "seed": 7,
+      "task": "outside_depth",
+      "revision": {
+        "status": "revised",
+        "hypotheses": 20,
+        "search": {
+          "nodes": 11146,
+          "matches": 20,
+          "complete": true,
+          "depth": 4,
+          "max_nodes": 100000,
+          "max_matches": 10000
+        }
+      },
+      "queries": [
+        {
+          "input": "aB,, a  YaBa _BxYB",
+          "output": [
+            "",
+            " a  yaba _bxyb",
+            "ab"
+          ],
+          "hypotheses": 2
+        }
+      ],
+      "evaluation": {
+        "tests": 7,
+        "answers": 7,
+        "correct": 7,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "consensus": 7
+        },
+        "hypotheses": 2
+      },
+      "elapsed_seconds": 0.08596009099983348,
+      "sqlite_bytes": 20480
+    },
+    {
+      "seed": 17,
+      "task": "outside_depth",
+      "revision": {
+        "status": "revised",
+        "hypotheses": 20,
+        "search": {
+          "nodes": 11146,
+          "matches": 20,
+          "complete": true,
+          "depth": 4,
+          "max_nodes": 100000,
+          "max_matches": 10000
+        }
+      },
+      "queries": [
+        {
+          "input": "Y_xxxB_,, ,xaaBY",
+          "output": [
+            "",
+            " ",
+            "xaaby",
+            "y_xxxb_"
+          ],
+          "hypotheses": 2
+        }
+      ],
+      "evaluation": {
+        "tests": 7,
+        "answers": 7,
+        "correct": 7,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "consensus": 7
+        },
+        "hypotheses": 2
+      },
+      "elapsed_seconds": 0.07895603899987691,
+      "sqlite_bytes": 20480
+    },
+    {
+      "seed": 27,
+      "task": "outside_depth",
+      "revision": {
+        "status": "revised",
+        "hypotheses": 20,
+        "search": {
+          "nodes": 11146,
+          "matches": 20,
+          "complete": true,
+          "depth": 4,
+          "max_nodes": 100000,
+          "max_matches": 10000
+        }
+      },
+      "queries": [
+        {
+          "input": ",xxBaax_ xxx__Y",
+          "output": [
+            "",
+            "xxbaax_ xxx__y"
+          ],
+          "hypotheses": 2
+        }
+      ],
+      "evaluation": {
+        "tests": 7,
+        "answers": 7,
+        "correct": 7,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "consensus": 7
+        },
+        "hypotheses": 2
+      },
+      "elapsed_seconds": 0.07891387499967095,
+      "sqlite_bytes": 20480
+    }
+  ],
+  "rss_peak_bytes": 18010112,
+  "address_space_limit_bytes": 100000000,
+  "exploratory": true
+}

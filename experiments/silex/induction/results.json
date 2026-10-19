@@ -1,0 +1,5455 @@
+{
+  "date": "2026-10-19",
+  "python": "3.11.2",
+  "machine": "x86_64",
+  "language_model": false,
+  "primitives": "handwritten_allowlist",
+  "search_depth": 3,
+  "dataset_sha256": "195c37b7a1caee55236a25dc7d0edb69068ba10aedf62325bb0cabc46ad98cea",
+  "address_space_limit_bytes": 100000000,
+  "rss_peak_bytes": 19009536,
+  "rss_scope": "search_and_evaluation_combined",
+  "elapsed_seconds": 0.877417793999939,
+  "energy": null,
+  "results": [
+    {
+      "task": "n_double_plus_one",
+      "kind": "int",
+      "evaluator_only_target": [
+        "mul2",
+        "add1"
+      ],
+      "examples": [
+        {
+          "input": 1,
+          "output": 3
+        }
+      ],
+      "search": {
+        "nodes": 585,
+        "matches": 63,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.004638933000023826,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 63
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": -9,
+                "entropy_bits": 3.787623782197151,
+                "partitions": 20,
+                "largest_partition": 10,
+                "hypotheses": 63
+              },
+              "teacher_output": -17,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 4
+              }
+            }
+          ],
+          "seconds": 0.007846382000025187,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 4
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 0
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 8
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -3
+              },
+              "teacher_output": -5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 4
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 9,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 4
+              }
+            }
+          ],
+          "seconds": 0.00649325000040335,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 4
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 9,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 2
+              },
+              "teacher_output": 5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": -1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 4
+              }
+            }
+          ],
+          "seconds": 0.0064840580002965,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 4
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 8
+              },
+              "teacher_output": 17,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 3
+              },
+              "teacher_output": 7,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": -1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 4
+              }
+            }
+          ],
+          "seconds": 0.006244860000151675,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 4
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "n_absolute",
+      "kind": "int",
+      "evaluator_only_target": [
+        "absolute"
+      ],
+      "examples": [
+        {
+          "input": 1,
+          "output": 1
+        }
+      ],
+      "search": {
+        "nodes": 585,
+        "matches": 65,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.0045159009996496025,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 5,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 65
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": -9,
+                "entropy_bits": 3.3251499326739467,
+                "partitions": 17,
+                "largest_partition": 17,
+                "hypotheses": 65
+              },
+              "teacher_output": 9,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 12
+              }
+            }
+          ],
+          "seconds": 0.009207902000071044,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 12
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 0
+              },
+              "teacher_output": 0,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 5,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 44
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -3
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 12
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 4,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 12
+              }
+            }
+          ],
+          "seconds": 0.007335463999879721,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 12
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 4,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 5,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 23
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 2
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 5,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 21
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 12
+              }
+            }
+          ],
+          "seconds": 0.007794514000124764,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 12
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 8
+              },
+              "teacher_output": 8,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 5,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 21
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 3
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 5,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 21
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 12
+              }
+            }
+          ],
+          "seconds": 0.008166958999936469,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 12
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "n_square_plus_two",
+      "kind": "int",
+      "evaluator_only_target": [
+        "square",
+        "add2"
+      ],
+      "examples": [
+        {
+          "input": 0,
+          "output": 2
+        }
+      ],
+      "search": {
+        "nodes": 585,
+        "matches": 77,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.006040509999820642,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 77
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": -9,
+                "entropy_bits": 3.9592974920222774,
+                "partitions": 23,
+                "largest_partition": 12,
+                "hypotheses": 77
+              },
+              "teacher_output": 83,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            }
+          ],
+          "seconds": 0.010056733000055829,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 6
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 1
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 27
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -3
+              },
+              "teacher_output": 11,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 18,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            }
+          ],
+          "seconds": 0.007488521000141191,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 6
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 18,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 2
+              },
+              "teacher_output": 6,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            }
+          ],
+          "seconds": 0.006716223000239552,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 6
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 8
+              },
+              "teacher_output": 66,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 3
+              },
+              "teacher_output": 11,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 6
+              }
+            }
+          ],
+          "seconds": 0.007565748000160966,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 6
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "n_negative_triple",
+      "kind": "int",
+      "evaluator_only_target": [
+        "mul3",
+        "negate"
+      ],
+      "examples": [
+        {
+          "input": 2,
+          "output": -6
+        }
+      ],
+      "search": {
+        "nodes": 585,
+        "matches": 11,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.004915442999845254,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 11
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": -9,
+                "entropy_bits": 2.1180782093497093,
+                "partitions": 5,
+                "largest_partition": 4,
+                "hypotheses": 11
+              },
+              "teacher_output": 27,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 2
+              }
+            }
+          ],
+          "seconds": 0.0033413780001865234,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 2
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 0
+              },
+              "teacher_output": 0,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -3
+              },
+              "teacher_output": 9,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 2
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": -12,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 2
+              }
+            }
+          ],
+          "seconds": 0.006238759999632748,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 2
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": -12,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 1
+              },
+              "teacher_output": -3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 2
+              }
+            }
+          ],
+          "seconds": 0.005563988000176323,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 2
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 8
+              },
+              "teacher_output": -24,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 3
+              },
+              "teacher_output": -9,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 2
+              }
+            }
+          ],
+          "seconds": 0.006241449999834003,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 2
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "n_double_square",
+      "kind": "int",
+      "evaluator_only_target": [
+        "square",
+        "mul2"
+      ],
+      "examples": [
+        {
+          "input": 1,
+          "output": 2
+        }
+      ],
+      "search": {
+        "nodes": 585,
+        "matches": 66,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.006540237000081106,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 66
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": -9,
+                "entropy_bits": 3.690767983548522,
+                "partitions": 18,
+                "largest_partition": 9,
+                "hypotheses": 66
+              },
+              "teacher_output": 162,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.008127955000418297,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 0
+              },
+              "teacher_output": 0,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 23
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -3
+              },
+              "teacher_output": 18,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 32,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.007123194000087096,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 4
+              },
+              "teacher_output": 32,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 2
+              },
+              "teacher_output": 8,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.006099296000229515,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": 8
+              },
+              "teacher_output": 128,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": 3
+              },
+              "teacher_output": 18,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": -1
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.006617958999868279,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "t_clean_lower",
+      "kind": "text",
+      "evaluator_only_target": [
+        "strip",
+        "lower"
+      ],
+      "examples": [
+        {
+          "input": " ABC ",
+          "output": "abc"
+        }
+      ],
+      "search": {
+        "nodes": 1184,
+        "matches": 48,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.009360669000216149,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 48
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "ÉTÉ  hiver",
+                "entropy_bits": 1.7299923279108644,
+                "partitions": 5,
+                "largest_partition": 23,
+                "hypotheses": 48
+              },
+              "teacher_output": "été  hiver",
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "B_A",
+                "entropy_bits": 0.9366673818775626,
+                "partitions": 2,
+                "largest_partition": 11,
+                "hypotheses": 17
+              },
+              "teacher_output": "b_a",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.009111633999964397,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": "xyz",
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 42
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": "a,b,c",
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 42
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "7  8",
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 17
+              }
+            }
+          ],
+          "seconds": 0.007406046999676619,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 17
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "7  8",
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 2,
+                  "ambiguous": 5
+                },
+                "hypotheses": 20
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": "b a b",
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": "z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 17
+              }
+            }
+          ],
+          "seconds": 0.006874139000046853,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 17
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": "a,,b",
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 42
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": "a a",
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 19
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": "z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 19
+              }
+            }
+          ],
+          "seconds": 0.007009396999819728,
+          "final": {
+            "tests": 7,
+            "answers": 5,
+            "correct": 5,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 5,
+              "ambiguous": 2
+            },
+            "hypotheses": 19
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "t_words_reverse",
+      "kind": "text",
+      "evaluator_only_target": [
+        "split_space",
+        "reverse",
+        "join_space"
+      ],
+      "examples": [
+        {
+          "input": "a b",
+          "output": "b a"
+        }
+      ],
+      "search": {
+        "nodes": 1179,
+        "matches": 43,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.008470831000067847,
+      "initial": {
+        "tests": 7,
+        "answers": 1,
+        "correct": 1,
+        "wrong": 0,
+        "shortest_correct": 1,
+        "statuses": {
+          "ambiguous": 6,
+          "consensus": 1
+        },
+        "hypotheses": 43
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "B_A",
+                "entropy_bits": 2.0560266262566573,
+                "partitions": 5,
+                "largest_partition": 14,
+                "hypotheses": 43
+              },
+              "teacher_output": "B_A",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            }
+          ],
+          "seconds": 0.004948201999923185,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 1
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": "XYZ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": "a,b,C",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "8 7",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            }
+          ],
+          "seconds": 0.0057608419997450255,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 1
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "8 7",
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 3
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": "b a b",
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 3
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": "z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 3
+              }
+            }
+          ],
+          "seconds": 0.005697567999959574,
+          "final": {
+            "tests": 7,
+            "answers": 1,
+            "correct": 1,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 6,
+              "consensus": 1
+            },
+            "hypotheses": 3
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": "a,,b",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": "a a",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": "z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 1
+              }
+            }
+          ],
+          "seconds": 0.005370242000026337,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 1
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "t_comma_sort",
+      "kind": "text",
+      "evaluator_only_target": [
+        "split_comma",
+        "sort"
+      ],
+      "examples": [
+        {
+          "input": "b,a",
+          "output": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "search": {
+        "nodes": 1179,
+        "matches": 32,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.007553713000106654,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 32
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  A B  ",
+                "entropy_bits": 2.474601752714581,
+                "partitions": 8,
+                "largest_partition": 14,
+                "hypotheses": 32
+              },
+              "teacher_output": [
+                "  A B  "
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 4,
+                  "ambiguous": 3
+                },
+                "hypotheses": 14
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C",
+                "entropy_bits": 2.128085278891394,
+                "partitions": 6,
+                "largest_partition": 6,
+                "hypotheses": 14
+              },
+              "teacher_output": [
+                "C",
+                "a",
+                "b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 6
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "B_A",
+                "entropy_bits": 0.6500224216483541,
+                "partitions": 2,
+                "largest_partition": 5,
+                "hypotheses": 6
+              },
+              "teacher_output": [
+                "B_A"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.011877360999733355,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": [
+                "XYZ"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 18
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": [
+                "C",
+                "a",
+                "b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 8
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": [
+                "  7  8 "
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 6
+              }
+            }
+          ],
+          "seconds": 0.006791367000005266,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 6
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": [
+                "  7  8 "
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 16
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": [
+                "b a b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 16
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": [
+                " z "
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 16
+              }
+            }
+          ],
+          "seconds": 0.006097090999901411,
+          "final": {
+            "tests": 7,
+            "answers": 1,
+            "correct": 1,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 6,
+              "consensus": 1
+            },
+            "hypotheses": 16
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": [
+                "",
+                "a",
+                "b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": [
+                "a a"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": [
+                " z "
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 8
+              }
+            }
+          ],
+          "seconds": 0.006412941000235151,
+          "final": {
+            "tests": 7,
+            "answers": 2,
+            "correct": 2,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 5,
+              "consensus": 2
+            },
+            "hypotheses": 8
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "t_first_two_lower",
+      "kind": "text",
+      "evaluator_only_target": [
+        "lower",
+        "take2"
+      ],
+      "examples": [
+        {
+          "input": "ABC",
+          "output": "ab"
+        }
+      ],
+      "search": {
+        "nodes": 1184,
+        "matches": 29,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.00770626599978641,
+      "initial": {
+        "tests": 7,
+        "answers": 4,
+        "correct": 4,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "ambiguous": 3,
+          "consensus": 4
+        },
+        "hypotheses": 29
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  A B  ",
+                "entropy_bits": 1.5991389844410326,
+                "partitions": 4,
+                "largest_partition": 17,
+                "hypotheses": 29
+              },
+              "teacher_output": "  ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "B_A",
+                "entropy_bits": 0.9366673818775626,
+                "partitions": 2,
+                "largest_partition": 11,
+                "hypotheses": 17
+              },
+              "teacher_output": "b_",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.007674329000110447,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": "xy",
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 29
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": "a,",
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 29
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "  ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            }
+          ],
+          "seconds": 0.007060110000111308,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 17
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": "  ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": "b ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": " z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            }
+          ],
+          "seconds": 0.006659858000148233,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 17
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": "a,",
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 29
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": "a ",
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 20
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": " z",
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 17
+              }
+            }
+          ],
+          "seconds": 0.006711075000112032,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 17
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "t_words_count",
+      "kind": "text",
+      "evaluator_only_target": [
+        "split_space",
+        "length"
+      ],
+      "examples": [
+        {
+          "input": "a b",
+          "output": 2
+        }
+      ],
+      "search": {
+        "nodes": 1179,
+        "matches": 59,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.0074719970002661285,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 7,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 59
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b",
+                "entropy_bits": 2.0628073141406325,
+                "partitions": 5,
+                "largest_partition": 19,
+                "hypotheses": 59
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b",
+                "entropy_bits": 0.6840384356390417,
+                "partitions": 2,
+                "largest_partition": 9,
+                "hypotheses": 11
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "B_A",
+                "entropy_bits": 0.5032583347756457,
+                "partitions": 2,
+                "largest_partition": 8,
+                "hypotheses": 9
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 8
+              }
+            }
+          ],
+          "seconds": 0.012922599999910744,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 8
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.007189773999925819,
+          "final": {
+            "tests": 7,
+            "answers": 5,
+            "correct": 5,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 5,
+              "ambiguous": 2
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 40
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": 3,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 22
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 22
+              }
+            }
+          ],
+          "seconds": 0.006047279000085837,
+          "final": {
+            "tests": 7,
+            "answers": 1,
+            "correct": 1,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 6,
+              "consensus": 1
+            },
+            "hypotheses": 22
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 10
+              }
+            }
+          ],
+          "seconds": 0.007093577999967238,
+          "final": {
+            "tests": 7,
+            "answers": 5,
+            "correct": 5,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 5,
+              "ambiguous": 2
+            },
+            "hypotheses": 10
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "l_positive_sum",
+      "kind": "list",
+      "evaluator_only_target": [
+        "positive_only",
+        "sum"
+      ],
+      "examples": [
+        {
+          "input": [
+            1,
+            2
+          ],
+          "output": 3
+        }
+      ],
+      "search": {
+        "nodes": 1759,
+        "matches": 137,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.012702678000096057,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 3,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 137
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -4,
+                  1,
+                  -2
+                ],
+                "entropy_bits": 3.6986882598903885,
+                "partitions": 19,
+                "largest_partition": 27,
+                "hypotheses": 137
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 16
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ],
+                "entropy_bits": 1.3716407621868583,
+                "partitions": 4,
+                "largest_partition": 11,
+                "hypotheses": 16
+              },
+              "teacher_output": 12,
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ],
+                "entropy_bits": 1.0957952550009336,
+                "partitions": 3,
+                "largest_partition": 8,
+                "hypotheses": 11
+              },
+              "teacher_output": 5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 8
+              }
+            }
+          ],
+          "seconds": 0.022201454999958514,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 8
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  5,
+                  -5
+                ]
+              },
+              "teacher_output": 5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 13
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 8
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": 0,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 8
+              }
+            }
+          ],
+          "seconds": 0.008484336000037729,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 8
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ]
+              },
+              "teacher_output": 12,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 3,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 43
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 10,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 3,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 42
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 10
+              }
+            }
+          ],
+          "seconds": 0.009695518000171433,
+          "final": {
+            "tests": 7,
+            "answers": 4,
+            "correct": 4,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 3,
+              "consensus": 4
+            },
+            "hypotheses": 10
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": 2,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 16
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": 0,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 14
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 5,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 8
+              }
+            }
+          ],
+          "seconds": 0.007848156999898492,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 8
+          },
+          "sqlite_bytes": 36864
+        }
+      ],
+      "sqlite_bytes": 36864
+    },
+    {
+      "task": "l_unique_sorted",
+      "kind": "list",
+      "evaluator_only_target": [
+        "unique",
+        "sort"
+      ],
+      "examples": [
+        {
+          "input": [
+            2,
+            1,
+            2
+          ],
+          "output": [
+            1,
+            2
+          ]
+        }
+      ],
+      "search": {
+        "nodes": 1760,
+        "matches": 136,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.014359666000018478,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 136
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -4,
+                  1,
+                  -2
+                ],
+                "entropy_bits": 3.6918515731168116,
+                "partitions": 18,
+                "largest_partition": 27,
+                "hypotheses": 136
+              },
+              "teacher_output": [
+                -4,
+                -2,
+                1
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.01909554899975774,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  5,
+                  -5
+                ]
+              },
+              "teacher_output": [
+                -5,
+                5
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 1,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 38
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 2,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 26
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 2,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 26
+              }
+            }
+          ],
+          "seconds": 0.010200668999914342,
+          "final": {
+            "tests": 7,
+            "answers": 2,
+            "correct": 2,
+            "wrong": 0,
+            "shortest_correct": 2,
+            "statuses": {
+              "ambiguous": 5,
+              "consensus": 2
+            },
+            "hypotheses": 26
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ]
+              },
+              "teacher_output": [
+                0,
+                3,
+                9
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                -1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.013947508999990532,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                -1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 33
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 15
+              }
+            }
+          ],
+          "seconds": 0.008536267999716074,
+          "final": {
+            "tests": 7,
+            "answers": 2,
+            "correct": 2,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 5,
+              "consensus": 2
+            },
+            "hypotheses": 15
+          },
+          "sqlite_bytes": 36864
+        }
+      ],
+      "sqlite_bytes": 36864
+    },
+    {
+      "task": "l_abs_sorted",
+      "kind": "list",
+      "evaluator_only_target": [
+        "abs_each",
+        "sort"
+      ],
+      "examples": [
+        {
+          "input": [
+            -2,
+            1
+          ],
+          "output": [
+            1,
+            2
+          ]
+        }
+      ],
+      "search": {
+        "nodes": 1758,
+        "matches": 49,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.011770278999847505,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 4,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 49
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ],
+                "entropy_bits": 3.0378374520014355,
+                "partitions": 10,
+                "largest_partition": 11,
+                "hypotheses": 49
+              },
+              "teacher_output": [
+                0,
+                3,
+                9
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ],
+                "entropy_bits": 0.8812908992306927,
+                "partitions": 2,
+                "largest_partition": 7,
+                "hypotheses": 10
+              },
+              "teacher_output": [
+                1,
+                2,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.012514381000073627,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  5,
+                  -5
+                ]
+              },
+              "teacher_output": [
+                5,
+                5
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 4,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 32
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 4,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 17
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 4,
+                "correct": 4,
+                "wrong": 0,
+                "shortest_correct": 4,
+                "statuses": {
+                  "ambiguous": 3,
+                  "consensus": 4
+                },
+                "hypotheses": 12
+              }
+            }
+          ],
+          "seconds": 0.008455267000044842,
+          "final": {
+            "tests": 7,
+            "answers": 4,
+            "correct": 4,
+            "wrong": 0,
+            "shortest_correct": 4,
+            "statuses": {
+              "ambiguous": 3,
+              "consensus": 4
+            },
+            "hypotheses": 12
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ]
+              },
+              "teacher_output": [
+                0,
+                3,
+                9
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2,
+                3,
+                4
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                1,
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.007816030999947543,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                1,
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 5,
+                  "ambiguous": 2
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.00793809400011014,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "l_reverse_take",
+      "kind": "list",
+      "evaluator_only_target": [
+        "reverse",
+        "take2"
+      ],
+      "examples": [
+        {
+          "input": [
+            1,
+            2
+          ],
+          "output": [
+            2,
+            1
+          ]
+        }
+      ],
+      "search": {
+        "nodes": 1759,
+        "matches": 73,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.012220926999816584,
+      "initial": {
+        "tests": 7,
+        "answers": 1,
+        "correct": 1,
+        "wrong": 0,
+        "shortest_correct": 1,
+        "statuses": {
+          "ambiguous": 6,
+          "consensus": 1
+        },
+        "hypotheses": 73
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -4,
+                  1,
+                  -2
+                ],
+                "entropy_bits": 2.9668512261400872,
+                "partitions": 12,
+                "largest_partition": 23,
+                "hypotheses": 73
+              },
+              "teacher_output": [
+                -2,
+                1
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.011222841999824595,
+          "final": {
+            "tests": 7,
+            "answers": 5,
+            "correct": 5,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 2,
+              "consensus": 5
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  5,
+                  -5
+                ]
+              },
+              "teacher_output": [
+                -5,
+                5
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 1,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 18
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 11
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.007377901999916503,
+          "final": {
+            "tests": 7,
+            "answers": 2,
+            "correct": 2,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 5,
+              "consensus": 2
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ]
+              },
+              "teacher_output": [
+                3,
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 3,
+                "correct": 3,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 4,
+                  "consensus": 3
+                },
+                "hypotheses": 8
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                2,
+                -1
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 5,
+                "correct": 5,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 2,
+                  "consensus": 5
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.007750149999992573,
+          "final": {
+            "tests": 7,
+            "answers": 5,
+            "correct": 5,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 2,
+              "consensus": 5
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": [
+                2,
+                -1
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 15
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": [
+                0
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 15
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": [
+                1,
+                2
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 2,
+                "correct": 2,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 5,
+                  "consensus": 2
+                },
+                "hypotheses": 11
+              }
+            }
+          ],
+          "seconds": 0.007616404999680526,
+          "final": {
+            "tests": 7,
+            "answers": 2,
+            "correct": 2,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "ambiguous": 5,
+              "consensus": 2
+            },
+            "hypotheses": 11
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    },
+    {
+      "task": "l_sum_plus_one",
+      "kind": "list",
+      "evaluator_only_target": [
+        "sum",
+        "add1"
+      ],
+      "examples": [
+        {
+          "input": [
+            1,
+            2
+          ],
+          "output": 4
+        }
+      ],
+      "search": {
+        "nodes": 1759,
+        "matches": 125,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.01274677800029167,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "ambiguous": 7
+        },
+        "hypotheses": 125
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -4,
+                  1,
+                  -2
+                ],
+                "entropy_bits": 3.718913907504042,
+                "partitions": 20,
+                "largest_partition": 25,
+                "hypotheses": 125
+              },
+              "teacher_output": -4,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 9
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ],
+                "entropy_bits": 1.3516441151533922,
+                "partitions": 3,
+                "largest_partition": 5,
+                "hypotheses": 9
+              },
+              "teacher_output": 6,
+              "evaluation": {
+                "tests": 7,
+                "answers": 7,
+                "correct": 7,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 7
+                },
+                "hypotheses": 5
+              }
+            }
+          ],
+          "seconds": 0.01672320200032118,
+          "final": {
+            "tests": 7,
+            "answers": 7,
+            "correct": 7,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 7
+            },
+            "hypotheses": 5
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  5,
+                  -5
+                ]
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 12
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 6,
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 7
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.007946106999952463,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  9,
+                  0,
+                  3
+                ]
+              },
+              "teacher_output": 13,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  4,
+                  3,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 11,
+              "evaluation": {
+                "tests": 7,
+                "answers": 1,
+                "correct": 1,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 6,
+                  "consensus": 1
+                },
+                "hypotheses": 10
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.007960689999890747,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 36864
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  -1,
+                  -1,
+                  2
+                ]
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 14
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  0
+                ]
+              },
+              "teacher_output": 1,
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "ambiguous": 7
+                },
+                "hypotheses": 8
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": [
+                  2,
+                  2,
+                  1
+                ]
+              },
+              "teacher_output": 6,
+              "evaluation": {
+                "tests": 7,
+                "answers": 6,
+                "correct": 6,
+                "wrong": 0,
+                "shortest_correct": 7,
+                "statuses": {
+                  "consensus": 6,
+                  "ambiguous": 1
+                },
+                "hypotheses": 7
+              }
+            }
+          ],
+          "seconds": 0.007592180999836273,
+          "final": {
+            "tests": 7,
+            "answers": 6,
+            "correct": 6,
+            "wrong": 0,
+            "shortest_correct": 7,
+            "statuses": {
+              "consensus": 6,
+              "ambiguous": 1
+            },
+            "hypotheses": 7
+          },
+          "sqlite_bytes": 36864
+        }
+      ],
+      "sqlite_bytes": 36864
+    },
+    {
+      "task": "outside_depth",
+      "kind": "text",
+      "evaluator_only_target": [
+        "strip",
+        "lower",
+        "split_comma",
+        "sort"
+      ],
+      "examples": [
+        {
+          "input": " B,a ",
+          "output": [
+            "a",
+            "b"
+          ]
+        }
+      ],
+      "search": {
+        "nodes": 1179,
+        "matches": 0,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "search_seconds": 0.00839833500003806,
+      "initial": {
+        "tests": 7,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 7
+        },
+        "hypotheses": 0
+      },
+      "policies": [
+        {
+          "policy": "active",
+          "seed": 7,
+          "history": [],
+          "seconds": 7.232300004034187e-05,
+          "final": {
+            "tests": 7,
+            "answers": 0,
+            "correct": 0,
+            "wrong": 0,
+            "shortest_correct": 0,
+            "statuses": {
+              "no_hypothesis": 7
+            },
+            "hypotheses": 0
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 7,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "XYZ"
+              },
+              "teacher_output": [
+                "xyz"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a,b,C"
+              },
+              "teacher_output": [
+                "a",
+                "b",
+                "c"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": [
+                "7  8"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            }
+          ],
+          "seconds": 0.0033495180000500113,
+          "final": {
+            "tests": 7,
+            "answers": 0,
+            "correct": 0,
+            "wrong": 0,
+            "shortest_correct": 0,
+            "statuses": {
+              "no_hypothesis": 7
+            },
+            "hypotheses": 0
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 17,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "  7  8 "
+              },
+              "teacher_output": [
+                "7  8"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "b a b"
+              },
+              "teacher_output": [
+                "b a b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": [
+                "z"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            }
+          ],
+          "seconds": 0.0035482939997564245,
+          "final": {
+            "tests": 7,
+            "answers": 0,
+            "correct": 0,
+            "wrong": 0,
+            "shortest_correct": 0,
+            "statuses": {
+              "no_hypothesis": 7
+            },
+            "hypotheses": 0
+          },
+          "sqlite_bytes": 20480
+        },
+        {
+          "policy": "random",
+          "seed": 27,
+          "history": [
+            {
+              "question": {
+                "status": "question",
+                "input": "a,,b"
+              },
+              "teacher_output": [
+                "",
+                "a",
+                "b"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": "a a"
+              },
+              "teacher_output": [
+                "a a"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            },
+            {
+              "question": {
+                "status": "question",
+                "input": " z "
+              },
+              "teacher_output": [
+                "z"
+              ],
+              "evaluation": {
+                "tests": 7,
+                "answers": 0,
+                "correct": 0,
+                "wrong": 0,
+                "shortest_correct": 0,
+                "statuses": {
+                  "no_hypothesis": 7
+                },
+                "hypotheses": 0
+              }
+            }
+          ],
+          "seconds": 0.0034422710000399093,
+          "final": {
+            "tests": 7,
+            "answers": 0,
+            "correct": 0,
+            "wrong": 0,
+            "shortest_correct": 0,
+            "statuses": {
+              "no_hypothesis": 7
+            },
+            "hypotheses": 0
+          },
+          "sqlite_bytes": 20480
+        }
+      ],
+      "sqlite_bytes": 20480
+    }
+  ]
+}

@@ -83,3 +83,14 @@ Décision : ne pas intégrer ces routeurs comme contrôleurs fiables. Paged rest
 
 [2026-10-19] Silex → KAIROS · REVUE CROISÉE exécutée
 Source : ff4b346c3df8d1a90bea978f44a3dd9d721dcd2d, moissonnage stdlib. Bug reproduit : comparaison sous-chaîne accepte1dans31. Sur51questions :46noncouvertes,3justes/5réponses,2fausses, et non4/5. Comparaison Decimal exacte sur les5 sorties numériques. Rapport, source d'audit et sorties : experiments/silex/review/*. Revue transmise au Doc avec corrections du calcul d'années-personne et des limites d'extrapolation ; pas de modification de la branche collègue, pas de confirmation de correction encore.
+
+[2026-10-19] Silex · S7 · EXÉCUTÉ — acquisition, clarification, révision, limites
+Fait : moteur de synthèse de compositions depuis I/O,29primitives fournies, hypothèses SQLite non fusionnées sur le seul train ; refus de consensus si recherche tronquée ; contre-exemples et élargissement profondeur3→4. Atelier web8082 réellement essayable, ancienRNN8080 arrêté.
+Boucles :16tâches fixées avant premier run ; queries générées ;5fonctions hors DSL ; révision4étapes ; profondeur1..6 en processus frais ;256procédures générées inédites. Enseignants simulés/exacts, pas de français libre.
+Résultat256 :234cibles longueur≤3→actif1872/1872 tests corrects,238questions ; aléatoire1686/1872,702questions.22cibles longueur4→actif128corrects+8faux acceptés/176 ; aléatoire110corrects+0faux. L'accord interne ne garantit pas une classe de fonctions correcte. Contre-banc horsDSL :33fausses réponses/195 par désaccord seul,3/195 avec audits,3/195 aléatoire ; exception ponctuelle non découverte. Révision profondeur4 :21/21 sur tâche initialement sans hypothèse, aucune primitive ajoutée.
+Mémoire/coût :banc25614,50s/RSS23,83Mo ; serveurRSS~21Mo mesuré sur PIDPython ; RLIMIT_AS100000000 imposé dans bancs/serveur. SQLitecache256Kio/mmap0. Pas de plafond cgroup/cacheOS ni d'énergie mesurée. Recherche exponentielle :profondeur6 atteint100000nœuds et refuse de conclure.
+Tests :9tests noyau+10checksHTTP+syntaxJS passent ;6S6+7Paged passent. Sources primaires PROSE/DreamCoder lues :aucune invention de la synthèse de programmes revendiquée.
+Fichiers :experiments/silex/induction/ (code,atelier,7JSONrésultats,README). Aucun modèle généraliste obtenu. Demande de test indépendant aux collègues transmise au Doc ; pas de ressource utilisateur requise.
+
+[2026-10-19] Silex → KAIROS/MNÉMOSYNE · NOUVELLE REVUE
+Nouveaux commits lus :b07d2dc GPT4,24M deKAIROS ;fb24796 lecture disque deMNÉMOSYNE. Audit exécuté du tokeniseurKAIROS :noms distincts→mêmesIDsUNK, casse/espaces perdus ; donc le réseau ne peut distinguer ces contextes. Quotient loss/char non comparable à un codage caractère sans perte, vocabulaire entraîné avant splitvalidation. audit_tokenizer.py+tokenizer-audit.json publiés. Pas de forward ni de réentraînement revendiqué. Conseils envoyés aux collègues ; lecture-seule disque≠débit d'inférence mesuré.

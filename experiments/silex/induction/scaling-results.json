@@ -1,0 +1,173 @@
+{
+  "results": [
+    {
+      "depth": 1,
+      "search": {
+        "nodes": 9,
+        "matches": 3,
+        "complete": true,
+        "depth": 1,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.001176118999865139,
+      "query_seconds": 0.0021447720000651316,
+      "question": {
+        "status": "question",
+        "input": -35,
+        "entropy_bits": 1.584962500721156,
+        "partitions": 3,
+        "largest_partition": 1,
+        "hypotheses": 3
+      },
+      "prediction": {
+        "status": "ambiguous",
+        "hypotheses": 3
+      },
+      "sqlite_bytes": 20480,
+      "rss_peak_bytes": 13492224,
+      "address_space_limit_bytes": 100000000
+    },
+    {
+      "depth": 2,
+      "search": {
+        "nodes": 73,
+        "matches": 14,
+        "complete": true,
+        "depth": 2,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.001834142999996402,
+      "query_seconds": 0.005972641999960615,
+      "question": {
+        "status": "question",
+        "input": -35,
+        "entropy_bits": 2.3248629576173565,
+        "partitions": 6,
+        "largest_partition": 4,
+        "hypotheses": 14
+      },
+      "prediction": {
+        "status": "ambiguous",
+        "hypotheses": 14
+      },
+      "sqlite_bytes": 20480,
+      "rss_peak_bytes": 13545472,
+      "address_space_limit_bytes": 100000000
+    },
+    {
+      "depth": 3,
+      "search": {
+        "nodes": 585,
+        "matches": 65,
+        "complete": true,
+        "depth": 3,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.004647433000172896,
+      "query_seconds": 0.024059118999957718,
+      "question": {
+        "status": "question",
+        "input": -35,
+        "entropy_bits": 3.3251499326739467,
+        "partitions": 17,
+        "largest_partition": 17,
+        "hypotheses": 65
+      },
+      "prediction": {
+        "status": "ambiguous",
+        "hypotheses": 65
+      },
+      "sqlite_bytes": 20480,
+      "rss_peak_bytes": 13635584,
+      "address_space_limit_bytes": 100000000
+    },
+    {
+      "depth": 4,
+      "search": {
+        "nodes": 4681,
+        "matches": 384,
+        "complete": true,
+        "depth": 4,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.027956198000083532,
+      "query_seconds": 0.14213434599969332,
+      "question": {
+        "status": "question",
+        "input": -13,
+        "entropy_bits": 4.439746418575347,
+        "partitions": 51,
+        "largest_partition": 70,
+        "hypotheses": 384
+      },
+      "prediction": {
+        "status": "ambiguous",
+        "hypotheses": 384
+      },
+      "sqlite_bytes": 57344,
+      "rss_peak_bytes": 13504512,
+      "address_space_limit_bytes": 100000000
+    },
+    {
+      "depth": 5,
+      "search": {
+        "nodes": 37449,
+        "matches": 2279,
+        "complete": true,
+        "depth": 5,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.2110569880001094,
+      "query_seconds": 0.9140951760000462,
+      "question": {
+        "status": "question",
+        "input": -13,
+        "entropy_bits": 5.432498113341348,
+        "partitions": 159,
+        "largest_partition": 304,
+        "hypotheses": 2279
+      },
+      "prediction": {
+        "status": "ambiguous",
+        "hypotheses": 2279
+      },
+      "sqlite_bytes": 278528,
+      "rss_peak_bytes": 14852096,
+      "address_space_limit_bytes": 100000000
+    },
+    {
+      "depth": 6,
+      "search": {
+        "nodes": 100000,
+        "matches": 3757,
+        "complete": false,
+        "depth": 6,
+        "max_nodes": 100000,
+        "max_matches": 10000
+      },
+      "fit_seconds": 0.5554346089998035,
+      "query_seconds": 1.5671443920000456,
+      "question": {
+        "status": "question",
+        "input": -40,
+        "entropy_bits": 5.759842939192736,
+        "partitions": 198,
+        "largest_partition": 323,
+        "hypotheses": 3757
+      },
+      "prediction": {
+        "status": "incomplete_search",
+        "hypotheses": 3757
+      },
+      "sqlite_bytes": 487424,
+      "rss_peak_bytes": 14684160,
+      "address_space_limit_bytes": 100000000
+    }
+  ],
+  "fresh_process_per_depth": true
+}

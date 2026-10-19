@@ -1,0 +1,1272 @@
+{
+  "exploratory": true,
+  "heldout": [
+    -250,
+    -137,
+    -31,
+    -17,
+    -7,
+    0,
+    6,
+    9,
+    13,
+    22,
+    31,
+    137,
+    250
+  ],
+  "teacher_in_DSL": false,
+  "max_additional_labels": 3,
+  "results": [
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 7,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 7,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 197,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 7,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -170,
+          "output": -170,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -171,
+          "output": -171,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 99,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 17,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 17,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 196,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 17,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": 151,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 27,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 27,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 199,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "upper_clamp_10",
+      "seed": 27,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -150,
+          "output": -150,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -21,
+          "output": -21,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 197,
+          "output": 10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 7,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 7,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 7,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -170,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 17,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 17,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 17,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": 151,
+          "output": 151,
+          "hypotheses": 8
+        },
+        {
+          "mode": "random",
+          "input": 82,
+          "output": 82,
+          "hypotheses": 8
+        },
+        {
+          "mode": "random",
+          "input": -175,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 27,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 27,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "lower_clamp_minus10",
+      "seed": 27,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -150,
+          "output": -10,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 7,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -34,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 7,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -34,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 7,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -170,
+          "output": -169,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 17,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -44,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 17,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -44,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 17,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": 151,
+          "output": 152,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 27,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -58,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 27,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -58,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "shift_outside_20",
+      "seed": 27,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -150,
+          "output": -149,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 7,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 7,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 197,
+          "output": 197,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": -181,
+          "output": -181,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 7,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -170,
+          "output": -170,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -171,
+          "output": -171,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 99,
+          "output": 99,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 17,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 17,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 196,
+          "output": 196,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": -198,
+          "output": -198,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 17,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": 151,
+          "output": 151,
+          "hypotheses": 8
+        },
+        {
+          "mode": "random",
+          "input": 82,
+          "output": 82,
+          "hypotheses": 8
+        },
+        {
+          "mode": "random",
+          "input": -175,
+          "output": -175,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 27,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 27,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 199,
+          "output": 199,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": -194,
+          "output": -194,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "exception_at_137",
+      "seed": 27,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -150,
+          "output": -150,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -21,
+          "output": -21,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 197,
+          "output": 197,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 12,
+        "wrong": 1,
+        "shortest_correct": 12,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 7,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 7,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -35,
+          "output": -35,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 197,
+          "output": -197,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 7,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -170,
+          "output": -170,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -171,
+          "output": -171,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 99,
+          "output": -99,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 17,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 17,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -45,
+          "output": -45,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 196,
+          "output": -196,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 17,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": 151,
+          "output": -151,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 27,
+      "policy": "active",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 13,
+        "correct": 8,
+        "wrong": 5,
+        "shortest_correct": 8,
+        "statuses": {
+          "consensus": 13
+        },
+        "hypotheses": 7
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 27,
+      "policy": "active_plus_audit",
+      "queries": [
+        {
+          "mode": "active",
+          "input": -59,
+          "output": -59,
+          "hypotheses": 7
+        },
+        {
+          "mode": "audit",
+          "input": 199,
+          "output": -199,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    },
+    {
+      "teacher": "sign_flip_above10",
+      "seed": 27,
+      "policy": "random",
+      "queries": [
+        {
+          "mode": "random",
+          "input": -150,
+          "output": -150,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": -21,
+          "output": -21,
+          "hypotheses": 7
+        },
+        {
+          "mode": "random",
+          "input": 197,
+          "output": -197,
+          "hypotheses": 0
+        }
+      ],
+      "evaluation": {
+        "tests": 13,
+        "answers": 0,
+        "correct": 0,
+        "wrong": 0,
+        "shortest_correct": 0,
+        "statuses": {
+          "no_hypothesis": 13
+        },
+        "hypotheses": 0
+      }
+    }
+  ],
+  "rss_peak_bytes": 18374656,
+  "address_space_limit_bytes": 100000000
+}

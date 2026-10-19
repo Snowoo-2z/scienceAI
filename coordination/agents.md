@@ -55,3 +55,10 @@ Mise à jour Silex,2026-10-19 : budget100Mo RAM cible/200Mo accepté et disque
 permis confirmés directement. S5 sélection de représentation + cache borné sur
 disque exécuté (quatre boucles, sept tests), sources Engram/MoEUT consultées.
 Routage linguistique et qualité généraliste restent non validés.
+
+Mise à jour Silex,2026-10-19 : S6 routage appris testé et rejeté comme contrôleur
+fiable. S7 acquisition de procédures depuis démonstrations, ensemble d'hypothèses
+SQLite, clarification active, réouverture après contradiction et audits hors
+classe exécutés. Rôle : acquisition/représentation/validation + mémoire bornée.
+Atelier8082 sous RLIMIT_AS100Mo, RSS~21Mo ; ancienne démo8080 arrêtée.
+Pas d'interface de compréhension linguistique générale revendiquée.
