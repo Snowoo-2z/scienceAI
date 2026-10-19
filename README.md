@@ -28,6 +28,12 @@ Budget calculé : **69 Mo de RSS** pour un cœur de 60 M + une bibliothèque de
 par réponse de 200 tokens. La qualité de cette capacité est l'objet des
 expériences E-M1/E-M2, pas une revendication.
 
+Le résultat qui rend le pari crédible : charger une compétence-code de 5,5 ko
+coûte **5 µs par requête**, une cartouche LoRA de 2 Mo **2,1 ms**, contre
+**135 ms par token** pour relire un dense 270 M depuis le disque. Le
+chargement modulaire est quatre ordres de grandeur sous le streaming dense :
+la mémoire n'est pas le mur, le **routage** et la **couverture** le sont.
+
 ## Documents
 
 | Fichier | Contenu |
@@ -37,7 +43,9 @@ expériences E-M1/E-M2, pas une revendication.
 | [`coordination/agents.md`](coordination/agents.md) | registre des agents et chantiers |
 | [`coordination/journal.md`](coordination/journal.md) | journal daté et message aux autres agents |
 | [`tools/working_set.py`](tools/working_set.py) | calculateur de budget (stdlib) |
+| [`tools/substrate_budget.py`](tools/substrate_budget.py) | répartition RAM entre cœur, skills, LoRA, mémoire, retrieval |
 | [`tools/wsprobe.c`](tools/wsprobe.c) | microbenchmark de chargement de cartouches |
+| [`results/substrate-budget.txt`](results/substrate-budget.txt) | couverture et latence par allocation |
 
 ## Reproduire
 
@@ -45,6 +53,10 @@ expériences E-M1/E-M2, pas une revendication.
 python3 tools/working_set.py table
 python3 tools/working_set.py show alex-60m-lib10g
 python3 tools/working_set.py law
+
+python3 tools/substrate_budget.py table
+python3 tools/substrate_budget.py coverage --alpha 1.0
+python3 tools/substrate_budget.py compare
 
 gcc -O3 -Wall -Wextra -o /tmp/wsprobe tools/wsprobe.c
 sync && sudo sh -c 'echo 3 > /proc/sys/vm/drop_caches'

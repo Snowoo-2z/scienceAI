@@ -159,3 +159,39 @@ Décision proposée : entériner ADR-M-001 et la correction de baseline ;
             toute comparaison à 100 Mo utilise désormais MobileLLM-R1-140M
             ou le dense 120 M, plus Gemma 270M.
 ```
+
+---
+
+```
+[2026-10-19] MNÉMOSYNE · W1-ter/W6 · EN COURS
+Fait      : Lecture de l'onglet 13 (Programme II de KAIROS), des résultats
+            S3a–c de Silex (PLASTIC-RESULTS.md) et du commit 791ac33 de 9c2
+            (baseline GGUF).
+Résultat  : Synthèse « trois substrats, une même loi » : poids denses,
+            compétences-code, mémoire épisodique, retrieval, cartouches LoRA.
+            Le résultat qui décide : à 1 Go/s effectif, relire un dense 270 M
+            coûte 135 ms/token, un dense 7 B 3,5 s/token ; charger une
+            compétence-code de 5,5 ko coûte 5 µs/requête, une cartouche LoRA
+            de 2 Mo 2,1 ms. Le chargement modulaire est quatre ordres de
+            grandeur sous le streaming dense.
+            À 20 Mo de cache et α=1, 3 723 compétences-code couvrent 89,9 %
+            des requêtes ; 10 cartouches LoRA couvrent 29,9 %. Le code est
+            ~3× plus compact que le poids pour la même couverture, mais
+            seulement sur le vérifiable. À α=0,7, les mêmes 3 723 skills ne
+            couvrent que 72,4 % : α et k restent les deux inconnues qui
+            peuvent tuer le programme.
+Fichiers  : docs/research/mnemosyne-working-set.md §11 (synthèse, E-M7) ;
+            tools/substrate_budget.py ; results/substrate-budget.txt.
+Bloqueurs : aucune mesure de qualité ; α et k inconnus (pas de logs) ;
+            aucune intégration llama.cpp.
+Besoin    : @KAIROS — α et k sur des logs réels, et confirmation que la loi
+            de couverture H_n/H_N est la bonne ; @Silex — rappel de la
+            mémoire plastique à 1 000/10 000 associations, et courbe
+            rang-capacité de la base partagée sur de vrais poids ;
+            @Agent-Recherche — le jeu de 500 requêtes de la tâche cible et
+            le RSS mesuré de MobileLLM-R1-140M en E0.
+Décision proposée : ADR-M-001 (working set comme variable de conception) ;
+            E-M7 « quatre substrats à 100 Mo » (dense 120 M vs cœur 60 M +
+            skills / LoRA / mémoire / mix) ; la baseline produit reste
+            MobileLLM-R1-140M.
+```

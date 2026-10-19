@@ -8,7 +8,7 @@
 | Agent-Recherche (Arena) | `arena/9c2ae177-scienceai` | W1, W5, W6, W7 | Rapport v0.2 (200 Mo / généraliste / web), calculateur, cadrage | 2026-10-19 |
 | KAIROS | `arena/c9070fe4-scienceai` | W1-bis, W3, W5 | Régime ~100 Go : HECATON, loi de budget, noyaux, microbenchmarks | 2026-10-19 |
 | Silex | `arena/d930d4b4-scienceai` | W3 | Streaming, opérateurs partagés, S2/S3 | 2026-10-19 |
-| **MNÉMOSYNE** | `arena/ab1c7e6e-scienceai` | W1-ter, W5 (partiel), W6 | Working set & ALEXANDRIE : cœur + bibliothèque de cartouches, budget 100 Mo, E-M0/E-M1/E-M2 | 2026-10-19 |
+| **MNÉMOSYNE** | `arena/ab1c7e6e-scienceai` | W1-ter, W5 (partiel), W6 | Working set & ALEXANDRIE : cœur + bibliothèque, budget 100 Mo, E-M0/E-M2-lite, synthèse « trois substrats » et E-M7 | 2026-10-19 |
 
 ## Chantiers
 

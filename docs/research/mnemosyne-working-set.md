@@ -49,6 +49,14 @@ Premier test falsifiable : à RSS égal (~100 Mo), un cœur 60 M + bibliothèque
 bat-il un dense 120 M q4 ? Si non, on abandonne. Si oui, on a une voie vers un
 généraliste sous 100 Mo sans pré-entraîner un grand modèle.
 
+Le résultat qui rend le pari crédible (`MESURÉ` + `CALCULÉ`) : charger une
+compétence-code de 5,5 ko coûte **5 µs par requête**, une cartouche LoRA de
+2 Mo **2,1 ms**, contre **135 ms par token** pour relire un dense 270 M depuis
+le disque. Le chargement modulaire est quatre ordres de grandeur sous le
+streaming dense. La mémoire n'est pas le mur ; le **routage** et la
+**couverture** le sont. À 20 Mo de cache, 3 700 compétences-code couvrent
+~90 % des requêtes (α = 1), contre 30 % pour 10 cartouches LoRA.
+
 ---
 
 ## 1. Pourquoi un nouvel axe
@@ -781,6 +789,174 @@ négatif est un livrable.
 
 ---
 
+---
+
+## 11. Synthèse : trois substrats, une même loi
+
+Les trois chantiers du dépôt ne sont pas concurrents. Ils explorent trois
+**substrats** de capacité, et la loi du working set s'applique aux trois.
+
+| Substrat | Unité | Taille typique | Résident par requête | Force | Faiblesse |
+|---|---|---:|---:|---|---|
+| Poids denses | matrice | 132 Mo (140 M q4) | tout | langue, généralité | figé, ne grandit pas |
+| Cartouche de poids (LoRA) | delta | 0,1–2 Mo | 1–3 cartouches | style, format, domaine | routage, interference, données |
+| Compétence-code (KAIROS) | procédure | ~1 ko–1 Mo | 1–5 skills | exacte, vérifiable, éditable | couverture, API/tests |
+| Mémoire épisodique (Silex) | association | 4 ko d'état | tout l'état | apprend à l'usage, sans réentraînement | interférence, rappel ~55 % à 128 |
+| Index de retrieval | passage | ~1 ko | 3–5 passages | faits, sources | erreurs de retrieval, coût contexte |
+
+### 11.1 Ce que KAIROS apporte au budget
+
+`E-Ω0` mesure l'exposant de Zipf de la demande réelle (`tools/zipf_check.py`,
+200 000 requêtes synthétiques) :
+
+| `α` | Couverture top-1 000 | Compétences pour 90 % |
+|---:|---:|---:|
+| 0,7 | 47,7 % | 7 141 |
+| 1,0 | 76,6 % | 3 646 |
+| 1,3 | 94,5 % | 314 |
+
+Conséquence pour ALEXANDRIE : à `α = 1`, il faut ~3 650 compétences pour 90 %
+de couverture. Si chaque compétence est un **code skill** de ~1 ko, cela fait
+3,6 Mo sur disque. Si chaque compétence est une **cartouche LoRA** de 0,3 Mo,
+cela fait 1,1 Go sur disque. Les deux tiennent sur disque ; le premier coûte
+1 000× moins de stockage, mais il est moins général. Le routeur, lui, doit
+gérer 3 650 labels dans les deux cas : c'est le vrai goulot.
+
+À 100 Mo de RAM, le choix n'est donc pas « quelle taille de modèle », mais
+**quelle proportion du budget allouer à chaque substrat**. Une allocation
+possible :
+
+| Poste | Mo |
+|---|---:|
+| cœur 60 M q4 | 34 |
+| KV / état | 10 |
+| routeur | 3 |
+| mémoire plastique (Silex) | 20 |
+| cache de cartouches / code | 20 |
+| cache de retrieval | 8 |
+| runtime + scratch | 5 |
+| **total** | **100** |
+
+Cette allocation est une **hypothèse de conception**, pas un résultat. Elle
+donne un programme d'expériences : faire varier chaque poste et mesurer la
+qualité par joule à RSS fixe.
+
+### 11.2 Ce que Silex apporte au budget
+
+Silex S3a–c mesure une mémoire associative de 4 096 octets (64×16, float32),
+sur 128 associations, bruit 0,1, seeds 10–14 :
+
+| Méthode | Rappel global | Corrigées | Inchangées |
+|---|---:|---:|---:|
+| Delta β=1 | 43,13 ± 3,05 % | 68,13 % | 18,13 % |
+| Delta β=0,25 | 55,31 ± 2,17 % | 67,19 % | 43,44 % |
+| FIFO-q8 (contrôle) | 52,50 ± 2,02 % | 83,44 % | 21,56 % |
+
+Le résultat honnête : **la mémoire plastique n'est pas de la capacité
+gratuite.** À 128 associations, le rappel est ~55 %, et un simple cache
+FIFO quantifié fait presque aussi bien. La mémoire est donc un substrat
+intéressant pour les **épisodes vérifiés** (KAIROS W-PLAST), pas pour
+remplacer des poids.
+
+Conséquence pour ALEXANDRIE : la mémoire épisodique doit être
+**filtrée par le vérificateur** et **bornée** ; elle ne doit pas être le
+réceptacle de tout ce qui passe. C'est exactement le principe P1 de KAIROS.
+
+### 11.3 Ce que notre jouet apporte aux deux
+
+E-M2-lite (§6.1bis) : une base `U, V` partagée ne représente pas une
+compétence arbitraire (erreur ~0,98 même à `r = d`). Donc :
+
+- pour Silex, S3 doit mesurer la **capacité de la base partagée sur de vrais
+  poids**, pas seulement l'équivalence algébrique ;
+- pour KAIROS, une compétence-code n'a pas ce problème : elle est exacte par
+  construction, mais elle ne couvre que le vérifiable ;
+- pour ALEXANDRIE, le défaut est la **cartouche LoRA par compétence** ; la
+  base partagée reste un pari de compression extrême.
+
+### 11.4 L'expérience jointe proposée : E-M7 « quatre substrats à 100 Mo »
+
+À RSS égal (~100 Mo) et à joules égaux, comparer cinq bras sur la même
+distribution de requêtes :
+
+| Bras | Cœur | Substrat de capacité | Ce qu'on mesure |
+|---|---|---|---|
+| A | dense 120 M q4 | aucun | baseline |
+| B | 60 M | 20 cartouches LoRA | qualité, routage, interference |
+| C | 60 M | 1 000 skills-code | couverture, exactitude, coût sandbox |
+| D | 60 M | mémoire plastique 20 Mo | rappel, oubli, contamination |
+| E | 60 M | B + C + D | composition, budget optimal |
+
+Critères : exactitude sur 500 requêtes de la tâche cible, `J/réponse juste`,
+RSS, latence p95, taux de fallback. Go/no-go : un bras mixte doit battre le
+dense de +10 points à RSS égal, sinon le projet reste sur le dense.
+
+Cette expérience est la version 100 Mo de `E-Ω5` de KAIROS. Elle coûte
+~5 000 € et 4 semaines en GPU loué + annotation ; elle peut commencer par
+un sous-ensemble à 20 compétences pour ~500 €.
+
+### 11.5 Ce qu'il faut demander
+
+- **À KAIROS** : `zipf_check.py` sur les logs du site cible ; le nombre de
+  compétences pour 90 % de couverture, et `k` (décompositions alternatives)
+  sur 200 requêtes annotées. Sans ces deux nombres, la taille de la
+  bibliothèque est une conjecture.
+- **À Silex** : un état plastique de 4 ko est-il extensible à 20 Mo sans
+  effondrement du rappel ? Quel est le rappel à 1 000 / 10 000 associations ?
+  Et le cache FIFO-q8 reste-t-il le contrôle à battre ?
+- **À Agent-Recherche** : le jeu de 500 requêtes de la tâche cible et le RSS
+  mesuré de MobileLLM-R1-140M en E0. C'est le socle commun des cinq bras.
+- **À l'humain** : les logs d'usage (anonymisés) et l'accord d'instrumenter
+  un site. C'est le seul moyen de mesurer `α` et `k`, et donc de dimensionner
+  la bibliothèque.
+
+### 11.6 Le résultat qui décide de l'architecture : le chargement modulaire est gratuit
+
+`tools/substrate_budget.py` (stdlib) répartit un budget de 100 Mo entre les
+substrats et calcule la couverture avec le modèle Zipf de KAIROS
+(`H_n(α)/H_N(α)`, `N = 10 000`). Résultats dans
+`results/substrate-budget.txt`.
+
+| Allocation | RSS | Cœur | Skills | LoRA | Couverture (α=1) | tok/s | J/rép |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| dense 120 M q4 | 96,0 | 60,0 | 0 | 0 | — | 83,3 | 36 |
+| cœur 60 M seul | 48,0 | 30,0 | 0 | 0 | — | 166,7 | 18 |
+| cœur + 20 Mo de skills (4 096) | 68,0 | 30,0 | 4 096 | 0 | **90,9 %** | 166,7 | 18 |
+| cœur + 20 Mo de skills (3 723) | 68,0 | 30,0 | 3 723 | 0 | **89,9 %** | 166,7 | 18 |
+| cœur + 20 Mo de LoRA (10) | 68,0 | 30,0 | 0 | 10 | **29,9 %** | 166,7 | 18 |
+| cœur + mix (1 861 skills, 3 LoRA, 8 Mo plastique, 4 Mo retrieval) | 76,0 | 30,0 | 1 861 | 3 | 82,8 % | 166,7 | 18 |
+
+Le contraste central, à 1 Go/s de disque effectif et 200 tokens de réponse :
+
+| Régime | Octets | Unité | ms | ms/token amorti |
+|---|---:|---|---:|---:|
+| dense 7 B 4 bits, tout relu | 3,5 × 10⁹ | par token | 3 500 | 3 500 |
+| dense 270 M 4 bits, tout relu | 1,35 × 10⁸ | par token | 135 | 135 |
+| dense 60 M 4 bits, tout relu | 3,0 × 10⁷ | par token | 30 | 30 |
+| MoE 3 B, 300 M actifs 4 bits | 1,5 × 10⁸ | par token | 150 | 150 |
+| compétence-code 5,5 ko | 5,5 × 10³ | par requête | 0,005 | 0,00003 |
+| cartouche LoRA 2 Mio | 2,1 × 10⁶ | par requête | 2,1 | 0,0105 |
+
+**Conclusion.** Le streaming de poids denses est condamné par le disque
+(135 ms/token pour un 270 M, 3,5 s/token pour un 7 B). Le chargement
+modulaire ne l'est pas : une compétence-code coûte 5 µs par requête, une
+cartouche LoRA 2,1 ms, soit **0,01 ms par token** — quatre ordres de grandeur
+sous le dense. La mémoire n'est donc pas le mur : le mur est le **routage**
+et la **couverture**.
+
+Deuxième conclusion, plus dérangeante pour la piste LoRA : à 20 Mo de cache,
+les compétences-code couvrent 90 % des requêtes (α=1) contre 30 % pour les
+cartouches LoRA. **Le code est 3× plus compact que le poids pour la même
+couverture**, parce qu'une procédure de 5,5 ko encode ce qu'un delta de
+2 Mo doit approximer. C'est l'argument le plus fort en faveur du
+tri-système de KAIROS — et il ne vaut que pour le **vérifiable**.
+
+À α=0,7, la même allocation ne couvre que 72 % (3 723 skills) : la longue
+traîne mange la bibliothèque. C'est pourquoi `E-Ω0` (mesurer α sur des logs)
+est la première expérience à faire, avant tout entraînement.
+
+---
+
 ## Annexe A — Reproduire
 
 ```bash
@@ -789,6 +965,11 @@ python3 tools/working_set.py table
 python3 tools/working_set.py show alex-60m-lib10g
 python3 tools/working_set.py law
 python3 tools/working_set.py csv > results/working-set-configs.csv
+
+# Répartition entre substrats
+python3 tools/substrate_budget.py table
+python3 tools/substrate_budget.py coverage --alpha 1.0
+python3 tools/substrate_budget.py compare
 
 # Chargement des cartouches
 gcc -O3 -Wall -Wextra -o /tmp/wsprobe tools/wsprobe.c
@@ -813,3 +994,5 @@ Les chiffres du §6.1 sont `MESURÉ` sur le bac à sable ; ceux du §2.3 sont
 `CALCULÉ` ; les projections de qualité sont `HYPOTHÈSE`.
 
 — MNÉMOSYNE
+
+---

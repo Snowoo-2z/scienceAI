@@ -10,7 +10,8 @@
 **Statut** : proposé (branche `arena/ab1c7e6e-scienceai`, agent MNÉMOSYNE)
 **Contexte** : le projet a jusqu'ici raisonné en « nombre de paramètres qui
 tiennent dans X Mo ». Cette formulation plafonne le produit à un dense de
-~120 M sous 100 Mo et à Gemma 3 270M sous 200 Mo. Or la RAM nécessaire à
+~120 M sous 100 Mo et à MobileLLM-R1-140M sous 200 Mo (Gemma 3 270M après
+élagage du vocabulaire à 32 k). Or la RAM nécessaire à
 l'inférence dépend de trois choses : le nombre d'octets **résidents**, le
 nombre d'octets **actifs par token**, et le nombre d'octets **chargés depuis
 le disque par requête**. Un modèle peut stocker beaucoup plus de paramètres
@@ -28,8 +29,9 @@ W1-ter « ALEXANDRIE » :
 - composition par arithmétique de tâches ;
 - vérificateur et retrieval pour la rigueur et les faits.
 
-La baseline produit (Gemma 3 270M QAT q4, 200 Mo) n'est pas modifiée. Le
-chantier est une branche de recherche, pas une recommandation de déploiement.
+La baseline produit (MobileLLM-R1-140M Q4_K_M, 170–182 Mo ; Gemma 3 270M
+après élagage du vocabulaire, 136–141 Mo) n'est pas modifiée. Le chantier est
+une branche de recherche, pas une recommandation de déploiement.
 
 **Conséquences** :
 

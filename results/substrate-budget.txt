@@ -1,0 +1,44 @@
+config                            RSS   cœur  skills  LoRA couverture  tok/s  J/rép  charge
+------------------------------------------------------------------------------------------------
+dense-120m                       96.0   60.0       0     0       0.0%   83.3     36   0.00ms
+core60-only                      48.0   30.0       0     0       0.0%  166.7     18   0.00ms
+core60+skills4.1k                68.0   30.0    4096     0      90.9%  166.7     18   0.00ms
+core60+skills3.7k                68.0   30.0    3723     0      89.9%  166.7     18   0.00ms
+core60+skills3.7k+ret8           76.0   30.0    3723     0      89.9%  166.7     18   0.00ms
+core60+lora10                    68.0   30.0       0    10      29.9%  166.7     18   0.18ms
+core60+plastic20                 68.0   30.0       0     0       0.0%  166.7     18   0.00ms
+core60+mix                       76.0   30.0    1861     3      82.8%  166.7     18   0.12ms
+Couverture du top-n, Zipf alpha=1.0, N=10 000
+     n couverture  code 5,5 ko  LoRA 2 Mio
+    10      29.9%         0.1 Mo        0.0 Mo
+    30      40.8%         0.2 Mo        0.1 Mo
+   100      53.0%         0.5 Mo        0.2 Mo
+   300      64.2%         1.6 Mo        0.6 Mo
+  1000      76.5%         5.4 Mo        2.0 Mo
+  2000      83.6%        10.7 Mo        3.9 Mo
+  3646      89.7%        19.6 Mo        7.1 Mo
+  5000      92.9%        26.9 Mo        9.8 Mo
+  7141      96.6%        38.4 Mo       13.9 Mo
+ 10000     100.0%        53.7 Mo       19.5 Mo
+Couverture du top-n, Zipf alpha=0.7, N=10 000
+     n couverture  code 5,5 ko  LoRA 2 Mio
+    10       7.9%         0.1 Mo        0.0 Mo
+    30      13.0%         0.2 Mo        0.1 Mo
+   100      21.0%         0.5 Mo        0.2 Mo
+   300      31.3%         1.6 Mo        0.6 Mo
+  1000      47.4%         5.4 Mo        2.0 Mo
+  2000      59.6%        10.7 Mo        3.9 Mo
+  3646      72.4%        19.6 Mo        7.1 Mo
+  5000      80.2%        26.9 Mo        9.8 Mo
+  7141      89.9%        38.4 Mo       13.9 Mo
+ 10000     100.0%        53.7 Mo       19.5 Mo
+Comparaison des deux régimes de chargement
+Hypothèses : disque 1 Go/s effectif, 4 bits/poids, réponse 200 tokens.
+régime                                       octets    unité         ms  ms/token amorti
+------------------------------------------------------------------------------------------
+dense 7B 4-bit, tout relu                3500000000 par token   3500.000         3500.000
+dense 270M 4-bit, tout relu               135000000 par token    135.000          135.000
+dense 60M 4-bit, tout relu                 30000000 par token     30.000           30.000
+MoE 3B, 300M actifs 4-bit                 150000000 par token    150.000          150.000
+compétence-code 5,5 ko                         5500 par requête      0.005          0.00003
+cartouche LoRA 2 Mio                        2100000 par requête      2.100          0.01050
