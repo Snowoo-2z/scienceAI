@@ -6,3 +6,6 @@ __pycache__/
 
 # corpus téléchargé (regénérable par demo/build_corpus.py)
 data/
+
+# environnement Python local (recréé par demo/serve.sh)
+.venv/
