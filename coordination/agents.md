@@ -45,3 +45,8 @@ S3 contrôleur appris et intégration langage non réalisés. Résultats en revu
 Mise à jour Silex, 2026-10-19 : extension mémoire1k/10k terminée et démo texte
 RNN pédagogique essayable (port8080). Corpus/licence à arbitrer pour poursuivre
 au-delà du jouet. Pas de modèle généraliste obtenu.
+
+Mise à jour Silex, 2026-10-19 : retour utilisateur → démo48paires archivée,
+pas de patch de réponses prédéfinies. S4 opérateurs appris/compositions inédites
+exécuté (deux boucles, contrôles indépendants). Résultats en revue ; conversation
+générale toujours non obtenue.

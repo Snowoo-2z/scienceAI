@@ -1,4 +1,6 @@
-# Silex : une vraie génération, un résultat encore très limité
+# ARCHIVE — Silex : démonstration de mémorisation, piste écartée
+
+**Décision après retour utilisateur : ne pas développer ce réseau comme voie vers le généraliste.** Les artefacts restent pour reproductibilité.
 
 2026-10-19. Démonstrateur de laboratoire destiné à rendre les résultats visibles
 sans savoir programmer. **Ce n'est pas le généraliste recherché.**

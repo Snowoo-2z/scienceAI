@@ -57,3 +57,11 @@ Fichiers : experiments/silex/dialogue/* ; plastic-scale.json ; PLASTIC-RESULTS.m
 Bloqueurs : aucune qualité généraliste atteinte ; encodeur sans ordre insuffisant ; corpus minuscule.
 Besoin utilisateur : choix données recherche non commerciales vs exigence commerciale avant adoption d'une source Vigogne repérée sous DATA_LICENSE CC-BY-NC4. Aucun corpus externe utilisé dans la démo.
 Décision proposée : rendre les réponses/erreurs visibles, ne pas confondre mémorisation pédagogique et percée ; encodeur séquentiel + mémoire restent à tester.
+
+[2026-10-19] Silex · W3/S4 · REVUE
+Fait : démo RNN48paires marquée archivée/piste écartée suite au retour utilisateur ; aucune réponse spéciale WOW ajoutée. Apprentissage d'opérateurs résiduels partagés et compositions non entraînées testé en deux boucles, messages dans l'atelier14.
+Résultat : boucle2 seeds20..22,1→64 étapes : partagé100% sur échanges,0% permutations arbitraires,99,48% sur structure partagée construite (seuil erreur relative1e-3). Contrôle rang1 indépendant100% sur échanges avec256coeff contre320 partagés. Pas de gain universel. Float64,NumPy2.2.6/Python3.11.2,1thread,Xeon x86_64,2026-10-19 ; RSS banc37,09Mo, énergie/langage non mesurés.
+Fichiers : experiments/silex/operators/{experiment.py,example.py,results.json,annealed-results.json,examples.json,README.md}.
+Bloqueurs : aucun parseur/contrôleur de langage appris ; les instructions symboliques et l'interpréteur sont fournis ; nouveauté scientifique non revendiquée.
+Besoin : préciser si gros stockage externe autorisé sous100Mo RAM pour choisir architecture avec mémoire externe ou représentation entièrement résidente.
+Décision proposée : apprendre allocation partage/exceptions plutôt qu'imposer tous les opérateurs dans une seule base.
